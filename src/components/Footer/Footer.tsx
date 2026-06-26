@@ -12,6 +12,8 @@ export function Footer() {
   return (
     <footer
       style={{
+        position: 'relative',
+        zIndex: 1,
         background: colors.surface.section,
         padding: '64px 30px 46px',
         borderTop: `1px solid ${colors.border.hair}`,
