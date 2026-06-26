@@ -1,0 +1,24 @@
+/* Slow cinematic page fade on each route change. Opacity only (no transform /
+   filter) so it never breaks position:fixed descendants like the Portfolio
+   FloatingLines backdrop. The fade passes through the charcoal body = a calm
+   "dip" between pages. Honors reduced motion. */
+
+@keyframes owPageFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.ow-page {
+  animation: owPageFade 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ow-page {
+    animation: none;
+  }
+}
