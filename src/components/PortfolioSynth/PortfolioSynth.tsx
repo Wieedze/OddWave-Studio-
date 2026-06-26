@@ -178,7 +178,7 @@ export function PortfolioSynth() {
   );
 
   return (
-    <div style={{ height: 'min(90vh, 880px)', display: 'flex', alignItems: 'stretch', justifyContent: 'center', fontFamily: MONO }}>
+    <div style={{ height: '90vh', minHeight: '760px', display: 'flex', alignItems: 'stretch', justifyContent: 'center', fontFamily: MONO }}>
       <div style={{ position: 'relative', width: '100%', maxWidth: '1640px', height: '100%', display: 'grid', gridTemplateColumns: '36px 1fr 36px', borderRadius: '18px', background: '#0B0C0F', boxShadow: '0 50px 120px rgba(0,0,0,.72)' }}>
         {ear('left')}
 
