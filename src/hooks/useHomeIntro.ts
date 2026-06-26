@@ -53,11 +53,13 @@ export function useHomeIntro<T extends HTMLElement = HTMLDivElement>() {
         if (studio) gsap.set(studio, { autoAlpha: 0, y: 24, filter: 'blur(12px)' });
         if (img) gsap.set(img, { filter: 'blur(0px)' });
 
+        // Timing: the nav still leads, but ODDWAVE / studio / eyebrow now arrive
+        // close behind it instead of lagging a full step after the nav opens.
         const step = 0.85 * speed;
-        const gNav = step;
-        const navOpenAt = gNav + 0.35 * speed;
-        const gTitle = navOpenAt + step;
-        const gStudio = gTitle + step;
+        const gNav = step; // nav appears
+        const navOpenAt = gNav + 0.3 * speed; // nav starts opening
+        const gTitle = gNav + 0.42 * speed; // ODDWAVE comes in just as the nav opens
+        const gStudio = gTitle + 0.5 * speed; // "studio" shortly after the title
 
         if (img) tl.to(img, { filter: 'blur(7px)', duration: 1.5 * speed, ease: 'power1.inOut' }, 0);
         if (nav) tl.to(nav, { autoAlpha: 1, y: 0, duration: 0.64 * speed, ease: 'power2.out' }, gNav);
@@ -65,9 +67,9 @@ export function useHomeIntro<T extends HTMLElement = HTMLDivElement>() {
         if (letters.length)
           tl.to(letters, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 1.8 * speed, ease: 'power2.out' }, gTitle);
 
-        const navFullyOpen = navOpenAt + 1.05;
-        const ebDur = 1.4 * speed;
-        if (cta) tl.to(cta, { autoAlpha: 1, y: 0, duration: ebDur, ease: 'power2.out' }, Math.max(gNav, navFullyOpen - ebDur));
+        // eyebrow lands together with the title rather than trailing the nav open
+        const ebDur = 1.1 * speed;
+        if (cta) tl.to(cta, { autoAlpha: 1, y: 0, duration: ebDur, ease: 'power2.out' }, Math.max(gNav, gTitle - 0.15 * speed));
         if (studio)
           tl.to(studio, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 1.8 * speed, ease: 'power2.out' }, gStudio);
       }
