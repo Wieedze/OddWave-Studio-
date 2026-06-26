@@ -125,4 +125,21 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
 - `.ow-gear` styles + the `@media 860` grid collapses (`data-phares`, `data-cats`)
   live in `Equipment/EquipmentPage.css`.
 
+## 2026-06-26 · Sound Design page + VideoModal
+
+- Built `/sound-design`: **cinematic hero video** (`sd-irradiation.mp4`, muted
+  autoplay loop, `.ow-hero-vid` clip-path open via the global `owCinema`
+  keyframe, `data-parallax="0.18"`), a **sound toggle** (imperative `video.muted`),
+  and the title revealed once playback passes `HERO_REVEAL_AT` (9s) with a
+  fallback timeout — reduced motion reveals immediately and disables the open.
+- **Réalisations grid** (`data-grid`, 3 cols) of `VideoEntry` cards. The handoff's
+  filter chips and featured index 0 are not in the shipped layout, so they were
+  omitted (fidelity to the actual page).
+- **VideoModal** (reusable, `components/VideoModal/`): real `<video controls
+  autoplay playsinline>` when the entry has a `src`, otherwise poster + simulated
+  play/progress; closes on backdrop / × / Escape. Equalizer bars keyframe co-located.
+- Video sources live in `content/soundDesign.ts` (the swap point): only
+  `sd-irradiation.mp4` / `sd-seabeast.mp4` have a `src` (real, local, gitignored);
+  the rest are placeholder tiles. Replace `src` with IPFS gateway URLs later.
+
 <!-- Add new entries above this line -->

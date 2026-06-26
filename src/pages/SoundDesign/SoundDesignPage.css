@@ -1,0 +1,64 @@
+/* Sound Design — cinematic hero open, hero text reveal, gallery cards.
+   Ported from design-handoff/Sound Design OddWave.dc.html. The owCinema keyframe
+   is defined globally in design-system/theme/global.css. */
+
+.ow-hero-vid {
+  clip-path: inset(0 0 0 0);
+  animation: owCinema 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ow-hero-vid {
+    animation: none !important;
+    clip-path: inset(0 0 0 0) !important;
+  }
+}
+
+.ow-hero-text {
+  opacity: 0;
+  filter: blur(14px);
+  transform: translateY(26px);
+  transition:
+    opacity 2s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 2.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ow-hero-text.show {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+.ow-card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #15161a;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+.ow-card .ow-poster {
+  transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.ow-card:hover .ow-poster {
+  transform: scale(1.06);
+}
+.ow-card:hover .ow-play {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: #c24e37;
+  border-color: #c24e37;
+}
+.ow-card:hover .ow-play svg {
+  fill: #f6eee6;
+}
+.ow-play {
+  transition:
+    transform 0.35s cubic-bezier(0.19, 1, 0.22, 1),
+    background 0.3s,
+    border-color 0.3s;
+}
+
+@media (max-width: 860px) {
+  [data-grid] {
+    grid-template-columns: 1fr !important;
+  }
+}

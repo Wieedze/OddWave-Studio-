@@ -1,0 +1,28 @@
+/* Modal player — equalizer bars animation. */
+
+@keyframes owEq {
+  0%,
+  100% {
+    transform: scaleY(0.28);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.ow-eq-bar {
+  display: block;
+  width: 3px;
+  height: 100%;
+  background: rgba(194, 78, 55, 0.85);
+  border-radius: 2px;
+  transform-origin: bottom;
+  animation: owEq 1s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ow-eq-bar {
+    animation: none;
+    transform: scaleY(0.6);
+  }
+}
