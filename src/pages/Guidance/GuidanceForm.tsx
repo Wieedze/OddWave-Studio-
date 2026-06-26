@@ -27,13 +27,16 @@ export function GuidanceForm({ formule, onSelectFormule, onSubmitted }: Guidance
   const [email, setEmail] = useState('');
   const [project, setProject] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     setSubmitting(true);
-    await contactService.submit({ name, email, project, formule: formule ?? undefined });
+    setError(null);
+    const result = await contactService.submit({ name, email, project, formule: formule ?? undefined });
     setSubmitting(false);
-    onSubmitted();
+    if (result.ok) onSubmitted();
+    else setError("L'envoi n'a pas abouti. Réessayez, ou écrivez-nous à contact@oddwave.studio.");
   }
 
   const labelGap = { display: 'flex', flexDirection: 'column', gap: '9px' } as const;
@@ -92,6 +95,9 @@ export function GuidanceForm({ formule, onSelectFormule, onSubmitted }: Guidance
       <button type="submit" className="ow-submit" disabled={submitting} style={{ fontFamily: typography.font.body }}>
         Envoyer la demande →
       </button>
+      {error && (
+        <p style={{ margin: 0, fontFamily: typography.font.body, fontSize: '14px', lineHeight: 1.5, color: colors.signal.red }}>{error}</p>
+      )}
     </form>
   );
 }

@@ -3,7 +3,7 @@
 
 import { useState, type FormEvent } from 'react';
 import { MonoLabel } from '@/design-system/primitives';
-import { colors } from '@/design-system/tokens';
+import { colors, typography } from '@/design-system/tokens';
 import { contactService } from '@/services';
 import { CONTACT, CONTACT_NEEDS } from '@/content/contact';
 
@@ -25,13 +25,16 @@ export function ContactForm({ onSubmitted }: ContactFormProps) {
   const [email, setEmail] = useState('');
   const [project, setProject] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     setSubmitting(true);
-    await contactService.submit({ name, email, project, need });
+    setError(null);
+    const result = await contactService.submit({ name, email, project, need });
     setSubmitting(false);
-    onSubmitted();
+    if (result.ok) onSubmitted();
+    else setError("L'envoi n'a pas abouti. Réessayez, ou écrivez-nous à contact@oddwave.studio.");
   }
 
   const labelGap = { display: 'flex', flexDirection: 'column', gap: '9px' } as const;
@@ -78,6 +81,9 @@ export function ContactForm({ onSubmitted }: ContactFormProps) {
       <button type="submit" className="ow-submit" disabled={submitting}>
         {CONTACT.submitLabel}
       </button>
+      {error && (
+        <p style={{ margin: 0, fontFamily: typography.font.body, fontSize: '14px', lineHeight: 1.5, color: colors.signal.red }}>{error}</p>
+      )}
     </form>
   );
 }

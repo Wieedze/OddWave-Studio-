@@ -178,4 +178,21 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
 - AudioContext is created on first play (user gesture), so SSG/no-JS render the
   rack statically without audio.
 
+## 2026-06-26 · Page transitions + form backend + deploy target
+
+- **Slow page transitions**: navigation felt too abrupt. Added a `PageTransition`
+  (layout) that keys the routed page on pathname and fades it in over 1s with the
+  brand reveal easing (`cubic-bezier(.16,1,.3,1)`), honoring reduced motion.
+  **Opacity only** — a transform/filter on the wrapper would break the Portfolio's
+  `position:fixed` FloatingLines backdrop. The fade passes through the charcoal
+  body (a cinematic "dip").
+- **Contact + Guidance forms → pro inbox via Web3Forms** (no backend). `ContactService`
+  POSTs to `api.web3forms.com/submit` with `access_key` from `VITE_WEB3FORMS_KEY`
+  (env, not hardcoded). Returns `{ ok, error }`; forms show an inline error and
+  re-enable on failure. Without the key, the form still confirms but logs a warning
+  (dev-friendly). `.env.example` documents the var.
+- **Hosting = Cloudflare Pages**. `docs/deploy.md` has the build settings
+  (`bun run build` → `dist/`), env vars, and the IPFS note for videos. SSG emits a
+  real HTML file per route, so no SPA catch-all is needed.
+
 <!-- Add new entries above this line -->
