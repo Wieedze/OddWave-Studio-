@@ -91,4 +91,27 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   videos `sd-irradiation.mp4` / `sd-seabeast.mp4` are present; the rest of the
   showreel videos are still pending.
 
+## 2026-06-26 · Video hosting decision — IPFS
+
+- Videos are too large for git (one is 151MB > GitHub's 100MB limit; ~395MB
+  total). Decision: **host videos on IPFS** (pin via Pinata / web3.storage /
+  Filebase / Fleek) and reference gateway URLs. Caveat: public gateways can be
+  slow/unreliable for video streaming — use a **dedicated gateway** for playback.
+- Implementation plan: when building Sound Design, put the video sources in a
+  configurable content map (CID / gateway URL per entry) so switching IPFS ↔ CDN
+  is a one-value change. Videos stay gitignored; images are committed.
+
+## 2026-06-26 · Le Studio page built
+
+- Built `/studio` from the handoff: centered hero (`studio-hero-ssl.jpg`), the
+  Théo Grozdanic bio split (`.92fr 1.08fr`, portrait + role + 2 paragraphs with
+  the `#E7C9AF` highlights on "OddWave"/"Earthworm"), the residence split
+  (`1.08fr .92fr`, reversed), a **parallax pedagogy band** (`session.jpg`,
+  `data-parallax="0.14"` with a horizontal mask gradient), and the CTA to
+  `/#contact`.
+- Split layout uses `data-split` / `data-split-media` / `data-split-text`; the
+  `@media 860` overrides (stack, media first) live in `Studio/StudioPage.css`.
+- Bio paragraph 1 is rendered in-page (inline `<span>` highlights); the rest of
+  the copy is in `content/studio.ts`.
+
 <!-- Add new entries above this line -->
