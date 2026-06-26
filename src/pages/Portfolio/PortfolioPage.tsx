@@ -8,7 +8,6 @@ import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
 import { ROUTES } from '@/content/navigation';
 import { PORTFOLIO } from '@/content/portfolio';
-import './PortfolioPage.css';
 
 export function PortfolioPage() {
   const ref = usePageMotion<HTMLDivElement>();
@@ -43,9 +42,8 @@ export function PortfolioPage() {
         {/* TITLE */}
         <section style={{ position: 'relative', height: '100vh', minHeight: '640px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' }}>
           <h1
-            className="ow-pf-reveal"
+            data-hero-title
             style={{
-              animationDelay: '0.48s',
               margin: 0,
               fontFamily: typography.font.display,
               fontWeight: typography.weight.black,
@@ -59,9 +57,8 @@ export function PortfolioPage() {
             {PORTFOLIO.heroTitle}
           </h1>
           <p
-            className="ow-pf-reveal"
+            data-hero-eyebrow
             style={{
-              animationDelay: '0.64s',
               margin: '24px 0 0',
               maxWidth: '540px',
               fontFamily: typography.font.body,

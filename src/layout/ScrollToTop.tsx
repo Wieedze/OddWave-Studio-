@@ -1,13 +1,16 @@
-// Resets scroll on route change, but honors in-page hash links (e.g. /#contact).
+// Resets scroll on route change. The jump must be INSTANT — the global
+// `html { scroll-behavior: smooth }` (used for in-page anchors) would otherwise
+// animate the whole next page up from the previous scroll position. In-page hash
+// links (e.g. /#contact) keep their smooth scroll.
 
-import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { isBrowser } from '@/helpers';
+import { useIsomorphicLayoutEffect } from '@/hooks';
 
 export function ScrollToTop(): null {
   const { pathname, hash } = useLocation();
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!isBrowser) return;
     if (hash) {
       const target = document.querySelector(hash);
@@ -16,7 +19,7 @@ export function ScrollToTop(): null {
         return;
       }
     }
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
   }, [pathname, hash]);
 
   return null;
