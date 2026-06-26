@@ -1,0 +1,1 @@
+export { SoundDesignPage } from './SoundDesignPage';

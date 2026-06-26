@@ -1,0 +1,24 @@
+/* Landing mobile overrides — ported from the @media(max-width:860px) block of
+   design-handoff/Landing OddWave GSAP.dc.html. Prestation panels stack to a
+   single column (image first), and the hero wordmark scales up by viewport. */
+
+@media (max-width: 860px) {
+  #top h1 {
+    font-size: clamp(56px, 19vw, 340px) !important;
+  }
+
+  [data-svc] > [data-svc-card] {
+    grid-template-columns: 1fr !important;
+    gap: 26px !important;
+  }
+
+  [data-svc-img] {
+    order: 1 !important;
+    min-height: 46vh !important;
+    max-height: 360px !important;
+  }
+
+  [data-svc-text] {
+    order: 2 !important;
+  }
+}
