@@ -54,4 +54,25 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   a `HomePage.css` with the `@media(max-width:860px)` overrides (single column,
   image first, hero `clamp(56px,19vw,340px)`) ported from the landing.
 
+## 2026-06-26 · Accompagnement (Guidance) page built
+
+- Recreated `/guidance` to the letter from the handoff: full-bleed parallax hero,
+  intro méthode, **4 phase cards** with the giant ghost number
+  (`clamp(340px,40vw,440px)`, `rgba(194,78,55,.12)`, same visual size on all four),
+  dash-bulleted lists, the **clickable formules table** (row click pre-fills the
+  form + smooth-scrolls to `#demande`), and the **request form** with chips, fields
+  and the `sent` confirmation naming the chosen formule.
+- State lifted to the page (`formule`, `sent`); `GuidanceForm` owns the inputs and
+  submits through `ContactService` (TODO backend). `Formula` model reshaped to
+  `(id, name, description, format)` to match the handoff columns.
+- CSS co-located in `Guidance/GuidancePage.css` (classes + the `@media 860`
+  overrides: phase titles wrap, ghost number shrinks, `.c-go` hidden, form grid
+  to one column).
+- Raw hexes kept where no token matches: intro paragraph `#D6D2CA`, phase list
+  `#E2DED6` (the latter lives in the `.css` structural layer, which is allowed).
+- The automated design-fidelity review was interrupted by a session limit; a
+  manual pass confirmed verbatim copy (no em/en dashes in visible text; curly ’
+  vs straight ' preserved), tokens over literals, and reduced-motion via
+  `usePageMotion`. Re-run the reviewer agent on `/guidance` when convenient.
+
 <!-- Add new entries above this line -->

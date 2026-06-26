@@ -10,7 +10,7 @@ interface MonoLabelProps {
   size?: string;
   /** Letter-spacing override (handoff ranges from .16em to .42em). */
   tracking?: string;
-  as?: 'span' | 'div';
+  as?: 'span' | 'div' | 'label';
   style?: CSSProperties;
 }
 

@@ -1,0 +1,258 @@
+/* Accompagnement (Guidance) — class-based styles ported from
+   design-handoff/Accompagnement OddWave.dc.html (phases, formules table,
+   form fields, chips, and the mobile overrides). */
+
+/* ---- Phase cards ---- */
+.ow-phase {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(36px, 3.6vw, 52px) clamp(30px, 3.4vw, 52px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: #0b0c0f;
+  transition: border-color 0.3s;
+}
+.ow-phase:hover {
+  border-color: rgba(194, 78, 55, 0.5);
+}
+.ow-phase-num {
+  position: absolute;
+  top: 50%;
+  right: clamp(-24px, 0.5vw, 16px);
+  transform: translateY(-50%);
+  font-family: 'Cabinet Grotesk';
+  font-weight: 900;
+  font-size: clamp(340px, 40vw, 440px);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: rgba(194, 78, 55, 0.12);
+  pointer-events: none;
+  user-select: none;
+}
+.ow-phase-body {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+}
+.ow-phase-eyebrow {
+  margin: 0 0 14px;
+  font:
+    500 clamp(14px, 1.3vw, 15px) / 1.4 'Manrope';
+  color: #c9885f;
+}
+.ow-phase-title {
+  margin: 0;
+  font:
+    800 clamp(34px, 4.4vw, 56px) / 1 'Cabinet Grotesk';
+  letter-spacing: -0.025em;
+  color: #f6eee6;
+  white-space: nowrap;
+}
+.ow-phase-rule {
+  height: 2px;
+  width: 100%;
+  max-width: 560px;
+  background: linear-gradient(90deg, #c24e37, rgba(194, 78, 55, 0));
+  margin: 24px 0 26px;
+}
+.ow-phase-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.ow-phase-list li {
+  position: relative;
+  padding-left: 28px;
+  font:
+    500 clamp(15.5px, 1.5vw, 17px) / 1.45 'Manrope';
+  color: #e2ded6;
+  text-wrap: pretty;
+}
+.ow-phase-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 15px;
+  height: 1.5px;
+  background: #c24e37;
+}
+
+/* ---- Formules table ---- */
+.ow-tbl {
+  width: 100%;
+  border-collapse: collapse;
+}
+.ow-tbl th {
+  text-align: left;
+  font:
+    600 11px/1 'JetBrains Mono',
+    monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7e7a72;
+  padding: 0 28px 18px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  vertical-align: bottom;
+}
+.ow-tbl td {
+  padding: 28px 28px 28px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  vertical-align: top;
+  transition: border-color 0.3s;
+}
+.ow-tbl tr:hover td {
+  border-bottom-color: rgba(194, 78, 55, 0.5);
+}
+.ow-tbl .c-name {
+  font:
+    700 22px/1.15 'Cabinet Grotesk';
+  letter-spacing: -0.01em;
+  color: #d8d4cc;
+  white-space: nowrap;
+  width: 200px;
+  transition: color 0.25s;
+}
+.ow-tbl tr:hover .c-name {
+  color: #f6eee6;
+}
+.ow-tbl .c-desc {
+  font:
+    400 15px/1.6 'Manrope';
+  color: #9c9890;
+  text-wrap: pretty;
+}
+.ow-tbl .c-fmt {
+  font:
+    600 11px/1.4 'JetBrains Mono',
+    monospace;
+  letter-spacing: 0.08em;
+  color: #7e7a72;
+  white-space: nowrap;
+  width: 150px;
+}
+.ow-tbl tr[data-pick] {
+  cursor: pointer;
+}
+.ow-tbl .c-go {
+  width: 130px;
+  text-align: right;
+  font:
+    600 11px/1.4 'JetBrains Mono',
+    monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7e7a72;
+  white-space: nowrap;
+  transition:
+    color 0.25s,
+    transform 0.25s;
+}
+.ow-tbl tr:hover .c-go {
+  color: #c24e37;
+  transform: translateX(3px);
+}
+
+/* ---- Form fields & chips ---- */
+.ow-field {
+  width: 100%;
+  font:
+    400 16px/1.5 'Manrope',
+    sans-serif;
+  color: #f1eee8;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 15px 16px;
+  outline: none;
+  transition:
+    border-color 0.25s,
+    background 0.25s;
+}
+.ow-field::placeholder {
+  color: #6b675f;
+}
+.ow-field:focus {
+  border-color: #c24e37;
+  background: rgba(194, 78, 55, 0.05);
+}
+textarea.ow-field {
+  resize: vertical;
+  min-height: 130px;
+}
+.ow-chip-radio {
+  cursor: pointer;
+  font:
+    600 13px/1 'Manrope',
+    sans-serif;
+  letter-spacing: 0.01em;
+  color: rgba(241, 238, 232, 0.66);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 11px 16px;
+  transition: all 0.2s;
+}
+.ow-chip-radio:hover {
+  color: #f1eee8;
+  border-color: rgba(255, 255, 255, 0.28);
+}
+.ow-chip-radio.on {
+  color: #f6eee6;
+  background: #c24e37;
+  border-color: #c24e37;
+}
+
+/* ---- Submit button hover ---- */
+.ow-submit {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  padding: 17px 34px;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  background: #c24e37;
+  color: #f6eee6;
+  font:
+    600 15px/1 'Manrope';
+  letter-spacing: 0.01em;
+  box-shadow: 0 14px 40px rgba(194, 78, 55, 0.3);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.ow-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 48px rgba(194, 78, 55, 0.42);
+}
+
+/* ---- Mobile overrides ---- */
+@media (max-width: 860px) {
+  .ow-method-h2 {
+    white-space: normal !important;
+    font-size: clamp(30px, 8vw, 46px) !important;
+    line-height: 1.04 !important;
+  }
+  .ow-phase-title {
+    white-space: normal !important;
+    font-size: clamp(28px, 7.5vw, 42px) !important;
+  }
+  .ow-phase-num {
+    font-size: clamp(190px, 52vw, 320px) !important;
+    right: -14px !important;
+  }
+  .ow-phase-body {
+    max-width: 100% !important;
+  }
+  .ow-tbl .c-go {
+    display: none !important;
+  }
+  [data-form-grid] {
+    grid-template-columns: 1fr !important;
+  }
+}
