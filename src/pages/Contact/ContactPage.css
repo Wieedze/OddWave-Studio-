@@ -1,0 +1,46 @@
+/* Contact — direct channels rows + responsive grid. Ported from
+   design-handoff/Contact OddWave.dc.html. Form controls are shared
+   (design-system/primitives/forms.css). */
+
+.ow-channel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  transition: border-color 0.3s;
+}
+.ow-channel:hover {
+  border-top-color: rgba(194, 78, 55, 0.55);
+}
+.ow-channel:hover .ow-channel-val {
+  color: #f6eee6;
+}
+.ow-channel:hover .ow-channel-arrow {
+  transform: translateX(4px);
+  opacity: 1;
+}
+.ow-channel-val {
+  font:
+    600 18px/1.2 'Cabinet Grotesk';
+  letter-spacing: -0.01em;
+  color: #d8d4cc;
+  transition: color 0.25s;
+}
+.ow-channel-arrow {
+  flex: none;
+  color: #c24e37;
+  font-size: 18px;
+  opacity: 0.5;
+  transition:
+    transform 0.25s,
+    opacity 0.25s;
+}
+
+@media (max-width: 860px) {
+  [data-contact-grid] {
+    grid-template-columns: 1fr !important;
+    gap: 50px !important;
+  }
+}

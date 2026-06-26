@@ -75,4 +75,20 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   vs straight ' preserved), tokens over literals, and reduced-motion via
   `usePageMotion`. Re-run the reviewer agent on `/guidance` when convenient.
 
+## 2026-06-26 · Contact page + shared form CSS
+
+- Built `/contact` from the handoff: hero with **bottom-left** title ("Parlons de
+  votre son.", `session.jpg`, parallax), a `1.25fr .75fr` grid — left the request
+  form (Nom/Email, "besoin" chips defaulting to Mastering, Projet) wired to
+  `ContactService` with the "Message envoyé." confirmation; right the **direct
+  channels** (email mailto, Instagram external, studio non-clickable) with the
+  hover arrow/border treatment, divider, and the 48h note.
+- **Shared form controls extracted** to `design-system/primitives/forms.css`
+  (`.ow-field`, `.ow-chip-radio`, `.ow-submit`), imported once in `RootLayout`.
+  Removed the duplicated blocks from `GuidancePage.css`. Form fields/chips are a
+  design-system concern, so a single shared stylesheet (not a per-page copy).
+- Assets are in `public/assets/` now (client dropped them). Real Sound Design
+  videos `sd-irradiation.mp4` / `sd-seabeast.mp4` are present; the rest of the
+  showreel videos are still pending.
+
 <!-- Add new entries above this line -->

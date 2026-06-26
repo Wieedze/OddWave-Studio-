@@ -6,6 +6,7 @@ import { GlobalStyles } from '@/design-system/theme';
 import { Nav, Footer } from '@/components';
 import { ScrollToTop } from './ScrollToTop';
 import '@/design-system/theme/global.css';
+import '@/design-system/primitives/forms.css';
 
 export function RootLayout() {
   return (

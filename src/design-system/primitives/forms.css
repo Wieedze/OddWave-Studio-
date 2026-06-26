@@ -1,0 +1,82 @@
+/* Shared form controls — field, chip-radio, submit. Used by the Guidance and
+   Contact request forms. Ported from the handoff (.ow-field / .ow-chip-radio).
+   Imported once globally by the app shell. */
+
+.ow-field {
+  width: 100%;
+  font:
+    400 16px/1.5 'Manrope',
+    sans-serif;
+  color: #f1eee8;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 15px 16px;
+  outline: none;
+  transition:
+    border-color 0.25s,
+    background 0.25s;
+}
+.ow-field::placeholder {
+  color: #6b675f;
+}
+.ow-field:focus {
+  border-color: #c24e37;
+  background: rgba(194, 78, 55, 0.05);
+}
+textarea.ow-field {
+  resize: vertical;
+  min-height: 130px;
+}
+
+.ow-chip-radio {
+  cursor: pointer;
+  font:
+    600 13px/1 'Manrope',
+    sans-serif;
+  letter-spacing: 0.01em;
+  color: rgba(241, 238, 232, 0.66);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 11px 16px;
+  transition: all 0.2s;
+}
+.ow-chip-radio:hover {
+  color: #f1eee8;
+  border-color: rgba(255, 255, 255, 0.28);
+}
+.ow-chip-radio.on {
+  color: #f6eee6;
+  background: #c24e37;
+  border-color: #c24e37;
+}
+
+.ow-submit {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  padding: 17px 34px;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  background: #c24e37;
+  color: #f6eee6;
+  font:
+    600 15px/1 'Manrope';
+  letter-spacing: 0.01em;
+  box-shadow: 0 14px 40px rgba(194, 78, 55, 0.3);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.ow-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 48px rgba(194, 78, 55, 0.42);
+}
+.ow-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+  transform: none;
+}
