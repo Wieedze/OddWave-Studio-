@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&amp;display=swap" rel="stylesheet">
+<script src="logo-path.js"></script>
+<script src="ow-motion.js"></script>
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:#0E0F12;}
+  ::selection{background:#C24E37;color:#fff;}
+  @keyframes ow-eq{0%,100%{transform:scaleY(.28);}50%{transform:scaleY(1);}}
+  @keyframes ow-cinema{from{clip-path:inset(50% 0 50% 0);}to{clip-path:inset(0 0 0 0);}}
+  .ow-hero-vid{clip-path:inset(0 0 0 0);animation:ow-cinema 1.6s cubic-bezier(.16,1,.3,1) .2s both;}
+  @media (prefers-reduced-motion: reduce){.ow-hero-vid{animation:none !important;clip-path:inset(0 0 0 0) !important;}}
+  .ow-hero-text.show{opacity:1 !important;filter:none !important;transform:none !important;}
+  .ow-nav-side{display:flex;gap:28px;align-items:center;width:0;overflow:hidden;opacity:0;transition:width .8s cubic-bezier(.19,1,.22,1) .25s,margin .8s cubic-bezier(.19,1,.22,1) .25s,opacity .5s ease,transform .8s cubic-bezier(.19,1,.22,1) .25s;}
+  .ow-nav-left{justify-content:flex-end;transform:translateX(22px);margin-right:0;pointer-events:none;}
+  .ow-nav-right{justify-content:flex-start;transform:translateX(-22px);margin-left:0;pointer-events:none;}
+  .ow-nav:hover .ow-nav-left,.ow-nav:focus-within .ow-nav-left{width:350px;opacity:1;transform:translateX(0);margin-right:28px;pointer-events:auto;}
+  .ow-nav:hover .ow-nav-right,.ow-nav:focus-within .ow-nav-right{width:350px;opacity:1;transform:translateX(0);margin-left:28px;pointer-events:auto;}
+  .ow-link{position:relative;font:600 13px/1.5 'Manrope',sans-serif;letter-spacing:.02em;color:rgba(241,238,232,.74);text-decoration:none;white-space:nowrap;transition:color .25s;}
+  .ow-link:hover{color:#F1EEE8;}
+  .ow-link::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:1px;background:#C24E37;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.16,1,.3,1);}
+  .ow-link:hover::after{transform:scaleX(1);}
+  .ow-menu{display:none;}
+  .ow-mlink{font:600 15px/1.1 'Manrope',sans-serif;letter-spacing:.01em;color:rgba(241,238,232,.82);text-decoration:none;padding:12px 14px;border-radius:10px;white-space:nowrap;transition:background .2s,color .2s;}
+  .ow-mlink:hover{background:rgba(255,255,255,.06);color:#F6EEE6;}
+  .ow-chip{font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(241,238,232,.62);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);padding:10px 16px;border-radius:999px;cursor:pointer;transition:all .25s;white-space:nowrap;}
+  .ow-chip:hover{color:#F1EEE8;border-color:rgba(255,255,255,.28);}
+  .ow-chip.on{color:#F6EEE6;background:#C24E37;border-color:#C24E37;}
+  .ow-card{position:relative;border-radius:14px;overflow:hidden;cursor:pointer;background:#15161A;border:1px solid rgba(255,255,255,.07);}
+  .ow-card .ow-poster{transition:transform .9s cubic-bezier(.19,1,.22,1);}
+  .ow-card:hover .ow-poster{transform:scale(1.06);}
+  .ow-card:hover .ow-play{transform:scale(1.08);background:#C24E37;border-color:#C24E37;}
+  .ow-card:hover .ow-play svg{fill:#F6EEE6;}
+  .ow-play{transition:transform .35s cubic-bezier(.19,1,.22,1),background .3s,border-color .3s;}
+  .ow-feat:hover .ow-poster{transform:scale(1.03);}
+  .ow-feat:hover .ow-play{transform:scale(1.07);background:#C24E37;border-color:#C24E37;}
+  .ow-feat:hover .ow-play svg{fill:#F6EEE6;}
+  @media (max-width:860px){
+    .ow-nav-side{display:none !important;}
+    .ow-menu.open{display:flex !important;}
+    [data-grid]{grid-template-columns:1fr !important;}
+    [data-feat-inner]{flex-direction:column !important;}
+    [data-feat-meta]{max-width:none !important;}
+  }
+</style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="font-family:'Manrope',sans-serif;background:#0E0F12;color:#F1EEE8;-webkit-font-smoothing:antialiased;overflow-x:hidden;">
+
+  <!-- NAV -->
+  <div style="position:fixed;top:22px;left:0;right:0;z-index:60;display:flex;flex-direction:column;align-items:center;gap:12px;pointer-events:none;">
+    <nav class="ow-nav" style="position:relative;pointer-events:auto;display:flex;align-items:center;gap:0;padding:11px 20px;border-radius:999px;background:rgba(20,21,26,.46);backdrop-filter:blur(13px) saturate(1.3);-webkit-backdrop-filter:blur(13px) saturate(1.3);border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 30px rgba(0,0,0,.34);">
+      <div class="ow-nav-side ow-nav-left">
+        <a class="ow-link" href="Studio%20OddWave.dc.html">Le studio</a>
+        <a class="ow-link" href="Materiel%20OddWave.dc.html">Le matériel</a>
+        <a class="ow-link" href="Accompagnement%20OddWave.dc.html">Accompagnement</a>
+      </div>
+      <a href="Landing%20OddWave%20GSAP.dc.html" onClick="{{ toggleMenu }}" style="flex:none;display:flex;align-items:center;gap:0;text-decoration:none;cursor:pointer;">
+        <span style="width:46px;height:46px;display:block;">{{ logoMarkWhite }}</span>
+      </a>
+      <div class="ow-nav-side ow-nav-right">
+        <a class="ow-link" href="Sound%20Design%20OddWave.dc.html">Sound design</a>
+        <a class="ow-link" href="Portfolio%20OddWave.dc.html">Portfolio</a>
+        <a class="ow-link" href="Contact%20OddWave.dc.html">Contact</a>
+      </div>
+    </nav>
+    <div class="ow-menu" style="flex-direction:column;gap:2px;padding:12px 14px;border-radius:18px;background:rgba(18,19,24,.78);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 44px rgba(0,0,0,.45);min-width:210px;pointer-events:auto;">
+      <a class="ow-mlink" href="Landing%20OddWave%20GSAP.dc.html" onClick="{{ closeMenu }}">Accueil</a>
+      <a class="ow-mlink" href="Studio%20OddWave.dc.html" onClick="{{ closeMenu }}">Le studio</a>
+      <a class="ow-mlink" href="Materiel%20OddWave.dc.html" onClick="{{ closeMenu }}">Le matériel</a>
+      <a class="ow-mlink" href="Accompagnement%20OddWave.dc.html" onClick="{{ closeMenu }}">Accompagnement</a>
+      <a class="ow-mlink" href="Sound%20Design%20OddWave.dc.html" onClick="{{ closeMenu }}">Sound design</a>
+      <a class="ow-mlink" href="Portfolio%20OddWave.dc.html" onClick="{{ closeMenu }}">Portfolio</a>
+      <a class="ow-mlink" href="Contact%20OddWave.dc.html" onClick="{{ closeMenu }}">Contact</a>
+    </div>
+  </div>
+
+  <!-- HERO : vidéo son à l'image -->
+  <section data-screen-label="Sound Design — Hero" style="position:relative;height:100vh;min-height:640px;width:100%;overflow:hidden;background:#0B0C0F;">
+    <video ref="{{ heroVidRef }}" class="ow-hero-vid" data-parallax="0.18" autoplay="" muted="" loop="" playsinline="" poster="assets/sd-irradiation-poster.jpg" style="position:absolute;inset:-6% 0 0 0;width:100%;height:112%;object-fit:cover;object-position:center 28%;will-change:transform,clip-path;">
+      <source src="assets/sd-irradiation.mp4" type="video/mp4">
+    </video>
+    <!-- voiles : léger en haut, marqué en bas-gauche pour lisibilité du titre -->
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,15,.32) 0%,rgba(11,12,15,.05) 20%,transparent 46%,rgba(11,12,15,.5) 82%,rgba(11,12,15,.86) 100%);"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(120% 95% at 18% 92%,rgba(11,12,15,.6) 0%,transparent 52%);"></div>
+
+    <!-- bouton son -->
+    <button type="button" onClick="{{ toggleSound }}" aria-label="Activer le son" style="position:absolute;top:calc(22px + 64px);right:clamp(20px,4vw,46px);z-index:8;display:flex;align-items:center;gap:9px;padding:10px 16px;border-radius:999px;background:rgba(20,21,26,.5);backdrop-filter:blur(10px) saturate(1.3);-webkit-backdrop-filter:blur(10px) saturate(1.3);border:1px solid rgba(255,255,255,.16);color:#F1EEE8;cursor:pointer;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;transition:border-color .25s,background .25s;">
+      <span ref="{{ soundIconRef }}" style="display:block;width:14px;height:14px;">{{ soundIcon }}</span>
+      <span ref="{{ soundLabelRef }}">Son</span>
+    </button>
+
+    <!-- titre en bas à gauche, n'obstrue pas l'image -->
+    <div style="position:absolute;left:clamp(22px,5vw,84px);bottom:clamp(40px,8vh,96px);right:clamp(22px,5vw,84px);">
+      <div class="ow-hero-text {{ heroCls }}" style="opacity:0;filter:blur(14px);transform:translateY(26px);transition:opacity 2s cubic-bezier(.16,1,.3,1),filter 2.3s cubic-bezier(.16,1,.3,1),transform 2s cubic-bezier(.16,1,.3,1);margin:0 0 16px;font:600 13px/1 'JetBrains Mono',monospace;letter-spacing:.32em;text-transform:uppercase;color:#C9885F;text-indent:.32em;">Donner une voix à l'image</div>
+      <h1 class="ow-hero-text {{ heroCls }}" style="opacity:0;filter:blur(14px);transform:translateY(26px);transition:opacity 2s cubic-bezier(.16,1,.3,1),filter 2.3s cubic-bezier(.16,1,.3,1),transform 2s cubic-bezier(.16,1,.3,1);margin:0;font-family:'Cabinet Grotesk';font-weight:900;font-size:clamp(44px,9.5vw,168px);line-height:.86;letter-spacing:-.03em;color:#F6EEE6;text-shadow:0 4px 60px rgba(0,0,0,.55);">SOUND DESIGN</h1>
+    </div>
+  </section>
+
+  <!-- FEATURED -->
+  
+
+  <!-- GALLERY -->
+  <section id="reel" style="background:#0B0C0F;padding:clamp(20px,3vh,40px) 30px clamp(70px,11vh,130px);">
+    <div style="max-width:1180px;margin:0 auto;">
+      <div data-reveal="" style="margin-bottom:34px;">
+        <div style="font:700 clamp(22px,3vw,34px)/1 'Cabinet Grotesk';letter-spacing:-.02em;color:#F6EEE6;">Réalisations</div>
+      </div>
+
+      <div data-grid="" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+        <sc-for list="{{ gridVideos }}" as="v" hint-placeholder-count="9">
+          <div class="ow-card" onClick="{{ v.onClick }}">
+            <div style="position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;">
+              <div class="ow-poster" style="position:absolute;inset:0;background-image:{{ v.posterCss }};background-size:cover;background-position:center;"></div>
+              <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,15,.05) 0%,rgba(11,12,15,.12) 50%,rgba(11,12,15,.78) 100%);"></div>
+              <div class="ow-play" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(20,21,26,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1.5px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;">
+                <svg width="17" height="19" viewBox="0 0 17 19" style="fill:#F6EEE6;margin-left:3px;"><path d="M0 0 L17 9.5 L0 19 Z"></path></svg>
+              </div>
+              <div style="position:absolute;top:13px;right:13px;padding:5px 9px;border-radius:7px;background:rgba(11,12,15,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.04em;color:#F1EEE8;">{{ v.dur }}</div>
+            </div>
+            <div style="padding:16px 18px 18px;">
+              <div style="font:600 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#C24E37;margin-bottom:9px;">{{ v.cat }}</div>
+              <div style="font:700 18px/1.15 'Cabinet Grotesk';letter-spacing:-.01em;color:#F1EEE8;">{{ v.title }}</div>
+              <div style="margin-top:5px;font:400 13px/1.5 'Manrope';color:#8C887F;text-wrap:pretty;">{{ v.note }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:#0B0C0F;padding:clamp(80px,12vh,140px) 30px;border-top:1px solid rgba(255,255,255,.06);">
+    <div style="max-width:900px;margin:0 auto;text-align:center;">
+      <div data-reveal="" style="display:inline-block;width:44px;height:44px;margin-bottom:28px;">{{ logoMark }}</div>
+      <h2 data-reveal="" style="margin:0;font:700 clamp(34px,5.2vw,72px)/1 'Cabinet Grotesk';letter-spacing:-.03em;color:#F6EEE6;text-wrap:balance;">Un projet à sonoriser ?</h2>
+      <p data-reveal="" style="margin:24px auto 0;max-width:460px;font:400 17px/1.6 'Manrope';color:#B7B3AB;text-wrap:pretty;">Jeu, film, pub ou scène : parlons de l'univers sonore que vous imaginez.</p>
+      <a data-reveal="" href="Landing%20OddWave%20GSAP.dc.html#contact" style="margin-top:36px;display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:3px;background:#C24E37;color:#F6EEE6;font:600 15px/1 'Manrope';text-decoration:none;box-shadow:0 14px 40px rgba(194,78,55,.3);">Nous contacter →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#0B0C0F;padding:46px 30px;border-top:1px solid rgba(255,255,255,.06);">
+    <div style="max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;">
+      <a href="Landing%20OddWave%20GSAP.dc.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <span style="width:24px;height:24px;display:block;">{{ logoMark }}</span>
+        <span style="font:700 14px/1 'Cabinet Grotesk';letter-spacing:-.01em;color:#F1EEE8;">OddWave Studio</span>
+      </a>
+      <div style="font:500 12px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:#6B675F;">© 2026 · Mastering · Production · Sound design</div>
+    </div>
+  </footer>
+
+  <!-- MODAL PLAYER -->
+  <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeVideo }}" style="position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(8,9,11,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);">
+      <div onClick="{{ stop }}" style="position:relative;width:100%;max-width:1040px;border-radius:16px;overflow:hidden;background:#101116;border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 120px rgba(0,0,0,.7);">
+        <div style="position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;">
+          <sc-if value="{{ openHasVideo }}" hint-placeholder-val="{{ false }}">
+            <video src="{{ openSrc }}" poster="{{ openPosterImg }}" controls="controls" autoplay="autoplay" playsinline="playsinline" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;"></video>
+          </sc-if>
+          <sc-if value="{{ openNoVideo }}" hint-placeholder-val="{{ true }}">
+          <div style="position:absolute;inset:0;background-image:{{ openPoster }};background-size:cover;background-position:center;filter:brightness(.62);"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,15,.2) 0%,transparent 35%,rgba(11,12,15,.55) 100%);"></div>
+          <div onClick="{{ togglePlay }}" class="ow-play" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:88px;height:88px;border-radius:50%;background:rgba(194,78,55,.92);border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 12px 40px rgba(194,78,55,.4);">
+            <span style="font:700 13px/1 'JetBrains Mono',monospace;letter-spacing:.1em;color:#F6EEE6;">{{ playLabel }}</span>
+          </div>
+          </sc-if>
+          <button type="button" onClick="{{ closeVideo }}" style="position:absolute;top:16px;right:16px;width:40px;height:40px;border-radius:50%;background:rgba(11,12,15,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.16);color:#F1EEE8;font:400 20px/1 'Manrope';cursor:pointer;display:flex;align-items:center;justify-content:center;">×</button>
+        </div>
+        <!-- controls -->
+        <div style="padding:18px 22px 22px;">
+          <sc-if value="{{ openNoVideo }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+            <div style="position:relative;flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.14);overflow:hidden;">
+              <div style="position:absolute;left:0;top:0;bottom:0;width:{{ progressW }};background:#C24E37;border-radius:2px;"></div>
+            </div>
+            <div style="flex:none;font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.04em;color:#9C9890;">{{ timeLabel }} / {{ openDur }}</div>
+          </div>
+          </sc-if>
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;">
+            <div>
+              <div style="font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#C24E37;margin-bottom:9px;">{{ openCat }}</div>
+              <h3 style="margin:0;font:800 clamp(22px,3vw,34px)/1 'Cabinet Grotesk';letter-spacing:-.02em;color:#F6EEE6;">{{ openTitle }}</h3>
+              <p style="margin:9px 0 0;max-width:520px;font:400 14px/1.6 'Manrope';color:#9C9890;text-wrap:pretty;">{{ openNote }}</p>
+            </div>
+            <div style="flex:none;display:flex;align-items:flex-end;gap:4px;height:30px;">
+              <span style="display:block;width:3px;height:100%;background:rgba(194,78,55,.85);border-radius:2px;transform-origin:bottom;animation:ow-eq 1s ease-in-out infinite;"></span>
+              <span style="display:block;width:3px;height:100%;background:rgba(194,78,55,.85);border-radius:2px;transform-origin:bottom;animation:ow-eq 1s ease-in-out infinite .15s;"></span>
+              <span style="display:block;width:3px;height:100%;background:rgba(194,78,55,.85);border-radius:2px;transform-origin:bottom;animation:ow-eq 1s ease-in-out infinite .3s;"></span>
+              <span style="display:block;width:3px;height:100%;background:rgba(194,78,55,.85);border-radius:2px;transform-origin:bottom;animation:ow-eq 1s ease-in-out infinite .45s;"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.rootRef = React.createRef();
+    this.heroVidRef = React.createRef();
+    this.soundIconRef = React.createRef();
+    this.soundLabelRef = React.createRef();
+    this._ptick = this._ptick.bind(this);
+    this._motion = null;
+    this._pTimer = null;
+    this.state = { filter: 'Tous', openId: null, playing: false, progress: 0, soundOn: false, heroOn: false };
+    this.cats = ['Tous', 'Jeu vidéo', 'Film', 'Publicité', 'Trailer', 'Habillage', 'Autres'];
+    this.videos = [
+      { title: 'Une année de son à l\'image.', cat: 'Showreel 2026', dur: '2:48', img: 'hero-large.jpg', note: 'Le condensé de nos meilleures réalisations.' },
+      { title: 'Irradiation', cat: 'Trailer', dur: '0:40', img: 'sd-irradiation-poster.jpg', note: 'Redesign sonore complet : court CG de Sava Zivkovic.', src: 'assets/sd-irradiation.mp4' },
+      { title: 'The Sea Beast', cat: 'Film', dur: '0:40', img: 'sd-seabeast-poster.jpg', note: 'Redesign sonore : séquence du film d\'animation.', src: 'assets/sd-seabeast.mp4' },
+      { title: 'L\'Atelier', cat: 'Film', dur: '3:12', img: 'cabin-large.jpg', note: 'Design sonore et mixage 5.1, long-métrage indépendant.' },
+      { title: 'Neon Drift', cat: 'Jeu vidéo', dur: '1:54', img: 'stem-bokeh.jpg', note: 'Sound design interactif et boucles adaptatives.' },
+      { title: 'Auréa Parfums', cat: 'Publicité', dur: '0:42', img: 'rack-ssl.jpg', note: 'Habillage sonore et signature de marque.' },
+      { title: 'Until Dawn', cat: 'Trailer', dur: '1:28', img: 'genelec.jpg', note: 'Sonorisation et impacts pour bande-annonce AAA.' },
+      { title: 'EARTHWORM · Live AV', cat: 'Habillage', dur: '2:36', img: 'cabin-mic.jpg', note: 'Habillage sonore d\'un set audiovisuel.' },
+      { title: 'Petit Renard', cat: 'Autres', dur: '4:05', img: 'elysia-row.jpg', note: 'Bruitage et création sonore, court d\'animation.' },
+      { title: 'Hors-Saison', cat: 'Film', dur: '2:18', img: 'converter-blue.jpg', note: 'Ambiances et textures, court-métrage primé.' },
+      { title: 'Profondeurs', cat: 'Autres', dur: '5:40', img: 'mastering-bokeh.jpg', note: 'Création sonore, documentaire océanique.' },
+      { title: 'Résonance', cat: 'Autres', dur: '8:00', img: 'machine-tubetech.jpg', note: 'Installation sonore immersive multicanal.' }
+    ];
+  }
+  logoSvg(stroke) {
+    const path = (typeof window !== 'undefined' && window.OW_LOGO_PATH) || '';
+    return React.createElement('svg',
+      { viewBox: '0 0 3000 3000', style: { width: '100%', height: '100%', display: 'block', overflow: 'visible' } },
+      React.createElement('path', { d: path, fill: 'none', stroke: stroke || '#C24E37', strokeWidth: 20, strokeLinecap: 'round', strokeLinejoin: 'round' })
+    );
+  }
+  poster(img) {
+    return "linear-gradient(180deg,rgba(11,12,15,.05),rgba(11,12,15,.1)),url('assets/" + img + "')";
+  }
+  durToSec(d) { const p = d.split(':'); return (parseInt(p[0], 10) || 0) * 60 + (parseInt(p[1], 10) || 0); }
+  fmt(s) { const m = Math.floor(s / 60); const ss = Math.floor(s % 60); return m + ':' + (ss < 10 ? '0' : '') + ss; }
+  componentDidMount() {
+    // lecture de la vidéo de hero (l'apparition flou->net + parallaxe est gérée par OWMotion)
+    const hv = this.heroVidRef.current;
+    if (hv) {
+      hv.muted = true;
+      const p = hv.play && hv.play(); if (p && p.catch) p.catch(() => {});
+      this._heroRevealAt = 9;          // la vidéo doit atteindre 9s avant que le titre apparaisse
+      this._heroTextShown = false;
+      this._onHeroTime = () => { if (hv.currentTime >= this._heroRevealAt) this._showHeroText(); };
+      hv.addEventListener('timeupdate', this._onHeroTime);
+      this._heroFallback = setTimeout(() => this._showHeroText(), (this._heroRevealAt + 2.5) * 1000);
+    }
+    this._startMotion(0);
+  }
+  _startMotion(n) {
+    if (!this.rootRef.current) return;
+    if (window.OWMotion) { this._motion = window.OWMotion.init(this.rootRef.current); return; }
+    if ((n || 0) > 200) return;
+    this._motionTimer = setTimeout(() => this._startMotion((n || 0) + 1), 25);
+  }
+  _ptick() {
+    const v = this.videos[this.state.openId];
+    if (!v) return;
+    const sec = this.durToSec(v.dur) || 60;
+    const step = 100 / (sec * 10);
+    this.setState((s) => ({ progress: s.progress + step >= 100 ? 0 : s.progress + step }));
+  }
+  startTimer() { this.stopTimer(); this._pTimer = setInterval(this._ptick, 100); }
+  stopTimer() { if (this._pTimer) { clearInterval(this._pTimer); this._pTimer = null; } }
+  openVideo(i) { const v = this.videos[i]; this.setState({ openId: i, progress: 0, playing: true }); if (!(v && v.src)) this.startTimer(); }
+  closeVideo() { this.stopTimer(); this.setState({ openId: null, playing: false }); }
+  soundSvg(on) {
+    if (on) {
+      return React.createElement('svg', { viewBox: '0 0 24 24', style: { width: '100%', height: '100%', display: 'block' } },
+        React.createElement('path', { d: 'M3 9v6h4l5 5V4L7 9H3z', fill: '#F1EEE8' }),
+        React.createElement('path', { d: 'M16 8a5 5 0 0 1 0 8', fill: 'none', stroke: '#C24E37', strokeWidth: 2, strokeLinecap: 'round' }),
+        React.createElement('path', { d: 'M18.5 5.5a8.5 8.5 0 0 1 0 13', fill: 'none', stroke: '#C24E37', strokeWidth: 2, strokeLinecap: 'round' })
+      );
+    }
+    return React.createElement('svg', { viewBox: '0 0 24 24', style: { width: '100%', height: '100%', display: 'block' } },
+      React.createElement('path', { d: 'M3 9v6h4l5 5V4L7 9H3z', fill: '#F1EEE8' }),
+      React.createElement('path', { d: 'M16 9l5 6M21 9l-5 6', fill: 'none', stroke: '#9C9890', strokeWidth: 2, strokeLinecap: 'round' })
+    );
+  }
+  toggleSound() {
+    const hv = this.heroVidRef.current;
+    const on = !this.state.soundOn;
+    if (hv) { hv.muted = !on; if (on) { const p = hv.play && hv.play(); if (p && p.catch) p.catch(() => {}); } }
+    this.setState({ soundOn: on });
+  }
+  togglePlay() {
+    const playing = !this.state.playing;
+    this.setState({ playing });
+    if (playing) this.startTimer(); else this.stopTimer();
+  }
+  _showHeroText() {
+    if (this._heroTextShown) return;
+    this._heroTextShown = true;
+    this.setState({ heroOn: true });
+    const hv = this.heroVidRef.current;
+    if (hv && this._onHeroTime) hv.removeEventListener('timeupdate', this._onHeroTime);
+    if (this._heroFallback) { clearTimeout(this._heroFallback); this._heroFallback = null; }
+  }
+  componentWillUnmount() {
+    if (this._motionTimer) clearTimeout(this._motionTimer);
+    if (this._motion) this._motion.destroy();
+    this.stopTimer();
+    const hv = this.heroVidRef.current;
+    if (hv && this._onHeroTime) hv.removeEventListener('timeupdate', this._onHeroTime);
+    if (this._heroFallback) clearTimeout(this._heroFallback);
+  }
+  renderVals() {
+    const filter = this.state.filter;
+    const chips = this.cats.map((c) => ({
+      label: c,
+      cls: c === filter ? 'on' : '',
+      onClick: () => this.setState({ filter: c })
+    }));
+    const grid = this.videos
+      .map((v, i) => ({ v, i }))
+      .filter((o) => o.i !== 0)
+      .filter((o) => filter === 'Tous' || o.v.cat === filter)
+      .map((o) => ({
+        title: o.v.title, cat: o.v.cat, dur: o.v.dur, note: o.v.note,
+        posterCss: this.poster(o.v.img),
+        onClick: () => this.openVideo(o.i)
+      }));
+    const open = this.state.openId != null ? this.videos[this.state.openId] : null;
+    const sec = open ? this.durToSec(open.dur) : 0;
+    return {
+      rootRef: this.rootRef,
+      heroVidRef: this.heroVidRef,
+      soundIconRef: this.soundIconRef,
+      soundLabelRef: this.soundLabelRef,
+      soundIcon: this.soundSvg(this.state.soundOn),
+      heroCls: this.state.heroOn ? 'show' : '',
+      toggleSound: () => this.toggleSound(),
+      logoMark: this.logoSvg(),
+      logoMarkWhite: this.logoSvg('#F1EEE8'),
+      toggleMenu: () => { const r = this.rootRef.current; if (!r) return; const m = r.querySelector('.ow-menu'); if (m) m.classList.toggle('open'); },
+      closeMenu: () => { const r = this.rootRef.current; if (!r) return; const m = r.querySelector('.ow-menu'); if (m) m.classList.remove('open'); },
+      chips,
+      gridVideos: grid,
+      openFeatured: () => this.openVideo(0),
+      modalOpen: open != null,
+      stop: (e) => { if (e && e.stopPropagation) e.stopPropagation(); },
+      closeVideo: () => this.closeVideo(),
+      togglePlay: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.togglePlay(); },
+      playLabel: this.state.playing ? '❙❙' : '►',
+      openPoster: open ? this.poster(open.img) : 'none',
+      openSrc: open && open.src ? open.src : '',
+      openPosterImg: open && open.img ? ('assets/' + open.img) : '',
+      openHasVideo: !!(open && open.src),
+      openNoVideo: !!(open && !open.src),
+      openCat: open ? open.cat : '',
+      openTitle: open ? open.title : '',
+      openNote: open ? open.note : '',
+      openDur: open ? open.dur : '0:00',
+      progressW: this.state.progress.toFixed(1) + '%',
+      timeLabel: open ? this.fmt(sec * this.state.progress / 100) : '0:00'
+    };
+  }
+}
+</script>
+</body>
+</html>

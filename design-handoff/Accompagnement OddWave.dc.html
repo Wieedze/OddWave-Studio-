@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&amp;display=swap" rel="stylesheet">
+<script src="logo-path.js"></script>
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:#0E0F12;}
+  ::selection{background:#C24E37;color:#fff;}
+  .ow-nav-side{display:flex;gap:28px;align-items:center;width:0;overflow:hidden;opacity:0;transition:width .8s cubic-bezier(.19,1,.22,1) .25s,margin .8s cubic-bezier(.19,1,.22,1) .25s,opacity .5s ease,transform .8s cubic-bezier(.19,1,.22,1) .25s;}
+  .ow-nav-left{justify-content:flex-end;transform:translateX(22px);margin-right:0;pointer-events:none;}
+  .ow-nav-right{justify-content:flex-start;transform:translateX(-22px);margin-left:0;pointer-events:none;}
+  .ow-nav:hover .ow-nav-left,.ow-nav:focus-within .ow-nav-left{width:350px;opacity:1;transform:translateX(0);margin-right:28px;pointer-events:auto;}
+  .ow-nav:hover .ow-nav-right,.ow-nav:focus-within .ow-nav-right{width:350px;opacity:1;transform:translateX(0);margin-left:28px;pointer-events:auto;}
+  .ow-link{position:relative;font:600 13px/1.5 'Manrope',sans-serif;letter-spacing:.02em;color:rgba(241,238,232,.74);text-decoration:none;white-space:nowrap;transition:color .25s;}
+  .ow-link:hover{color:#F1EEE8;}
+  .ow-link::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:1px;background:#C24E37;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.16,1,.3,1);}
+  .ow-link:hover::after{transform:scaleX(1);}
+  .ow-menu{display:none;}
+  .ow-mlink{font:600 15px/1.1 'Manrope',sans-serif;letter-spacing:.01em;color:rgba(241,238,232,.82);text-decoration:none;padding:12px 14px;border-radius:10px;white-space:nowrap;transition:background .2s,color .2s;}
+  .ow-mlink:hover{background:rgba(255,255,255,.06);color:#F6EEE6;}
+  .ow-tbl{width:100%;border-collapse:collapse;}
+  .ow-tbl th{text-align:left;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#7E7A72;padding:0 28px 18px 0;border-bottom:1px solid rgba(255,255,255,.18);vertical-align:bottom;}
+  .ow-tbl td{padding:28px 28px 28px 0;border-bottom:1px solid rgba(255,255,255,.1);vertical-align:top;transition:border-color .3s;}
+  .ow-tbl tr:hover td{border-bottom-color:rgba(194,78,55,.5);}
+  .ow-tbl .c-name{font:700 22px/1.15 'Cabinet Grotesk';letter-spacing:-.01em;color:#D8D4CC;white-space:nowrap;width:200px;transition:color .25s;}
+  .ow-tbl tr:hover .c-name{color:#F6EEE6;}
+  .ow-tbl .c-desc{font:400 15px/1.6 'Manrope';color:#9C9890;text-wrap:pretty;}
+  .ow-tbl .c-fmt{font:600 11px/1.4 'JetBrains Mono',monospace;letter-spacing:.08em;color:#7E7A72;white-space:nowrap;width:150px;}
+  .ow-phase{position:relative;overflow:hidden;padding:clamp(36px,3.6vw,52px) clamp(30px,3.4vw,52px);border:1px solid rgba(255,255,255,.08);border-radius:16px;background:#0B0C0F;transition:border-color .3s;}
+  .ow-phase:hover{border-color:rgba(194,78,55,.5);}
+  .ow-phase-num{position:absolute;top:50%;right:clamp(-24px,0.5vw,16px);transform:translateY(-50%);font-family:'Cabinet Grotesk';font-weight:900;font-size:clamp(340px,40vw,440px);line-height:1;letter-spacing:-.05em;color:rgba(194,78,55,.12);pointer-events:none;user-select:none;}
+  .ow-phase-body{position:relative;z-index:1;max-width:640px;}
+  .ow-phase-eyebrow{margin:0 0 14px;font:500 clamp(14px,1.3vw,15px)/1.4 'Manrope';color:#C9885F;}
+  .ow-phase-title{margin:0;font:800 clamp(34px,4.4vw,56px)/1 'Cabinet Grotesk';letter-spacing:-.025em;color:#F6EEE6;white-space:nowrap;}
+  .ow-phase-rule{height:2px;width:100%;max-width:560px;background:linear-gradient(90deg,#C24E37,rgba(194,78,55,0));margin:24px 0 26px;}
+  .ow-phase-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:16px;}
+  .ow-phase-list li{position:relative;padding-left:28px;font:500 clamp(15.5px,1.5vw,17px)/1.45 'Manrope';color:#E2DED6;text-wrap:pretty;}
+  .ow-phase-list li::before{content:"";position:absolute;left:0;top:.62em;width:15px;height:1.5px;background:#C24E37;}
+  .ow-tbl tr[data-pick]{cursor:pointer;}
+  .ow-tbl .c-go{width:130px;text-align:right;font:600 11px/1.4 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#7E7A72;white-space:nowrap;transition:color .25s,transform .25s;}
+  .ow-tbl tr:hover .c-go{color:#C24E37;transform:translateX(3px);}
+  .ow-field{width:100%;font:400 16px/1.5 'Manrope',sans-serif;color:#F1EEE8;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:15px 16px;outline:none;transition:border-color .25s,background .25s;}
+  .ow-field::placeholder{color:#6B675F;}
+  .ow-field:focus{border-color:#C24E37;background:rgba(194,78,55,.05);}
+  textarea.ow-field{resize:vertical;min-height:130px;}
+  .ow-chip-radio{cursor:pointer;font:600 13px/1 'Manrope',sans-serif;letter-spacing:.01em;color:rgba(241,238,232,.66);background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:11px 16px;transition:all .2s;}
+  .ow-chip-radio:hover{color:#F1EEE8;border-color:rgba(255,255,255,.28);}
+  .ow-chip-radio.on{color:#F6EEE6;background:#C24E37;border-color:#C24E37;}
+  @media (max-width:860px){
+    .ow-nav-side{display:none !important;}
+    .ow-menu.open{display:flex !important;}
+    [data-temps]{grid-template-columns:1fr !important;}
+    [data-temps-img]{height:42vh !important;order:0 !important;}
+    [data-temps-txt]{order:1 !important;}
+    .ow-panel{height:auto !important;min-height:78vh !important;}
+    .ow-num{font-size:clamp(96px,30vw,180px) !important;}
+    .ow-cap{text-align:left !important;}
+    .ow-cap p{margin-left:0 !important;}
+    .ow-formula{grid-template-columns:1fr !important;gap:6px;}
+    .ow-method-h2{white-space:normal !important;font-size:clamp(30px,8vw,46px) !important;line-height:1.04 !important;}
+    .ow-phase-title{white-space:normal !important;font-size:clamp(28px,7.5vw,42px) !important;}
+    .ow-phase-num{font-size:clamp(190px,52vw,320px) !important;right:-14px !important;}
+    .ow-phase-body{max-width:100% !important;}
+    .ow-tbl .c-go{display:none !important;}
+    [data-form-grid]{grid-template-columns:1fr !important;}
+  }
+</style>
+<script src="ow-motion.js"></script>
+</helmet>
+
+<div ref="{{ rootRef }}" style="font-family:'Manrope',sans-serif;background:#0E0F12;color:#F1EEE8;-webkit-font-smoothing:antialiased;overflow-x:hidden;">
+
+  <!-- NAV -->
+  <div style="position:fixed;top:22px;left:0;right:0;z-index:60;display:flex;flex-direction:column;align-items:center;gap:12px;pointer-events:none;">
+    <nav class="ow-nav" style="position:relative;pointer-events:auto;display:flex;align-items:center;gap:0;padding:11px 20px;border-radius:999px;background:rgba(20,21,26,.46);backdrop-filter:blur(13px) saturate(1.3);-webkit-backdrop-filter:blur(13px) saturate(1.3);border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 30px rgba(0,0,0,.34);">
+      <div class="ow-nav-side ow-nav-left">
+        <a class="ow-link" href="Studio%20OddWave.dc.html">Le studio</a>
+        <a class="ow-link" href="Materiel%20OddWave.dc.html">Le matériel</a>
+        <a class="ow-link" href="Accompagnement%20OddWave.dc.html">Accompagnement</a>
+      </div>
+      <a href="Landing%20OddWave%20GSAP.dc.html" onClick="{{ toggleMenu }}" style="flex:none;display:flex;align-items:center;gap:0;text-decoration:none;cursor:pointer;">
+        <span style="width:46px;height:46px;display:block;">{{ logoMarkWhite }}</span>
+      </a>
+      <div class="ow-nav-side ow-nav-right">
+        <a class="ow-link" href="Sound%20Design%20OddWave.dc.html">Sound design</a>
+        <a class="ow-link" href="Portfolio%20OddWave.dc.html">Portfolio</a>
+        <a class="ow-link" href="Contact%20OddWave.dc.html">Contact</a>
+      </div>
+    </nav>
+    <div class="ow-menu" style="flex-direction:column;gap:2px;padding:12px 14px;border-radius:18px;background:rgba(18,19,24,.78);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 44px rgba(0,0,0,.45);min-width:210px;pointer-events:auto;">
+      <a class="ow-mlink" href="Landing%20OddWave%20GSAP.dc.html" onClick="{{ closeMenu }}">Accueil</a>
+      <a class="ow-mlink" href="Studio%20OddWave.dc.html" onClick="{{ closeMenu }}">Le studio</a>
+      <a class="ow-mlink" href="Materiel%20OddWave.dc.html" onClick="{{ closeMenu }}">Le matériel</a>
+      <a class="ow-mlink" href="Accompagnement%20OddWave.dc.html" onClick="{{ closeMenu }}">Accompagnement</a>
+      <a class="ow-mlink" href="Sound%20Design%20OddWave.dc.html" onClick="{{ closeMenu }}">Sound design</a>
+      <a class="ow-mlink" href="Portfolio%20OddWave.dc.html" onClick="{{ closeMenu }}">Portfolio</a>
+      <a class="ow-mlink" href="Contact%20OddWave.dc.html" onClick="{{ closeMenu }}">Contact</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section data-screen-label="Accompagnement — Hero" style="position:relative;height:100vh;min-height:640px;width:100%;overflow:hidden;background:#0B0C0F;">
+    <div data-hero-img="" data-parallax="0.18" style="position:absolute;inset:-6% 0 0 0;height:112%;background:url('assets/eleve-hero.jpg') center 46% / cover no-repeat;will-change:transform,filter,opacity;opacity:0;filter:blur(18px);"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,15,.32) 0%,rgba(11,12,15,.05) 20%,transparent 46%,rgba(11,12,15,.5) 82%,rgba(11,12,15,.86) 100%);"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(120% 95% at 50% 80%,rgba(11,12,15,.55) 0%,transparent 56%);"></div>
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;">
+      <h1 data-hero-title="" style="opacity:0;filter:blur(14px);margin:0;font-family:'Cabinet Grotesk';font-weight:900;font-size:clamp(44px,9.5vw,150px);line-height:.86;letter-spacing:-.03em;color:#F6EEE6;text-shadow:0 4px 60px rgba(0,0,0,.55);">ACCOMPAGNEMENT</h1>
+      <div data-hero-eyebrow="" style="opacity:0;filter:blur(14px);margin:18px 0 0;font:600 13px/1 'JetBrains Mono',monospace;letter-spacing:.32em;text-transform:uppercase;color:#C9885F;text-indent:.32em;">Suivi personnalisé &amp; pédagogique</div>
+    </div>
+  </section>
+
+  <!-- INTRO MÉTHODE -->
+  <section id="methode" style="background:#0B0C0F;padding:clamp(50px,8vh,110px) 30px clamp(20px,4vh,50px);">
+    <div style="max-width:1180px;margin:0 auto;">
+      <div data-reveal="" style="font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#C24E37;margin-bottom:16px;">La méthode · en quatre phases</div>
+      <h2 data-reveal="" class="ow-method-h2" style="margin:0 0 14px;font-family:'Cabinet Grotesk';font-weight:800;font-size:clamp(28px,4.6vw,58px);line-height:1.04;letter-spacing:-.03em;color:#F6EEE6;text-wrap:balance;max-width:760px;">Un parcours clair, de la première écoute à la sortie.</h2>
+      <p data-reveal="" style="margin:18px 0 0;max-width:720px;font:400 clamp(18px,1.9vw,22px)/1.6 'Manrope';color:#D6D2CA;text-wrap:pretty;">Quatre phases, des livrables concrets à chaque étape. La démarche s'adapte à vos besoins, votre budget et vos délais, en résidence sur place, à distance, ou en hybride.</p>
+    </div>
+  </section>
+
+  <!-- LES 4 PHASES -->
+  <section id="phases" style="background:#0B0C0F;padding:clamp(18px,3.5vh,40px) 30px clamp(60px,9vh,110px);">
+    <div style="max-width:1360px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(18px,2.6vh,30px);">
+
+      <article data-reveal="" class="ow-phase">
+        <div class="ow-phase-num" aria-hidden="true">1</div>
+        <div class="ow-phase-body">
+          <p class="ow-phase-eyebrow">Comprendre l’artiste avant de produire quoi que ce soit.</p>
+          <h3 class="ow-phase-title">Diagnostic &amp; Vision</h3>
+          <div class="ow-phase-rule"></div>
+          <ul class="ow-phase-list">
+            <li>Écoute approfondie du projet</li>
+            <li>Analyse du niveau technique &amp; artistique</li>
+            <li>Identification des forces / faiblesses</li>
+            <li>Clarification de l’identité artistique</li>
+            <li>Positionnement (style, références, scène, labels)</li>
+          </ul>
+        </div>
+      </article>
+
+      <article data-reveal="" class="ow-phase">
+        <div class="ow-phase-num" aria-hidden="true">2</div>
+        <div class="ow-phase-body">
+          <p class="ow-phase-eyebrow">Transformer une idée en plan concret.</p>
+          <h3 class="ow-phase-title">Stratégie &amp; Objectifs</h3>
+          <div class="ow-phase-rule"></div>
+          <ul class="ow-phase-list">
+            <li>Définition d’objectifs réalistes (release, EP, live…)</li>
+            <li>Plan de progression adapté au temps et aux moyens</li>
+            <li>Ciblage des labels / DA / direction sonore</li>
+            <li>Mise en place de deadlines</li>
+          </ul>
+        </div>
+      </article>
+
+      <article data-reveal="" class="ow-phase">
+        <div class="ow-phase-num" aria-hidden="true">3</div>
+        <div class="ow-phase-body">
+          <p class="ow-phase-eyebrow">Faire évoluer concrètement la musique.</p>
+          <h3 class="ow-phase-title">Développement &amp; Production</h3>
+          <div class="ow-phase-rule"></div>
+          <ul class="ow-phase-list">
+            <li>Remise à niveau technique ciblée</li>
+            <li>Optimisation des méthodes de production</li>
+            <li>Travail sur la structure, la tension, l’identité sonore</li>
+            <li>Feedback régulier et précis</li>
+            <li>Mise en place d’un workflow efficace</li>
+          </ul>
+        </div>
+      </article>
+
+      <article data-reveal="" class="ow-phase">
+        <div class="ow-phase-num" aria-hidden="true">4</div>
+        <div class="ow-phase-body">
+          <p class="ow-phase-eyebrow">Transformer le travail en projet solide.</p>
+          <h3 class="ow-phase-title">Finalisation &amp; Projection</h3>
+          <div class="ow-phase-rule"></div>
+          <ul class="ow-phase-list">
+            <li>Préparation des morceaux pour mix / mastering</li>
+            <li>Organisation des sessions &amp; exports propres</li>
+            <li>Accompagnement au live (option)</li>
+            <li>Vision long terme (suite du projet)</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- FORMULES -->
+  <section id="formules" style="background:#0E0F12;padding:clamp(60px,9vh,120px) 30px clamp(80px,12vh,140px);border-top:1px solid rgba(255,255,255,.06);">
+    <div style="max-width:1180px;margin:0 auto;">
+      <div data-reveal="" style="font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#C24E37;margin-bottom:16px;">Les formules</div>
+      <h2 data-reveal="" style="margin:0 0 12px;font:700 clamp(28px,4vw,52px)/1.02 'Cabinet Grotesk';letter-spacing:-.025em;color:#F6EEE6;text-wrap:balance;max-width:680px;">Une formule par ambition.</h2>
+      <p data-reveal="" style="margin:0 0 46px;max-width:520px;font:400 16px/1.7 'Manrope';color:#9C9890;text-wrap:pretty;">Pas de tarif figé : chaque accompagnement se construit autour de votre projet. On en parle ensemble.</p>
+
+      <table data-reveal="" class="ow-tbl">
+        <thead>
+          <tr>
+            <th>Formule</th>
+            <th>Ce que ça comprend</th>
+            <th>Format</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <sc-for list="{{ formules }}" as="f" hint-placeholder-count="4">
+            <tr data-pick="" onClick="{{ f.onClick }}">
+              <td class="c-name">{{ f.name }}</td>
+              <td class="c-desc">{{ f.desc }}</td>
+              <td class="c-fmt">{{ f.fmt }}</td>
+              <td class="c-go">Choisir →</td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+      <p data-reveal="" style="margin:22px 0 0;font:500 13px/1.5 'JetBrains Mono',monospace;letter-spacing:.04em;color:#7E7A72;">Cliquez une formule pour pré-remplir votre demande ↓</p>
+    </div>
+  </section>
+
+  <!-- DEMANDE / CONVERSION -->
+  <section id="demande" style="background:#0B0C0F;padding:clamp(70px,11vh,140px) 30px clamp(90px,13vh,150px);border-top:1px solid rgba(255,255,255,.06);">
+    <div style="max-width:760px;margin:0 auto;">
+      <div data-reveal="" style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+        <span style="width:38px;height:38px;display:block;">{{ logoMark }}</span>
+        <span style="font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#C24E37;">Demande d'accompagnement</span>
+      </div>
+      <h2 data-reveal="" style="margin:0 0 14px;font:700 clamp(32px,5vw,64px)/1 'Cabinet Grotesk';letter-spacing:-.03em;color:#F6EEE6;text-wrap:balance;">Parlons de votre projet.</h2>
+      <p data-reveal="" style="margin:0 0 40px;max-width:540px;font:400 17px/1.6 'Manrope';color:#B7B3AB;text-wrap:pretty;">Choisissez une formule, dites-nous où vous en êtes : on définit ensemble ce qui vous fera avancer. Réponse sous 48h.</p>
+
+      <div data-reveal="">
+        <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:44px 38px;border-radius:16px;background:rgba(194,78,55,.07);border:1px solid rgba(194,78,55,.3);">
+            <div style="width:44px;height:44px;margin-bottom:20px;">{{ logoMark }}</div>
+            <h3 style="margin:0 0 12px;font:700 26px/1.05 'Cabinet Grotesk';letter-spacing:-.02em;color:#F6EEE6;">Demande envoyée.</h3>
+            <p style="margin:0;font:400 16px/1.6 'Manrope';color:#B7B3AB;text-wrap:pretty;max-width:440px;">Merci ! On a bien reçu votre demande pour <strong style="color:#E7C9AF;font-weight:600;">{{ chosen }}</strong>. On revient vers vous très vite.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:22px;">
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <label style="font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#7E7A72;">Formule souhaitée</label>
+              <div style="display:flex;flex-wrap:wrap;gap:9px;">
+                <sc-for list="{{ chips }}" as="c" hint-placeholder-count="4">
+                  <button type="button" class="ow-chip-radio {{ c.cls }}" onClick="{{ c.onClick }}">{{ c.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div data-form-grid="" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div style="display:flex;flex-direction:column;gap:9px;">
+                <label style="font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#7E7A72;">Nom</label>
+                <input class="ow-field" type="text" placeholder="Votre nom">
+              </div>
+              <div style="display:flex;flex-direction:column;gap:9px;">
+                <label style="font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#7E7A72;">Email</label>
+                <input class="ow-field" type="email" placeholder="vous@email.com">
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:9px;">
+              <label style="font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#7E7A72;">Votre projet</label>
+              <textarea class="ow-field" placeholder="Parlez-nous du morceau, du nombre de titres, de vos délais, de vos références…"></textarea>
+            </div>
+            <button type="submit" style="align-self:flex-start;display:inline-flex;align-items:center;gap:11px;padding:17px 34px;border:none;cursor:pointer;border-radius:3px;background:#C24E37;color:#F6EEE6;font:600 15px/1 'Manrope';letter-spacing:.01em;box-shadow:0 14px 40px rgba(194,78,55,.3);transition:transform .2s,box-shadow .2s;" style-hover="transform:translateY(-2px);box-shadow:0 18px 48px rgba(194,78,55,.42);">Envoyer la demande →</button>
+          </form>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#0B0C0F;padding:46px 30px;border-top:1px solid rgba(255,255,255,.06);">
+    <div style="max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;">
+      <a href="Landing%20OddWave%20GSAP.dc.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <span style="width:24px;height:24px;display:block;">{{ logoMark }}</span>
+        <span style="font:700 14px/1 'Cabinet Grotesk';letter-spacing:-.01em;color:#F1EEE8;">OddWave Studio</span>
+      </a>
+      <div style="font:500 12px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:#6B675F;">© 2026 · Mastering · Production · Accompagnement</div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.rootRef = React.createRef();
+    this._motion = null;
+    this.state = { formule: null, sent: false };
+    this.formuleList = [
+      { name: 'Starter', desc: "Un diagnostic d'1h30 en visio pour faire le point sur votre projet, votre workflow et les premières pistes d'amélioration.", fmt: 'Visio · 1h30' },
+      { name: 'Pack 2 à 4 titres', desc: 'Suivi complet sur plusieurs morceaux : coaching technique, mix et master, échanges réguliers tout au long de la production.', fmt: 'Suivi · 2 à 4 titres' },
+      { name: 'Premium', desc: "Développement de projets ou d'albums dans la durée : direction artistique, finalisation, stratégie de sortie.", fmt: 'Projet · album' },
+      { name: 'Live setup', desc: 'Construction et optimisation de vos performances scéniques : du routing au rendu sonore en conditions réelles.', fmt: 'Scène · live' }
+    ];
+  }
+  _goForm(name) {
+    this.setState({ formule: name }, () => {
+      const r = this.rootRef.current; if (!r) return;
+      const el = r.querySelector('#demande');
+      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 8, behavior: 'smooth' });
+    });
+  }
+  _startMotion(n) {
+    if (!this.rootRef.current) return;
+    if (window.OWMotion) { this._motion = window.OWMotion.init(this.rootRef.current); return; }
+    if ((n || 0) > 200) return;
+    this._motionTimer = setTimeout(() => this._startMotion((n || 0) + 1), 25);
+  }
+  logoSvg(stroke) {
+    const path = (typeof window !== 'undefined' && window.OW_LOGO_PATH) || '';
+    return React.createElement('svg',
+      { viewBox: '0 0 3000 3000', style: { width: '100%', height: '100%', display: 'block', overflow: 'visible' } },
+      React.createElement('path', { d: path, fill: 'none', stroke: stroke || '#C24E37', strokeWidth: 20, strokeLinecap: 'round', strokeLinejoin: 'round' })
+    );
+  }
+  componentDidMount() {
+    this._startMotion(0);
+  }
+  componentWillUnmount() {
+    if (this._motionTimer) clearTimeout(this._motionTimer);
+    if (this._motion) this._motion.destroy();
+  }
+  renderVals() {
+    const sel = this.state.formule;
+    const formules = this.formuleList.map((f) => ({
+      name: f.name, desc: f.desc, fmt: f.fmt,
+      onClick: () => this._goForm(f.name)
+    }));
+    const chips = this.formuleList.map((f) => ({
+      label: f.name,
+      cls: f.name === sel ? 'on' : '',
+      onClick: () => this.setState({ formule: f.name })
+    }));
+    return {
+      rootRef: this.rootRef,
+      formules: formules,
+      chips: chips,
+      sent: this.state.sent,
+      notSent: !this.state.sent,
+      chosen: sel ? ('la formule ' + sel) : 'votre accompagnement',
+      submit: (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ sent: true }); },
+      logoMark: this.logoSvg(),
+      logoMarkWhite: this.logoSvg('#F1EEE8'),
+      toggleMenu: () => { const r = this.rootRef.current; if (!r) return; const m = r.querySelector('.ow-menu'); if (m) m.classList.toggle('open'); },
+      closeMenu: () => { const r = this.rootRef.current; if (!r) return; const m = r.querySelector('.ow-menu'); if (m) m.classList.remove('open'); }
+    };
+  }
+}
+</script>
+</body>
+</html>

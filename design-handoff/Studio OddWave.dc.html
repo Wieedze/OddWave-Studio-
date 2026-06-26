@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap" rel="stylesheet">
+<script src="logo-path.js"></script>
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:#0E0F12;}
+  ::selection{background:#C24E37;color:#fff;}
+  .ow-nav-side{display:flex;gap:28px;align-items:center;width:0;overflow:hidden;opacity:0;transition:width .8s cubic-bezier(.19,1,.22,1) .25s,margin .8s cubic-bezier(.19,1,.22,1) .25s,opacity .5s ease,transform .8s cubic-bezier(.19,1,.22,1) .25s;}
+  .ow-nav-left{justify-content:flex-end;transform:translateX(22px);margin-right:0;pointer-events:none;}
+  .ow-nav-right{justify-content:flex-start;transform:translateX(-22px);margin-left:0;pointer-events:none;}
+  .ow-nav:hover .ow-nav-left,.ow-nav:focus-within .ow-nav-left{width:350px;opacity:1;transform:translateX(0);margin-right:28px;pointer-events:auto;}
+  .ow-nav:hover .ow-nav-right,.ow-nav:focus-within .ow-nav-right{width:350px;opacity:1;transform:translateX(0);margin-left:28px;pointer-events:auto;}
+  .ow-link{position:relative;font:600 13px/1.5 'Manrope',sans-serif;letter-spacing:.02em;color:rgba(241,238,232,.74);text-decoration:none;white-space:nowrap;transition:color .25s;}
+  .ow-link:hover{color:#F1EEE8;}
+  .ow-link::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:1px;background:#C24E37;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.16,1,.3,1);}
+  .ow-link:hover::after{transform:scaleX(1);}
+  .ow-menu{display:none;}
+  .ow-mlink{font:600 15px/1.1 'Manrope',sans-serif;letter-spacing:.01em;color:rgba(241,238,232,.82);text-decoration:none;padding:12px 14px;border-radius:10px;white-space:nowrap;transition:background .2s,color .2s;}
+  .ow-mlink:hover{background:rgba(255,255,255,.06);color:#F6EEE6;}
+  @media (max-width:860px){
+    .ow-nav-side{display:none !important;}
+    .ow-menu.open{display:flex !important;}
+    [data-split]{grid-template-columns:1fr !important;gap:34px !important;}
+    [data-split-media]{order:1 !important;height:54vh !important;max-height:420px !important;}
+    [data-split-text]{order:2 !important;}
+  }
+</style>
+<script src="ow-motion.js"></script>
+</helmet>
+
+<div ref="{{ rootRef }}" style="font-family:'Manrope',sans-serif;background:#0E0F12;color:#F1EEE8;-webkit-font-smoothing:antialiased;overflow-x:hidden;">
+
+  <!-- NAV -->
+  <div style="position:fixed;top:22px;left:0;right:0;z-index:60;display:flex;flex-direction:column;align-items:center;gap:12px;pointer-events:none;">
+    <nav class="ow-nav" style="position:relative;pointer-events:auto;display:flex;align-items:center;gap:0;padding:11px 20px;border-radius:999px;background:rgba(20,21,26,.46);backdrop-filter:blur(13px) saturate(1.3);-webkit-backdrop-filter:blur(13px) saturate(1.3);border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 30px rgba(0,0,0,.34);">
+      <div class="ow-nav-side ow-nav-left">
+        <a class="ow-link" href="Studio%20OddWave.dc.html">Le studio</a>
+        <a class="ow-link" href="Materiel%20OddWave.dc.html">Le matériel</a>
+        <a class="ow-link" href="Accompagnement%20OddWave.dc.html">Accompagnement</a>
+      </div>
+      <a href="Landing%20OddWave%20GSAP.dc.html" onClick="{{ toggleMenu }}" style="flex:none;display:flex;align-items:center;gap:0;text-decoration:none;cursor:pointer;">
+        <span style="width:46px;height:46px;display:block;">{{ logoMarkWhite }}</span>
+      </a>
+      <div class="ow-nav-side ow-nav-right">
+        <a class="ow-link" href="Sound%20Design%20OddWave.dc.html">Sound design</a>
+        <a class="ow-link" href="Portfolio%20OddWave.dc.html">Portfolio</a>
+        <a class="ow-link" href="Contact%20OddWave.dc.html">Contact</a>
+      </div>
+    </nav>
+    <div class="ow-menu" style="flex-direction:column;gap:2px;padding:12px 14px;border-radius:18px;background:rgba(18,19,24,.78);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 44px rgba(0,0,0,.45);min-width:210px;pointer-events:auto;">
+      <a class="ow-mlink" href="Landing%20OddWave%20GSAP.dc.html" onClick="{{ closeMenu }}">Accueil</a>
+      <a class="ow-mlink" href="Studio%20OddWave.dc.html" onClick="{{ closeMenu }}">Le studio</a>
+      <a class="ow-mlink" href="Materiel%20OddWave.dc.html" onClick="{{ closeMenu }}">Le matériel</a>
+      <a class="ow-mlink" href="Accompagnement%20OddWave.dc.html" onClick="{{ closeMenu }}">Accompagnement</a>
+      <a class="ow-mlink" href="Sound%20Design%20OddWave.dc.html" onClick="{{ closeMenu }}">Sound design</a>
+      <a class="ow-mlink" href="Portfolio%20OddWave.dc.html" onClick="{{ closeMenu }}">Portfolio</a>
+      <a class="ow-mlink" href="Contact%20OddWave.dc.html" onClick="{{ closeMenu }}">Contact</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section data-screen-label="Studio — Hero" style="position:relative;height:100vh;min-height:640px;width:100%;overflow:hidden;background:#0B0C0F;">
+    <div data-hero-img data-parallax="0.18" style="position:absolute;inset:-6% 0 0 0;height:112%;background:url('assets/studio-hero-ssl.jpg') center 50% / cover no-repeat;will-change:transform,filter,opacity;opacity:0;filter:blur(18px);"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,15,.32) 0%,rgba(11,12,15,.05) 20%,transparent 46%,rgba(11,12,15,.5) 82%,rgba(11,12,15,.86) 100%);"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(120% 95% at 50% 80%,rgba(11,12,15,.55) 0%,transparent 56%);"></div>
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;">
+      <h1 data-hero-title style="opacity:0;filter:blur(14px);margin:0;font-family:'Cabinet Grotesk';font-weight:900;font-size:clamp(48px,11vw,180px);line-height:.86;letter-spacing:-.03em;color:#F6EEE6;text-shadow:0 4px 60px rgba(0,0,0,.55);">LE STUDIO</h1>
+      <div data-hero-eyebrow style="opacity:0;filter:blur(14px);margin:18px 0 0;font:600 13px/1 'JetBrains Mono',monospace;letter-spacing:.32em;text-transform:uppercase;color:#C9885F;text-indent:.32em;">Le lieu · l'ingénieur</div>
+    </div>
+  </section>
+
+  <!-- 01 · A PLACE FOR EVERYONE -->
+  <!-- 02 · THÉO GROZDANIC -->
+  <section style="background:#0B0C0F;padding:clamp(36px,5vh,64px) 30px clamp(80px,12vh,140px);">
+    <div style="max-width:1180px;margin:0 auto;">
+      <div data-split style="display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(40px,5vw,72px);align-items:center;">
+        <div data-split-media data-reveal style="position:relative;height:min(72vh,640px);border-radius:18px;overflow:hidden;box-shadow:0 34px 80px rgba(0,0,0,.55);">
+          <div style="position:absolute;inset:0;background:url('assets/theo-portrait.jpg') center 28%/cover no-repeat;"></div>
+        </div>
+        <div data-split-text>
+          <h2 data-reveal style="margin:0 0 10px;font:700 clamp(36px,4.6vw,64px)/1 'Cabinet Grotesk';letter-spacing:-.025em;color:#F6EEE6;">Théo Grozdanic</h2>
+          <div data-reveal style="font:600 13px/1.5 'JetBrains Mono',monospace;letter-spacing:.06em;color:#C9885F;margin-bottom:26px;">Ingénieur du son · Producteur · Formateur</div>
+          <p data-reveal style="margin:0 0 20px;max-width:520px;font:400 16px/1.75 'Manrope';color:#B7B3AB;text-wrap:pretty;">D'une passion devenue expertise : à 18 ans, il enregistre et mixe les groupes locaux dans son propre studio. Technicien son sur scène, puis producteur, il lance <span style="color:#E7C9AF;">OddWave</span> et <span style="color:#E7C9AF;">Earthworm</span>, signe sur des labels reconnus et tourne à travers le monde.</p>
+          <p data-reveal style="margin:0;max-width:520px;font:400 16px/1.75 'Manrope';color:#B7B3AB;text-wrap:pretty;">Aujourd'hui directeur artistique et pédagogue, il guide les artistes émergents tout en repoussant les limites de l'ingénierie sonore.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · ENVIRONNEMENT -->
+  <section style="background:#0E0F12;padding:clamp(80px,12vh,140px) 30px;">
+    <div style="max-width:1180px;margin:0 auto;">
+      <div data-split style="display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(40px,5vw,72px);align-items:center;">
+        <div data-split-text style="order:1;">
+          <h2 data-reveal style="margin:0 0 24px;max-width:520px;font:700 clamp(34px,4.6vw,60px)/1.04 'Cabinet Grotesk';letter-spacing:-.025em;color:#F6EEE6;text-wrap:pretty;">Créatif et apaisant.</h2>
+          <p data-reveal style="margin:0 0 20px;max-width:500px;font:400 17px/1.75 'Manrope';color:#B7B3AB;text-wrap:pretty;">Un cadre tranquille en pleine campagne provençale. Des résidences avec hébergement : un appartement indépendant face aux espaces de travail.</p>
+          <p data-reveal style="margin:0;max-width:500px;font:400 17px/1.75 'Manrope';color:#B7B3AB;text-wrap:pretty;">Plus de 15 ans d'expérience, des artistes du monde entier, tous styles et genres confondus.</p>
+        </div>
+        <div data-split-media data-reveal style="position:relative;height:min(64vh,560px);border-radius:18px;overflow:hidden;box-shadow:0 34px 80px rgba(0,0,0,.55);order:2;">
+          <div style="position:absolute;inset:0;background:url('assets/cabin-mic.jpg') center/cover no-repeat;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · APPROCHE PÉDAGOGIQUE -->
+  <section style="position:relative;padding:clamp(100px,15vh,170px) 30px;overflow:hidden;">
+    <div data-parallax="0.14" style="position:absolute;inset:-10% 0;height:120%;background:url('assets/session.jpg') center/cover no-repeat;will-change:transform;-webkit-mask-image:linear-gradient(90deg, transparent 6%, rgba(0,0,0,.35) 36%, #000 66%);mask-image:linear-gradient(90deg, transparent 6%, rgba(0,0,0,.35) 36%, #000 66%);"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,#0B0C0F 0%,rgba(11,12,15,.86) 40%,rgba(11,12,15,.32) 78%,transparent 100%);"></div>
+    <div style="position:relative;max-width:1080px;margin:0 auto;">
+      <h2 data-reveal style="margin:0;max-width:760px;font:700 clamp(32px,4.6vw,58px)/1.06 'Cabinet Grotesk';letter-spacing:-.025em;color:#F6EEE6;text-wrap:pretty;">Au-delà des prestations : vous donner les clés.</h2>
+      <p data-reveal style="margin:26px 0 0;max-width:540px;font:400 17px/1.75 'Manrope';color:#C8C4BC;text-wrap:pretty;">Formations, workshops, coaching. Des formats hybrides pour finaliser vos productions et rendre votre mix/master plus efficace, tout en progressant techniquement.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:#0E0F12;padding:clamp(90px,13vh,150px) 30px;border-top:1px solid rgba(255,255,255,.07);">
+    <div style="max-width:900px;margin:0 auto;text-align:center;">
+      <div data-reveal style="display:inline-block;width:44px;height:44px;margin-bottom:28px;">{{ logoMark }}</div>
+      <h2 data-reveal style="margin:0;font:700 clamp(36px,5.5vw,76px)/1 'Cabinet Grotesk';letter-spacing:-.03em;color:#F6EEE6;text-wrap:balance;">Venez voir le studio.</h2>
+      <p data-reveal style="margin:24px auto 0;max-width:460px;font:400 17px/1.6 'Manrope';color:#B7B3AB;text-wrap:pretty;">En résidence ou à distance : parlons de votre projet.</p>
+      <a data-reveal href="Landing%20OddWave%20GSAP.dc.html#contact" style="margin-top:36px;display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:3px;background:#C24E37;color:#F6EEE6;font:600 15px/1 'Manrope';text-decoration:none;box-shadow:0 14px 40px rgba(194,78,55,.3);">Nous contacter →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#0B0C0F;padding:46px 30px;border-top:1px solid rgba(255,255,255,.06);">
+    <div style="max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;">
+      <a href="Landing%20OddWave%20GSAP.dc.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <span style="width:24px;height:24px;display:block;">{{ logoMark }}</span>
+        <span style="font:700 14px/1 'Cabinet Grotesk';letter-spacing:-.01em;color:#F1EEE8;">OddWave Studio</span>
+      </a>
+      <div style="font:500 12px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:#6B675F;">© 2026 · Mastering · Production · Accompagnement</div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.rootRef = React.createRef();
+    this._motion = null;
+  }
+  // attend que le module partagé OWMotion soit chargé, puis initialise les animations
+  _startMotion(n) {
+    if (!this.rootRef.current) return;
+    if (window.OWMotion) { this._motion = window.OWMotion.init(this.rootRef.current); return; }
+    if ((n || 0) > 200) return;
+    this._motionTimer = setTimeout(() => this._startMotion((n || 0) + 1), 25);
+  }
+  logoSvg(stroke) {
+    const path = (typeof window !== 'undefined' && window.OW_LOGO_PATH) || '';
+    return React.createElement('svg',
+      { viewBox: '0 0 3000 3000', style: { width: '100%', height: '100%', display: 'block', overflow: 'visible' } },
+      React.createElement('path', { d: path, fill: 'none', stroke: stroke || '#C24E37', strokeWidth: 20, strokeLinecap: 'round', strokeLinejoin: 'round' })
+    );
+  }
+  componentDidMount() {
+    this._startMotion(0);
+  }
+  componentWillUnmount() {
+    if (this._motionTimer) clearTimeout(this._motionTimer);
+    if (this._motion) this._motion.destroy();
+  }
+  renderVals() {
+    return {
+      rootRef: this.rootRef,
+      logoMark: this.logoSvg(),
+      logoMarkWhite: this.logoSvg('#F1EEE8'),
+      toggleMenu: () => { const r = this.rootRef.current; if (!r) return; const m = r.querySelector('.ow-menu'); if (m) m.classList.toggle('open'); },
+      closeMenu: () => { const r = this.rootRef.current; if (!r) return; const m = r.querySelector('.ow-menu'); if (m) m.classList.remove('open'); }
+    };
+  }
+}
+</script>
+</body>
+</html>

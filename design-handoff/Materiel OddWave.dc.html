@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap" rel="stylesheet">
+<script src="logo-path.js"></script>
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:#0E0F12;}
+  ::selection{background:#C24E37;color:#fff;}
+  .ow-nav-side{display:flex;gap:28px;align-items:center;width:0;overflow:hidden;opacity:0;transition:width .8s cubic-bezier(.19,1,.22,1) .25s,margin .8s cubic-bezier(.19,1,.22,1) .25s,opacity .5s ease,transform .8s cubic-bezier(.19,1,.22,1) .25s;}
+  .ow-nav-left{justify-content:flex-end;transform:translateX(22px);margin-right:0;pointer-events:none;}
+  .ow-nav-right{justify-content:flex-start;transform:translateX(-22px);margin-left:0;pointer-events:none;}
+  .ow-nav:hover .ow-nav-left,.ow-nav:focus-within .ow-nav-left{width:350px;opacity:1;transform:translateX(0);margin-right:28px;pointer-events:auto;}
+  .ow-nav:hover .ow-nav-right,.ow-nav:focus-within .ow-nav-right{width:350px;opacity:1;transform:translateX(0);margin-left:28px;pointer-events:auto;}
+  .ow-link{position:relative;font:600 13px/1.5 'Manrope',sans-serif;letter-spacing:.02em;color:rgba(241,238,232,.74);text-decoration:none;white-space:nowrap;transition:color .25s;}
+  .ow-link:hover{color:#F1EEE8;}
+  .ow-link::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:1px;background:#C24E37;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.16,1,.3,1);}
+  .ow-link:hover::after{transform:scaleX(1);}
+  .ow-menu{display:none;}
+  .ow-mlink{font:600 15px/1.1 'Manrope',sans-serif;letter-spacing:.01em;color:rgba(241,238,232,.82);text-decoration:none;padding:12px 14px;border-radius:10px;white-space:nowrap;transition:background .2s,color .2s;}
+  .ow-mlink:hover{background:rgba(255,255,255,.06);color:#F6EEE6;}
+  .ow-gear{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 0;border-top:1px solid rgba(255,255,255,.08);}
+  .ow-gear:hover .ow-gear-name{color:#F6EEE6;}
+  .ow-gear-name{font:500 16px/1.3 'Manrope',sans-serif;color:#D8D4CC;transition:color .2s;text-decoration:none;cursor:pointer;}
+  a.ow-gear-name{cursor:pointer;}
+
+  a.ow-gear-name:hover{color:#F6EEE6;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;}
+  .ow-gear-tag{font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:#7E7A72;white-space:nowrap;}
+  @media (max-width:860px){
+    .ow-nav-side{display:none !important;}
+    .ow-menu.open{display:flex !important;}
+    [data-phares]{grid-template-columns:1fr !important;}
+    [data-cats]{grid-template-columns:1fr !important;}
+  }
+</style>
+<script src="ow-motion.js"></script>
+</helmet>
+
+<div ref="{{ rootRef }}" style="font-family:'Manrope',sans-serif;background:#0E0F12;color:#F1EEE8;-webkit-font-smoothing:antialiased;overflow-x:hidden;">
+
+  <!-- NAV -->
+  <div style="position:fixed;top:22px;left:0;right:0;z-index:60;display:flex;flex-direction:column;align-items:center;gap:12px;pointer-events:none;">
+    <nav class="ow-nav" style="position:relative;pointer-events:auto;display:flex;align-items:center;gap:0;padding:11px 20px;border-radius:999px;background:rgba(20,21,26,.46);backdrop-filter:blur(13px) saturate(1.3);-webkit-backdrop-filter:blur(13px) saturate(1.3);border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 30px rgba(0,0,0,.34);">
+      <div class="ow-nav-side ow-nav-left">
+        <a class="ow-link" href="Studio%20OddWave.dc.html">Le studio</a>
+        <a class="ow-link" href="Materiel%20OddWave.dc.html">Le matériel</a>
+        <a class="ow-link" href="Accompagnement%20OddWave.dc.html">Accompagnement</a>
+      </div>
+      <a href="Landing%20OddWave%20GSAP.dc.html" onClick="{{ toggleMenu }}" style="flex:none;display:flex;align-items:center;gap:0;text-decoration:none;cursor:pointer;">
+        <span style="width:46px;height:46px;display:block;">{{ logoMarkWhite }}</span>
+      </a>
+      <div class="ow-nav-side ow-nav-right">
+        <a class="ow-link" href="Sound%20Design%20OddWave.dc.html">Sound design</a>
+        <a class="ow-link" href="Portfolio%20OddWave.dc.html">Portfolio</a>
+        <a class="ow-link" href="Contact%20OddWave.dc.html">Contact</a>
+      </div>
+    </nav>
+    <div class="ow-menu" style="flex-direction:column;gap:2px;padding:12px 14px;border-radius:18px;background:rgba(18,19,24,.78);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 44px rgba(0,0,0,.45);min-width:210px;pointer-events:auto;">
+      <a class="ow-mlink" href="Landing%20OddWave%20GSAP.dc.html" onClick="{{ closeMenu }}">Accueil</a>
+      <a class="ow-mlink" href="Studio%20OddWave.dc.html" onClick="{{ closeMenu }}">Le studio</a>
+      <a class="ow-mlink" href="Materiel%20OddWave.dc.html" onClick="{{ closeMenu }}">Le matériel</a>
+      <a class="ow-mlink" href="Accompagnement%20OddWave.dc.html" onClick="{{ closeMenu }}">Accompagnement</a>
+      <a class="ow-mlink" href="Sound%20Design%20OddWave.dc.html" onClick="{{ closeMenu }}">Sound design</a>
+      <a class="ow-mlink" href="Portfolio%20OddWave.dc.html" onClick="{{ closeMenu }}">Portfolio</a>
+      <a class="ow-mlink" href="Contact%20OddWave.dc.html" onClick="{{ closeMenu }}">Contact</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section data-screen-label="Matériel — Hero" style="position:relative;height:100vh;min-height:640px;width:100%;overflow:hidden;background:#0B0C0F;">
+    <div data-hero-img data-parallax="0.18" style="position:absolute;inset:-6% 0 0 0;height:112%;background:url('assets/rack-elysia.jpg') center 50% / cover no-repeat;will-change:transform,filter,opacity;opacity:0;filter:blur(18px);"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,15,.32) 0%,rgba(11,12,15,.05) 20%,transparent 46%,rgba(11,12,15,.5) 82%,rgba(11,12,15,.86) 100%);"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(120% 95% at 50% 80%,rgba(11,12,15,.55) 0%,transparent 56%);"></div>
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;">
+      <h1 data-hero-title style="opacity:0;filter:blur(14px);margin:0;font-family:'Cabinet Grotesk';font-weight:900;font-size:clamp(48px,11vw,170px);line-height:.86;letter-spacing:-.03em;color:#F6EEE6;text-shadow:0 4px 60px rgba(0,0,0,.55);">LE MATÉRIEL</h1>
+      <div data-hero-eyebrow style="opacity:0;filter:blur(14px);margin:18px 0 0;font:600 13px/1 'JetBrains Mono',monospace;letter-spacing:.32em;text-transform:uppercase;color:#C9885F;text-indent:.32em;">Du convertisseur au master</div>
+    </div>
+  </section>
+
+  <!-- PIÈCES PHARES -->
+  <section style="background:#0B0C0F;padding:clamp(40px,7vh,90px) 30px clamp(70px,10vh,120px);">
+    <div style="max-width:1480px;margin:0 auto;">
+      <div data-phares style="display:grid;grid-template-columns:1.3fr .7fr;gap:22px;">
+        <div data-reveal style="position:relative;height:min(80vh,760px);border-radius:18px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5);">
+          <div style="position:absolute;inset:0;background:url('assets/materiel-console.jpg') center/cover no-repeat;"></div>
+          <div style="position:absolute;left:24px;bottom:22px;">
+            <div style="font:700 28px/1 'Cabinet Grotesk';color:#F6EEE6;text-shadow:0 1px 14px rgba(0,0,0,.7);">SSL &amp; Elysia channel strip</div>
+            <div style="font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.06em;color:#E7C9AF;margin-top:8px;text-shadow:0 1px 10px rgba(0,0,0,.8);">Le cœur de la chaîne</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-rows:2.1fr 1fr;gap:22px;">
+          <div data-reveal style="position:relative;border-radius:16px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5);min-height:220px;">
+            <div style="position:absolute;inset:0;background:url('assets/machine-tubetech.jpg') center/cover no-repeat;"></div>
+            <div style="position:absolute;left:20px;bottom:18px;font:700 18px/1 'Cabinet Grotesk';color:#F6EEE6;text-shadow:0 1px 12px rgba(0,0,0,.7);">Tube-Tech</div>
+          </div>
+          <div data-reveal style="position:relative;border-radius:16px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5);min-height:140px;">
+            <div style="position:absolute;inset:0;background:#0B0C0F url('assets/machine-channelstrip.jpg') center/cover no-repeat;"></div>
+            <div style="position:absolute;left:14px;bottom:14px;font:700 13px/1.1 'Cabinet Grotesk';color:#F6EEE6;text-shadow:0 1px 12px rgba(0,0,0,.7);">Elysia &amp; SSL Fusion</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LISTE EXHAUSTIVE PAR TYPE -->
+  <section style="background:#0E0F12;padding:clamp(60px,9vh,110px) 30px clamp(80px,12vh,140px);">
+    <div style="max-width:1180px;margin:0 auto;">
+      <h2 data-reveal style="margin:0 0 8px;font:700 clamp(30px,4vw,52px)/1 'Cabinet Grotesk';letter-spacing:-.025em;color:#F6EEE6;">L'inventaire complet</h2>
+      <p data-reveal style="margin:0 0 56px;max-width:560px;font:400 16px/1.7 'Manrope';color:#9C9890;text-wrap:pretty;">Tout l'équipement du studio, classé par catégorie. Chaque référence est sélectionnée pour sa transparence et son caractère.</p>
+
+      <div data-cats style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,5vw,80px);">
+
+        <div data-reveal>
+          <div style="font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#C24E37;margin-bottom:6px;">Conversion &amp; préamplis</div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.apple.com/mac-studio/" target="_blank" rel="noopener">Mac Studio M4 Max</a><span class="ow-gear-tag">CPU16 · GPU40 · 128 GB</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.prismsound.com/products/lyra-2/" target="_blank" rel="noopener">Prism Audio Lyra 2</a><span class="ow-gear-tag">Convertisseur</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://apogeedigital.com/products/duet-2" target="_blank" rel="noopener">Apogee Duet 2</a><span class="ow-gear-tag">Interface</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://focusrite.com/products/isa-one" target="_blank" rel="noopener">Focusrite ISA One</a><span class="ow-gear-tag">Préampli</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://focusrite.com/products/scarlett-octopre" target="_blank" rel="noopener">Focusrite Octopre</a><span class="ow-gear-tag">Préampli ×8</span></div>
+        </div>
+
+        <div data-reveal>
+          <div style="font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#C24E37;margin-bottom:6px;">Monitoring</div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.genelec.com/8351b" target="_blank" rel="noopener">Genelec 8351B</a><span class="ow-gear-tag">Monitor 3 voies</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://usa.yamaha.com/products/proaudio/speakers/hs_series/index.html" target="_blank" rel="noopener">Yamaha HS80M</a><span class="ow-gear-tag">Monitor</span></div>
+        </div>
+
+        <div data-reveal>
+          <div style="font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#C24E37;margin-bottom:6px;">Traitement (outboard)</div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://solidstatelogic.com/products/fusion" target="_blank" rel="noopener">SSL Fusion</a><span class="ow-gear-tag">Bus processor</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.tube-tech.com/smc-2b" target="_blank" rel="noopener">Tube-Tech SMC2B</a><span class="ow-gear-tag">Multiband comp</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://elysia.com/products/xpressor-500" target="_blank" rel="noopener">Elysia Xpressor 500</a><span class="ow-gear-tag">Compresseur</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://elysia.com/products/mpressor-500" target="_blank" rel="noopener">Elysia Mpressor 500</a><span class="ow-gear-tag">Compresseur</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://elysia.com/products/nvelope-500" target="_blank" rel="noopener">Elysia Nvelope 500</a><span class="ow-gear-tag">Transient</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://elysia.com/products/xfilter-500" target="_blank" rel="noopener">Elysia Xfilter 500</a><span class="ow-gear-tag">EQ</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://spl.audio/en/spl-produkt/de-esser-mk2" target="_blank" rel="noopener">SPL De-Esser 500</a><span class="ow-gear-tag">De-esser</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.meris.us/product/mercury7-reverb" target="_blank" rel="noopener">Meris Mercury 7</a><span class="ow-gear-tag">Reverb 500</span></div>
+        </div>
+
+        <div data-reveal>
+          <div style="font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#C24E37;margin-bottom:6px;">Micros</div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.neumann.com/en-en/products/microphones/u-87-ai/" target="_blank" rel="noopener">Neumann U87 Ai</a><span class="ow-gear-tag">Condensateur</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.shure.com/en-US/products/microphones/sm7b" target="_blank" rel="noopener">Shure SM7B</a><span class="ow-gear-tag">Dynamique</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.shure.com/en-US/products/microphones/sm57" target="_blank" rel="noopener">Shure SM57</a><span class="ow-gear-tag">Dynamique</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.akg.com/Microphones/Condenser%20Microphones/C214.html" target="_blank" rel="noopener">AKG C214</a><span class="ow-gear-tag">Condensateur</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://rode.com/en/microphones/location-sound/ntg5" target="_blank" rel="noopener">Rode NTG5</a><span class="ow-gear-tag">Shotgun</span></div>
+        </div>
+
+        <div data-reveal>
+          <div style="font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#C24E37;margin-bottom:6px;">Contrôle</div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://iconproaudio.com/product/v1-m/" target="_blank" rel="noopener">Icon V1-M &amp; V1-X</a><span class="ow-gear-tag">Contrôleur</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.presonus.com/products/FaderPort" target="_blank" rel="noopener">PreSonus FaderPort</a><span class="ow-gear-tag">Contrôleur</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.softube.com/console-1" target="_blank" rel="noopener">Softube Console 1</a><span class="ow-gear-tag">Contrôleur</span></div>
+          <div class="ow-gear"><span class="ow-gear-name">iPad (cabine)</span><span class="ow-gear-tag">Remote</span></div>
+        </div>
+
+        <div data-reveal>
+          <div style="font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#C24E37;margin-bottom:6px;">Logiciels</div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.ableton.com/live/" target="_blank" rel="noopener">Ableton Live</a><span class="ow-gear-tag">DAW</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.steinberg.net/wavelab/" target="_blank" rel="noopener">WaveLab Pro 10</a><span class="ow-gear-tag">Mastering</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.fabfilter.com" target="_blank" rel="noopener">FabFilter · Soundtoys</a><span class="ow-gear-tag">Plugins</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.native-instruments.com/en/products/komplete/bundles/komplete-14-ultimate/" target="_blank" rel="noopener">NI Komplete 14 Ultimate</a><span class="ow-gear-tag">Instruments</span></div>
+          <div class="ow-gear"><a class="ow-gear-name" href="https://www.arturia.com" target="_blank" rel="noopener">Arturia · Pulsar · Waves</a><span class="ow-gear-tag">Suites</span></div>
+        </div>
+
+        <div data-reveal>
+          <div style="font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:#C24E37;margin-bottom:6px;">Instruments &amp; hardware</div>
+          <div class="ow-gear"><span class="ow-gear-name">Sequential Prophet 6</span><span class="ow-gear-tag">Synthé analogique</span></div>
+          <div class="ow-gear"><span class="ow-gear-name">Access Virus TI2</span><span class="ow-gear-tag">Synthé</span></div>
+          <div class="ow-gear"><span class="ow-gear-name">Clavia Nord Rack 2x</span><span class="ow-gear-tag">Synthé ×2</span></div>
+          <div class="ow-gear"><span class="ow-gear-name">Behringer RD-9</span><span class="ow-gear-tag">Boîte à rythmes</span></div>
+          <div class="ow-gear"><span class="ow-gear-name">LTD EC1000 Deluxe</span><span class="ow-gear-tag">Guitare</span></div>
+          <div class="ow-gear"><span class="ow-gear-name">Chapman ML3 Baritone</span><span class="ow-gear-tag">Guitare</span></div>
+          <div class="ow-gear"><span class="ow-gear-name">Gitane Cigano</span><span class="ow-gear-tag">Guitare</span></div>
+          <div class="ow-gear"><span class="ow-gear-name">Peavey XXX Combo</span><span class="ow-gear-tag">Ampli</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DÉTAILS — gros plans -->
+  <section style="background:#0B0C0F;padding:clamp(50px,8vh,100px) 30px clamp(40px,6vh,70px);">
+    <div style="max-width:1180px;margin:0 auto;">
+      <div data-phares style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+        <div data-reveal style="position:relative;height:min(40vh,340px);border-radius:16px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5);background:#0B0C0F;">
+          <div style="position:absolute;inset:0;background:url('assets/ssl-elysia-knobs.jpg') center/contain no-repeat;"></div>
+          <div style="position:absolute;left:22px;bottom:20px;">
+            <div style="font:700 19px/1 'Cabinet Grotesk';color:#F6EEE6;text-shadow:0 1px 12px rgba(0,0,0,.7);">SSL Fusion &amp; Elysia</div>
+            <div style="font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.06em;color:#E7C9AF;margin-top:7px;text-shadow:0 1px 10px rgba(0,0,0,.8);">Couleur &amp; largeur stéréo</div>
+          </div>
+        </div>
+        <div data-reveal style="position:relative;height:min(40vh,340px);border-radius:16px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5);">
+          <div style="position:absolute;inset:0;background:url('assets/converter-blue.jpg') center/cover no-repeat;"></div>
+          <div style="position:absolute;left:22px;bottom:20px;">
+            <div style="font:700 19px/1 'Cabinet Grotesk';color:#F6EEE6;text-shadow:0 1px 12px rgba(0,0,0,.7);">Conversion &amp; monitoring</div>
+            <div style="font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.06em;color:#E7C9AF;margin-top:7px;text-shadow:0 1px 10px rgba(0,0,0,.8);">Le point d'entrée du signal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:#0B0C0F;padding:clamp(90px,13vh,150px) 30px;border-top:1px solid rgba(255,255,255,.06);">
+    <div style="max-width:900px;margin:0 auto;text-align:center;">
+      <div data-reveal style="display:inline-block;width:44px;height:44px;margin-bottom:28px;">{{ logoMark }}</div>
+      <h2 data-reveal style="margin:0;font:700 clamp(34px,5.2vw,72px)/1 'Cabinet Grotesk';letter-spacing:-.03em;color:#F6EEE6;text-wrap:balance;">Un projet en tête ?</h2>
+      <p data-reveal style="margin:24px auto 0;max-width:460px;font:400 17px/1.6 'Manrope';color:#B7B3AB;text-wrap:pretty;">Dites-nous ce que vous cherchez à faire : on définit ensemble la meilleure chaîne pour votre son.</p>
+      <a data-reveal href="Landing%20OddWave%20GSAP.dc.html#contact" style="margin-top:36px;display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:3px;background:#C24E37;color:#F6EEE6;font:600 15px/1 'Manrope';text-decoration:none;box-shadow:0 14px 40px rgba(194,78,55,.3);">Nous contacter →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#0B0C0F;padding:46px 30px;border-top:1px solid rgba(255,255,255,.06);">
+    <div style="max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;">
+      <a href="Landing%20OddWave%20GSAP.dc.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <span style="width:24px;height:24px;display:block;">{{ logoMark }}</span>
+        <span style="font:700 14px/1 'Cabinet Grotesk';letter-spacing:-.01em;color:#F1EEE8;">OddWave Studio</span>
+      </a>
+      <div style="font:500 12px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:#6B675F;">© 2026 · Mastering · Production · Accompagnement</div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.rootRef = React.createRef();
+    this._motion = null;
+  }
+  _startMotion(n) {
+    if (!this.rootRef.current) return;
+    if (window.OWMotion) { this._motion = window.OWMotion.init(this.rootRef.current); return; }
+    if ((n || 0) > 200) return;
+    this._motionTimer = setTimeout(() => this._startMotion((n || 0) + 1), 25);
+  }
+  logoSvg(stroke) {
+    const path = (typeof window !== 'undefined' && window.OW_LOGO_PATH) || '';
+    return React.createElement('svg',
+      { viewBox: '0 0 3000 3000', style: { width: '100%', height: '100%', display: 'block', overflow: 'visible' } },
+      React.createElement('path', { d: path, fill: 'none', stroke: stroke || '#C24E37', strokeWidth: 20, strokeLinecap: 'round', strokeLinejoin: 'round' })
+    );
+  }
+  componentDidMount() {
+    this._startMotion(0);
+  }
+  componentWillUnmount() {
+    if (this._motionTimer) clearTimeout(this._motionTimer);
+    if (this._motion) this._motion.destroy();
+  }
+  renderVals() {
+    return {
+      rootRef: this.rootRef,
+      logoMark: this.logoSvg(),
+      logoMarkWhite: this.logoSvg('#F1EEE8'),
+      toggleMenu: () => { const r = this.rootRef.current; if (!r) return; const m = r.querySelector('.ow-menu'); if (m) m.classList.toggle('open'); },
+      closeMenu: () => { const r = this.rootRef.current; if (!r) return; const m = r.querySelector('.ow-menu'); if (m) m.classList.remove('open'); }
+    };
+  }
+}
+</script>
+</body>
+</html>

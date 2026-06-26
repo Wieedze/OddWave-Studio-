@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Chakra+Petch:wght@400;500;600;700&amp;family=Darker+Grotesque:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&amp;f[]=clash-display@200,300,400,500&amp;f[]=hatton@300,400,500&amp;display=swap" rel="stylesheet">
+<script src="logo-path.js"></script>
+<script src="ow-motion.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:#0E0F12;}
+  ::selection{background:#C24E37;color:#fff;}
+  /* nav: la pilule se rétracte sur logo+ODDWAVE, se déploie au survol */
+  .ow-nav-side{display:flex;gap:28px;align-items:center;width:0;overflow:hidden;opacity:0;transition:width .8s cubic-bezier(.19,1,.22,1) .25s,margin .8s cubic-bezier(.19,1,.22,1) .25s,opacity .5s ease,transform .8s cubic-bezier(.19,1,.22,1) .25s;}
+  .ow-nav-left{justify-content:flex-end;transform:translateX(22px);margin-right:0;pointer-events:none;}
+  .ow-nav-right{justify-content:flex-start;transform:translateX(-22px);margin-left:0;pointer-events:none;}
+  .ow-nav:hover .ow-nav-side,.ow-nav:focus-within .ow-nav-side,.ow-nav.is-open .ow-nav-side{transition:width .8s cubic-bezier(.19,1,.22,1),margin .8s cubic-bezier(.19,1,.22,1),opacity .6s ease .28s,transform .8s cubic-bezier(.19,1,.22,1);}
+  .ow-nav:hover .ow-nav-left,.ow-nav:focus-within .ow-nav-left,.ow-nav.is-open .ow-nav-left{width:350px;opacity:1;transform:translateX(0);margin-right:28px;pointer-events:auto;}
+  .ow-nav:hover .ow-nav-right,.ow-nav:focus-within .ow-nav-right,.ow-nav.is-open .ow-nav-right{width:350px;opacity:1;transform:translateX(0);margin-left:28px;pointer-events:auto;}
+  /* mot ODDWAVE : caché au repos (pilule = logo seul), se déploie en deux temps */
+  .ow-word{display:inline-block;overflow:hidden;white-space:nowrap;max-width:0;opacity:0;margin-left:0;transition:max-width .8s cubic-bezier(.19,1,.22,1) .25s,opacity .5s ease,margin .8s cubic-bezier(.19,1,.22,1) .25s;}
+  .ow-nav:hover .ow-word,.ow-nav:focus-within .ow-word,.ow-nav.is-open .ow-word{max-width:160px;opacity:1;margin-left:9px;transition:max-width .8s cubic-bezier(.19,1,.22,1),opacity .6s ease,margin .8s cubic-bezier(.19,1,.22,1);}
+  /* ouverture auto (intro) : barre lente, texte seulement une fois ouverte */
+  .ow-nav.is-open .ow-nav-side{transition:width 1.15s cubic-bezier(.19,1,.22,1),margin 1.15s cubic-bezier(.19,1,.22,1),opacity .7s ease .7s,transform 1.15s cubic-bezier(.19,1,.22,1);}
+  .ow-nav.is-open .ow-word{transition:max-width 1.3s cubic-bezier(.19,1,.22,1),opacity 1.1s ease 1.05s,margin 1.3s cubic-bezier(.19,1,.22,1);}
+  .ow-link{position:relative;font:600 13px/1.5 'Manrope',sans-serif;letter-spacing:.02em;color:rgba(241,238,232,.74);text-decoration:none;white-space:nowrap;transition:color .25s;}
+  .ow-link:hover{color:#F1EEE8;}
+  .ow-burger{display:none;}
+  .ow-menu{display:none;}
+  .ow-mlink{font:600 15px/1.1 'Manrope',sans-serif;letter-spacing:.01em;color:rgba(241,238,232,.82);text-decoration:none;padding:12px 14px;border-radius:10px;white-space:nowrap;transition:background .2s,color .2s;}
+  .ow-mlink:hover{background:rgba(255,255,255,.06);color:#F6EEE6;}
+  @media (max-width:860px){
+    .ow-nav-side{display:none !important;}
+    .ow-burger{display:flex !important;}
+    .ow-menu.open{display:flex !important;}
+    [data-svc] > div{grid-template-columns:1fr !important;gap:26px !important;}
+    [data-svc-img]{order:1 !important;height:46vh !important;max-height:360px !important;}
+    [data-svc-text]{order:2 !important;}
+    #materiel div[style*="1.2fr"]{grid-template-columns:1fr !important;}
+    #top h1{font-size:clamp(56px,19vw,340px) !important;}
+    [data-intro-el="eyebrow"]{font-size:13px !important;margin-top:-26px !important;}
+  }
+  .ow-link::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:1px;background:#C24E37;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.16,1,.3,1);}
+  .ow-link:hover::after{transform:scaleX(1);}
+  @keyframes owScrollCue{0%{transform:translateY(0);opacity:.9;}50%{transform:translateY(7px);opacity:.35;}100%{transform:translateY(0);opacity:.9;}}
+  @keyframes owDraw{to{stroke-dashoffset:0;}}
+</style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="font-family:'Manrope',sans-serif;background:#0E0F12;color:#F1EEE8;-webkit-font-smoothing:antialiased;">
+
+  <!-- NAV FLOTTANTE -->
+  <div style="position:fixed;top:22px;left:0;right:0;z-index:60;display:flex;flex-direction:column;align-items:center;gap:12px;pointer-events:none;">
+    <nav class="ow-nav" style="position:relative;pointer-events:auto;display:flex;align-items:center;gap:0;padding:11px 20px;border-radius:999px;background:rgba(20,21,26,.46);backdrop-filter:blur(13px) saturate(1.3);-webkit-backdrop-filter:blur(13px) saturate(1.3);border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 30px rgba(0,0,0,.34);">
+      <div class="ow-nav-side ow-nav-left">
+        <a class="ow-link" href="Studio%20OddWave.dc.html">Le studio</a>
+        <a class="ow-link" href="Materiel%20OddWave.dc.html">Le matériel</a>
+        <a class="ow-link" href="Accompagnement%20OddWave.dc.html">Accompagnement</a>
+      </div>
+      <a href="#top" onClick="{{ toggleMenu }}" style="flex:none;display:flex;align-items:center;gap:0;text-decoration:none;cursor:pointer;">
+        <span style="width:46px;height:46px;display:block;">{{ logoMarkWhite }}</span>
+      </a>
+      <div class="ow-nav-side ow-nav-right">
+        <a class="ow-link" href="Sound%20Design%20OddWave.dc.html">Sound design</a>
+        <a class="ow-link" href="Portfolio%20OddWave.dc.html">Portfolio</a>
+        <a class="ow-link" href="Contact%20OddWave.dc.html">Contact</a>
+      </div>
+    </nav>
+    <div class="ow-menu" style="flex-direction:column;gap:2px;padding:12px 14px;border-radius:18px;background:rgba(18,19,24,.78);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 44px rgba(0,0,0,.45);min-width:210px;pointer-events:auto;">
+      <a class="ow-mlink" href="Landing%20OddWave%20GSAP.dc.html" onClick="{{ closeMenu }}">Accueil</a>
+      <a class="ow-mlink" href="Studio%20OddWave.dc.html" onClick="{{ closeMenu }}">Le studio</a>
+      <a class="ow-mlink" href="Materiel%20OddWave.dc.html" onClick="{{ closeMenu }}">Le matériel</a>
+      <a class="ow-mlink" href="Accompagnement%20OddWave.dc.html" onClick="{{ closeMenu }}">Accompagnement</a>
+      <a class="ow-mlink" href="Sound%20Design%20OddWave.dc.html" onClick="{{ closeMenu }}">Sound design</a>
+      <a class="ow-mlink" href="Portfolio%20OddWave.dc.html" onClick="{{ closeMenu }}">Portfolio</a>
+      <a class="ow-mlink" href="Contact%20OddWave.dc.html" onClick="{{ closeMenu }}">Contact</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section id="top" data-screen-label="Hero" style="position:relative;height:100vh;min-height:680px;width:100%;overflow:hidden;">
+    <div ref="{{ heroImgRef }}" style="position:absolute;inset:-22% 0 -22% 0;height:144%;background:url('assets/hero.jpg') center 40% / cover no-repeat;will-change:transform;filter:blur(7px);"></div>
+    <!-- voiles : vignettage + assombrissement haut pour le titre -->
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,9,12,.74) 0%,rgba(8,9,12,.2) 32%,rgba(8,9,12,.18) 55%,rgba(11,12,15,.85) 86%,#0B0C0F 100%);"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 42%,transparent 40%,rgba(8,9,12,.55) 100%);"></div>
+
+    <!-- titre qui chevauche -->
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;">
+      <h1 style="margin:0;font-family:'Cabinet Grotesk';font-weight:900;font-size:clamp(64px,15vw,236px);line-height:.92;letter-spacing:.01em;color:rgba(255,253,251,.9);-webkit-text-stroke:1.4px rgba(194,78,55,.85);text-shadow:0 2px 40px rgba(0,0,0,.3);"><span style="white-space:nowrap;"><span data-ltr="" style="display:inline-block;">O</span><span data-ltr="" style="display:inline-block;">D</span><span data-ltr="" style="display:inline-block;">D</span></span><wbr><span style="white-space:nowrap;"><span data-ltr="" style="display:inline-block;">W</span><span data-ltr="" style="display:inline-block;">A</span><span data-ltr="" style="display:inline-block;">V</span><span data-ltr="" style="display:inline-block;">E</span></span></h1>
+      <div data-intro-el="studio" style="display:inline-block;margin-top:10px;font-family:'Clash Display';font-weight:300;font-size:clamp(20px,4.4vw,64px);line-height:.9;letter-spacing:.16em;color:#F6EEE6;text-shadow:0 2px 40px rgba(0,0,0,.4);">studio</div>
+    </div>
+
+    <!-- eyebrow en bas du hero -->
+    <div data-intro-el="cta" style="position:absolute;bottom:46px;left:0;right:0;display:flex;justify-content:center;">
+      <div style="font:600 16px/1 'JetBrains Mono',monospace;letter-spacing:.42em;text-transform:uppercase;color:#C9885F;text-indent:.42em;">Production · Mixage · Mastering · Sound design</div>
+    </div>
+
+  </section>
+
+  <!-- ZONE PRESTATIONS : fond WebGL collant + blocs qui défilent par-dessus -->
+  <div style="position:relative;background:#0B0C0F;">
+    <div style="position:sticky;top:0;height:100vh;width:100%;overflow:hidden;z-index:0;pointer-events:none;">
+      <div style="position:absolute;inset:0;"><x-import component-from-global-scope="FloatingLines" from="./FloatingLines.jsx" dc-props="{{ flProps }}" hint-size="100%,100%"></x-import></div>
+      <div style="position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 50%,transparent 30%,rgba(11,12,15,.55) 100%);"></div>
+    </div>
+    <div style="position:relative;z-index:2;margin-top:-100vh;">
+    <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:420px;z-index:1;pointer-events:none;backdrop-filter:blur(52px);-webkit-backdrop-filter:blur(52px);-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 30%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 30%,transparent 100%);background:linear-gradient(180deg,rgba(11,12,15,.85) 0%,rgba(11,12,15,.35) 45%,transparent 100%);"></div>
+  <div aria-hidden="true" style="height:min(34vh,380px);"></div>
+
+  <!-- PRESTATION 1 — Mastering : card image + texte -->
+  <section data-svc="" data-screen-label="Prestation — Mastering" style="position:relative;background:transparent;padding:0 clamp(20px,4vw,64px);display:flex;justify-content:flex-end;">
+   <div data-reveal="" style="width:100%;max-width:1500px;display:grid;grid-template-columns:.96fr 1.04fr;border-radius:8px;overflow:hidden;background:rgba(14,15,18,.62);backdrop-filter:blur(28px) saturate(120%);-webkit-backdrop-filter:blur(28px) saturate(120%);border:1px solid rgba(246,238,230,.10);box-shadow:0 50px 130px rgba(0,0,0,.55);">
+    <div style="padding:clamp(34px,3.4vw,62px);display:flex;flex-direction:column;justify-content:center;text-align:left;">
+      <h3 style="margin:0 0 24px;font:700 clamp(34px,3.4vw,56px)/1 'Cabinet Grotesk';letter-spacing:-.025em;color:#F8F6F2;">Mastering</h3>
+      <p style="margin:0;font:400 16.5px/1.85 'Manrope';color:#A5A5A5;text-wrap:pretty;max-width:60ch;">Le mastering est l'étape finale de votre production. Il vise à présenter votre musique sous son meilleur jour, quelle que soit la plateforme : on affine et on donne une finition brillante à votre travail, en mettant en valeur tous les détails auxquels vous avez consacré tant de temps. Pour cette phase, un simple fichier stéréo de votre mix suffit. Mon rôle premier est d'apporter une oreille neuve, avertie et experte à votre production. Si je peux vous conseiller pour mieux porter votre message, je m'attache à vous guider afin que le travail soit d'une qualité optimale. Techniquement, je me concentre sur la dynamique, l'équilibre fréquentiel, la profondeur, la largeur, la couleur tonale d'ensemble, ainsi que le contrôle qualité final et l'adaptation aux différents environnements d'écoute.</p>
+      <a href="#contact" style="margin-top:32px;display:inline-flex;align-items:center;gap:9px;font:600 14px/1 'Manrope';color:#F1EEE8;text-decoration:none;border-bottom:1px solid rgba(194,142,87,.85);padding-bottom:5px;">Demander un devis →</a>
+    </div>
+    <div style="position:relative;overflow:hidden;min-height:clamp(440px,64vh,720px);">
+     <div data-svc-img="" data-from="left" style="position:absolute;inset:0;will-change:transform,opacity,filter;">
+      <div style="position:absolute;inset:0;background:url('assets/ssl-elysia-knobs.jpg') center 74%/cover no-repeat;"></div>
+     </div>
+    </div>
+   </div>
+  </section>
+
+  <div aria-hidden="true" style="height:min(32vh,360px);"></div>
+
+  <!-- PRESTATION 2 — Stem Mastering : card texte + image -->
+  <section data-svc="" data-screen-label="Prestation — Stem Mastering" style="position:relative;background:transparent;padding:0 clamp(20px,4vw,64px);display:flex;justify-content:flex-start;">
+   <div data-reveal="" style="width:100%;max-width:1500px;display:grid;grid-template-columns:1.04fr .96fr;border-radius:8px;overflow:hidden;background:rgba(14,15,18,.62);backdrop-filter:blur(28px) saturate(120%);-webkit-backdrop-filter:blur(28px) saturate(120%);border:1px solid rgba(246,238,230,.10);box-shadow:0 50px 130px rgba(0,0,0,.55);">
+    <div style="position:relative;overflow:hidden;min-height:clamp(440px,64vh,720px);">
+     <div data-svc-img="" data-from="right" style="position:absolute;inset:0;will-change:transform,opacity,filter;">
+      <div style="position:absolute;inset:0;background:url('assets/console.jpg') 70% 88%/cover no-repeat;"></div>
+     </div>
+    </div>
+    <div style="padding:clamp(34px,3.4vw,62px);display:flex;flex-direction:column;justify-content:center;text-align:left;">
+      <h3 style="margin:0 0 24px;font:700 clamp(34px,3.4vw,56px)/1 'Cabinet Grotesk';letter-spacing:-.025em;color:#F8F6F2;">Stem Mastering</h3>
+      <p style="margin:0;font:400 16.5px/1.85 'Manrope';color:#A5A5A5;text-wrap:pretty;max-width:60ch;">Le stem mastering partage la même ambition que le mastering classique, mais offre cette fois davantage d'espace pour sculpter en détail les différents éléments clés de vos morceaux. C'est une forme de mixage plus complète, toujours dans une optique de finalisation. Dans la plupart des cas, j'ai besoin des éléments suivants : kick, basse, caisse claire, percussions, leads, FX, nappes, voix, ou tout autre élément nécessitant un traitement spécifique. Sans jamais altérer l'intention de votre mix, je travaille la cohésion et la cohérence de tous les éléments importants : les phases, l'équilibre, la dynamique et la couleur de chaque composante, pour poser des fondations rythmiques solides qui soutiennent au mieux leur harmonie. Le stem mastering permet aussi, lorsque plusieurs titres partagent un même contexte (EP ou album), de travailler la cohérence entre les morceaux et de leur donner une intention commune.</p>
+      <a href="#contact" style="margin-top:32px;display:inline-flex;align-items:center;gap:9px;font:600 14px/1 'Manrope';color:#F1EEE8;text-decoration:none;border-bottom:1px solid rgba(194,142,87,.85);padding-bottom:5px;">Demander un devis →</a>
+    </div>
+   </div>
+  </section>
+
+  <div aria-hidden="true" style="height:min(32vh,360px);"></div>
+
+  <!-- PRESTATION 3 — Mixage : card image + texte -->
+  <section data-svc="" data-screen-label="Prestation — Mixage" style="position:relative;background:transparent;padding:0 clamp(20px,4vw,64px);display:flex;justify-content:flex-end;">
+   <div data-reveal="" style="width:100%;max-width:1500px;display:grid;grid-template-columns:.96fr 1.04fr;border-radius:8px;overflow:hidden;background:rgba(14,15,18,.62);backdrop-filter:blur(28px) saturate(120%);-webkit-backdrop-filter:blur(28px) saturate(120%);border:1px solid rgba(246,238,230,.10);box-shadow:0 50px 130px rgba(0,0,0,.55);">
+    <div style="padding:clamp(34px,3.4vw,62px);display:flex;flex-direction:column;justify-content:center;text-align:left;">
+      <h3 style="margin:0 0 24px;font:700 clamp(34px,3.4vw,56px)/1 'Cabinet Grotesk';letter-spacing:-.025em;color:#F8F6F2;">Mixage</h3>
+      <p style="margin:0;font:400 16.5px/1.85 'Manrope';color:#A5A5A5;text-wrap:pretty;max-width:60ch;">Le mixage est l'une des étapes les plus cruciales de votre production. Comme dans une recette, le juste dosage des épices ou des ingrédients peut tout changer. Il n'existe évidemment pas de recette unique : avec les mêmes ingrédients, je peux vous proposer une grande variété de saveurs jusqu'à trouver celle qui vous correspond, tout en garantissant un équilibre parfait. Deux approches sont possibles. Pour les groupes de musique instrumentale, je travaille l'ensemble des pistes pour mixer vos productions, avec les éditions et arrangements nécessaires, et je peux proposer des suggestions via de courtes vidéos explicatives. Pour les producteurs de musique électronique, architectes de leur création, je travaille sur des pistes et groupes de pistes précis afin de respecter vos choix de production et rendre le travail plus clair et efficace. Si besoin, un accompagnement en amont peut être réalisé en analysant vos sessions et en préparant vos exports.</p>
+      <a href="#contact" style="margin-top:32px;display:inline-flex;align-items:center;gap:9px;font:600 14px/1 'Manrope';color:#F1EEE8;text-decoration:none;border-bottom:1px solid rgba(194,142,87,.85);padding-bottom:5px;">Demander un devis →</a>
+    </div>
+    <div style="position:relative;overflow:hidden;min-height:clamp(440px,64vh,720px);">
+     <div data-svc-img="" data-from="left" style="position:absolute;inset:0;will-change:transform,opacity,filter;">
+      <div style="position:absolute;inset:0;background:url('assets/mastering-bokeh.jpg') center 60%/cover no-repeat;"></div>
+     </div>
+    </div>
+   </div>
+  </section>
+
+  <div aria-hidden="true" style="height:min(28vh,300px);"></div>
+
+    </div>
+  </div>
+
+  
+
+  <!-- CONTACT / CTA FINAL -->
+  <section id="contact" data-screen-label="Contact" style="background:#0E0F12;padding:96px 30px 86px;border-top:1px solid rgba(255,255,255,.07);">
+    <div style="max-width:900px;margin:0 auto;text-align:center;">
+      <div data-reveal="" style="display:inline-block;width:46px;height:46px;margin-bottom:30px;">{{ logoMark }}</div>
+      <h2 data-reveal="" style="margin:0;font:700 clamp(40px,6.5vw,88px)/.98 'Cabinet Grotesk';letter-spacing:-.03em;color:#F6EEE6;text-wrap:balance;">Donnons une dimension à votre son.</h2>
+      <p data-reveal="" style="margin:28px auto 0;max-width:480px;font:400 17px/1.6 'Manrope';color:#B7B3AB;text-wrap:pretty;">À distance ou en résidence. Dites-nous où vous en êtes, on vous répond avec une proposition adaptée.</p>
+      <a data-reveal="" href="#contact-form" style="margin-top:40px;display:inline-flex;align-items:center;gap:11px;padding:17px 34px;border-radius:3px;background:#C24E37;color:#F6EEE6;font:600 15px/1 'Manrope';text-decoration:none;box-shadow:0 14px 40px rgba(194,78,55,.3);">Démarrer un projet →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#0B0C0F;padding:64px 30px 46px;border-top:1px solid rgba(255,255,255,.06);">
+    <nav aria-label="Plan du site" style="max-width:1180px;margin:0 auto 48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:36px 24px;">
+      <div style="display:flex;flex-direction:column;gap:13px;">
+        <h2 style="margin:0 0 4px;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#6B675F;">Studio</h2>
+        <a href="Studio%20OddWave.dc.html" style="font:500 14px/1 'Manrope';color:rgba(241,238,232,.78);text-decoration:none;">Le studio</a>
+        <a href="Materiel%20OddWave.dc.html" style="font:500 14px/1 'Manrope';color:rgba(241,238,232,.78);text-decoration:none;">Le matériel</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:13px;">
+        <h2 style="margin:0 0 4px;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#6B675F;">Prestations</h2>
+        <a href="Accompagnement%20OddWave.dc.html" style="font:500 14px/1 'Manrope';color:rgba(241,238,232,.78);text-decoration:none;">Accompagnement</a>
+        <a href="Sound%20Design%20OddWave.dc.html" style="font:500 14px/1 'Manrope';color:rgba(241,238,232,.78);text-decoration:none;">Sound design</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:13px;">
+        <h2 style="margin:0 0 4px;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#6B675F;">Travaux</h2>
+        <a href="Portfolio%20OddWave.dc.html" style="font:500 14px/1 'Manrope';color:rgba(241,238,232,.78);text-decoration:none;">Portfolio</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:13px;">
+        <h2 style="margin:0 0 4px;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#6B675F;">Contact</h2>
+        <a href="Contact%20OddWave.dc.html" style="font:500 14px/1 'Manrope';color:rgba(241,238,232,.78);text-decoration:none;">Nous contacter</a>
+        <a href="#contact-form" style="font:500 14px/1 'Manrope';color:rgba(241,238,232,.78);text-decoration:none;">Demander un devis</a>
+      </div>
+    </nav>
+    <div style="max-width:1180px;margin:0 auto;padding-top:34px;border-top:1px solid rgba(255,255,255,.06);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;">
+      <a href="#top" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <span style="width:24px;height:24px;display:block;">{{ logoMark }}</span>
+        <span style="font:700 14px/1 'Cabinet Grotesk';letter-spacing:-.01em;color:#F1EEE8;">OddWave Studio</span>
+      </a>
+      <div style="display:flex;align-items:center;gap:22px;">
+        <span style="display:flex;align-items:center;gap:6px;font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.06em;color:rgba(241,238,232,.45);"><span style="color:#F1EEE8;cursor:pointer;">FR</span><span style="opacity:.4;">/</span><span style="cursor:pointer;">EN</span></span>
+        <div style="font:500 12px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:#6B675F;">© 2026 · Mastering · Production · Accompagnement</div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;titleIntro&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;lettres&quot;,&quot;fondu&quot;,&quot;aucune&quot;],&quot;default&quot;:&quot;lettres&quot;,&quot;tsType&quot;:&quot;'lettres'|'fondu'|'aucune'&quot;},&quot;heroDefloute&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;cadence&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;lent&quot;,&quot;moyen&quot;,&quot;rapide&quot;],&quot;default&quot;:&quot;lent&quot;,&quot;tsType&quot;:&quot;'lent'|'moyen'|'rapide'&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.rootRef = React.createRef();
+    this.heroImgRef = React.createRef();
+    this._sts = [];        // ScrollTrigger instances à nettoyer
+    this._tweens = [];     // tweens GSAP à nettoyer
+  }
+  logoSvg(stroke, fill) {
+    const path = (typeof window !== 'undefined' && window.OW_LOGO_PATH) || '';
+    return React.createElement('svg',
+      { viewBox: '0 0 3000 3000', style: { width: '100%', height: '100%', display: 'block', overflow: 'visible' } },
+      React.createElement('path', { d: path, fill: fill || 'none', stroke: stroke || '#C24E37', strokeWidth: 20, strokeLinecap: 'round', strokeLinejoin: 'round' })
+    );
+  }
+  componentDidMount() {
+    this._dead = false;
+    this._ensureGsap(0);
+  }
+  // charge GSAP + ScrollTrigger UNE SEULE FOIS pour toute la page (dédupliqué par window.__owGsapState).
+  // évite la double-injection (qui remplaçait window.gsap par une 2e instance et orphelinait nos triggers).
+  _ensureGsap(n) {
+    if (this._dead) return;
+    if (window.gsap && window.ScrollTrigger) { this.initGsap(); return; }
+    // loader partagé (ow-motion.js) : même dédup (__owGsapState), même version, pour TOUTES les pages
+    if (window.OWMotion && window.OWMotion.ensureGsap) {
+      window.OWMotion.ensureGsap()
+        .then(() => { if (!this._dead) this.initGsap(); })
+        .catch(() => { if (!this._dead) this.initFallback(); });
+      return;
+    }
+    if (n > 200) { this.initFallback(); return; }   // ~6s puis filet de sécurité si ow-motion.js absent
+    this._timer = setTimeout(() => this._ensureGsap(n + 1), 30);
+  }
+  // si GSAP n'arrive pas (réseau coupé) on rend tout visible — jamais d'écran cassé
+  initFallback() {
+    const root = this.rootRef.current;
+    if (!root) return;
+    root.querySelectorAll('[data-reveal],[data-svc-text],#top [data-ltr],[data-intro-el]').forEach((el) => {
+      el.style.opacity = '1'; el.style.transform = 'none'; el.style.filter = 'none';
+    });
+    const fLogo = root.querySelector('#top [data-intro-el="logo"]');
+    if (fLogo) fLogo.style.opacity = '.18';
+    root.querySelectorAll('[data-svc-img]').forEach((el) => {
+      el.style.opacity = '1'; el.style.transform = 'none'; el.style.filter = 'none';
+    });
+  }
+  initGsap() {
+    const root = this.rootRef.current;
+    if (!root) return;
+    const gsap = window.gsap;
+    const ST = window.ScrollTrigger;
+    gsap.registerPlugin(ST);
+    this._gsap = gsap; this._ST = ST;
+    // recréation par mount : chaque mount lie ses triggers aux nœuds DOM vivants qu'il possède.
+    // pas de flag global (il empêcherait le mount survivant de (re)lier) ; le nettoyage ne touche que NOS triggers.
+
+    const mode = this.props.titleIntro || 'lettres';   // lettres | fondu | aucune
+    const net  = this.props.heroDefloute !== false;     // image nette -> floue à l'arrivée
+    const cad  = this.props.cadence || 'lent';
+    const speed = ({ lent: 0.92, moyen: 0.8, rapide: 0.62 })[cad] || 0.8;
+
+    const img     = this.heroImgRef.current;
+    const eyebrow = root.querySelector('[data-intro-el="eyebrow"]');
+    const cta     = root.querySelector('[data-intro-el="cta"]');
+    const ltrs    = Array.prototype.slice.call(root.querySelectorAll('#top [data-ltr]'));
+    const navEl   = root.querySelector('.ow-nav');
+    this._nav = navEl;
+
+    // ---------- INTRO (timeline unique, deux groupes) ----------
+    if (mode !== 'aucune') {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.05 });
+
+      // états initiaux
+      const logoEl = root.querySelector('#top [data-intro-el="logo"]');
+      gsap.set(navEl, { autoAlpha: 0, y: -8 });
+      const grp2 = [eyebrow, cta].filter(Boolean);
+      gsap.set(grp2, { autoAlpha: 0, y: 14 });
+      if (mode === 'lettres' && ltrs.length) gsap.set(ltrs, { autoAlpha: 0, y: 40, filter: 'blur(12px)' });
+      else gsap.set(root.querySelector('#top h1'), { autoAlpha: 0, y: 36, filter: 'blur(12px)' });
+      const studioEl = root.querySelector('[data-intro-el="studio"]');
+      if (studioEl) gsap.set(studioEl, { autoAlpha: 0, y: 24, filter: 'blur(12px)' });
+      if (img && net) gsap.set(img, { filter: 'blur(0px)' });
+      if (logoEl) gsap.set(logoEl, { opacity: 0 });
+
+      // SÉQUENCE : 1) photo nette  2) logo apparaît PENDANT que le flou monte
+      //            3) le logo se fond dans le flou (retombe à .18)  4) le titre arrive
+      // cadence régulière : chaque étape démarre un "step" après la précédente
+      const step  = 0.85 * speed;
+      const tBlur = 0.0;                   // le flou démarre dès l'arrivée
+      const tLogo = tBlur + step;          // (logo retiré)
+      const g1    = tBlur + step;          // le titre + nav, un step après le flou
+      const g2    = g1 + step;             // ouverture nav / eyebrow
+
+      // 2) le flou de la photo monte en premier, rapidement
+      if (img && net) {
+        tl.to(img, { filter: 'blur(7px)', duration: 1.5 * speed, ease: 'power1.inOut' }, tBlur);
+      }
+      // 3) PUIS le logo apparaît dans le flou, puis s'y fond presque entièrement
+      if (logoEl) {
+        tl.to(logoEl, { opacity: 0.42, duration: 0.85 * speed, ease: 'sine.inOut' }, tLogo)
+          // 3) le logo se fond dans le flou
+          .to(logoEl, { opacity: 0.06, duration: 1.2 * speed, ease: 'sine.inOut' }, tLogo + 0.55 * speed);
+      }
+
+      // ORDRE : 1) flou photo  2) la nav apparaît et s'ouvre  3) ODDWAVE + eyebrow ensemble  4) studio
+      const gNav   = tBlur + step;                 // la nav apparaît en premier
+      const navOpenAt = gNav + 0.35 * speed;       // puis s'ouvre juste après
+      const gTitle = navOpenAt + step;             // ODDWAVE + eyebrow ensemble
+      const gStudio = gTitle + step;               // studio en dernier
+
+      tl.to(navEl, { autoAlpha: 1, y: 0, duration: 0.64 * speed, ease: 'power2.out' }, gNav);
+      tl.add(() => { if (navEl) { navEl.classList.add('is-open'); this._navAuto = true; } }, navOpenAt);
+      // ODDWAVE
+      if (mode === 'lettres' && ltrs.length) {
+        tl.to(ltrs, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 1.8 * speed, ease: 'power2.out' }, gTitle);   // titre slow motion, flou → net
+      } else {
+        tl.to(root.querySelector('#top h1'), { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 1.8 * speed, ease: 'power2.out' }, gTitle);
+      }
+      // eyebrow + CTA : arrivent plus lentement et FINISSENT quand la nav est complètement ouverte
+      // (transition CSS d'ouverture ≈ 1.05 s : delay .25 + durée .8)
+      const navFullyOpen = navOpenAt + 1.05;
+      const ebDur = 1.4 * speed;
+      tl.to(grp2, { autoAlpha: 1, y: 0, duration: ebDur, ease: 'power2.out' }, Math.max(gNav, navFullyOpen - ebDur));
+      // "studio" arrive en tout dernier, en slow motion avec une mise au net (flou → net)
+      if (studioEl) tl.to(studioEl, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 1.8 * speed, ease: 'power2.out' }, gStudio);
+      this._introTl = tl;
+    } else {
+      this.initFallback();
+    }
+
+    // ---------- PARALLAXE HERO (scrub réel lié au scroll) ----------
+    if (img) {
+      this._tweens.push(gsap.to(img, {
+        y: () => window.innerHeight * 0.5,
+        ease: 'none',
+        scrollTrigger: { trigger: root.querySelector('#top'), start: 'top top', end: 'bottom top', scrub: true }
+      }));
+    }
+
+    // ---------- NAV : se referme au premier scroll vers le bas ----------
+    this._sts.push(ST.create({
+      start: 12, end: 'max',
+      onEnter: () => { if (this._navAuto && this._nav) { this._nav.classList.remove('is-open'); this._navAuto = false; } }
+    }));
+
+    // ---------- REVEAL générique [data-reveal] ----------
+    root.querySelectorAll('[data-reveal]').forEach((el) => {
+      gsap.set(el, { autoAlpha: 0, y: 12 });
+      this._tweens.push(gsap.to(el, {
+        autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 92%', once: true }
+      }));
+    });
+
+    // ---------- PRESTATIONS : image qui balaye + texte en relais ----------
+    root.querySelectorAll('[data-svc]').forEach((sec, idx) => {
+      const t  = sec.querySelector('[data-svc-text]');
+      const im = sec.querySelector('[data-svc-img]');
+      if (!im) return;
+      // image figée à sa place (plus de balayage) — thème "mise au point" porté par le texte
+      const card = t ? t.querySelector('[data-svc-card]') : null;
+      gsap.set(im, { x: 0, autoAlpha: 1, filter: 'none' });
+      if (card) gsap.set(card, { autoAlpha: 0, filter: 'blur(18px)', y: 24 });
+
+      // le texte se met au net (flou→précis) progressivement au scroll
+      const stl = gsap.timeline({
+        scrollTrigger: { trigger: sec, start: 'top 80%', end: 'top 34%', scrub: 1 }
+      });
+      if (stl.scrollTrigger) this._sts.push(stl.scrollTrigger);
+      this._tweens.push(stl);
+      if (card) stl.to(card, { autoAlpha: 1, filter: 'blur(0px)', y: 0, duration: 1, ease: 'power2.out' }, 0);
+    });
+
+    ST.refresh();
+  }
+  componentWillUnmount() {
+    // teardown ciblé : on ne tue QUE ce que cette instance a créé (jamais ST.getAll()).
+    // le mount survivant garde donc ses propres triggers liés aux nœuds vivants.
+    this._dead = true;
+    if (this._timer) clearTimeout(this._timer);
+    if (this._introTl) { try { this._introTl.kill(); } catch (e) {} }
+    // on ne tue PAS les ScrollTriggers ici : si l'unmount est la dernière étape du
+    // cycle de stream/remount, les tuer laisserait la page sans aucun trigger vivant.
+    // Les triggers sur des nœuds détachés s'auto-libèrent ; ceux des nœuds vivants doivent survivre.
+  }
+  renderVals() {
+    return {
+      rootRef: this.rootRef,
+      heroImgRef: this.heroImgRef,
+      logoMark: this.logoSvg(),
+      logoMarkWhite: this.logoSvg('#F1EEE8'),
+      logoMarkFilled: this.logoSvg('#C24E37', '#F1EEE8'),
+      flProps: {
+        linesGradient: ['#C24E37', '#D98E5A', '#8A5A3C'],
+        enabledWaves: ['top', 'middle', 'bottom'],
+        lineCount: [3, 4, 3],
+        lineDistance: [9, 7, 5],
+        animationSpeed: 0.7,
+        interactive: true,
+        parallax: true,
+        bendRadius: 16.0,
+        bendStrength: -1.6,
+        mouseDamping: 0.08,
+        mixBlendMode: 'screen'
+      },
+      toggleMenu: () => { const r = this.rootRef.current; if (!r) return; const m = r.querySelector('.ow-menu'); if (m) m.classList.toggle('open'); },
+      closeMenu: () => { const r = this.rootRef.current; if (!r) return; const m = r.querySelector('.ow-menu'); if (m) m.classList.remove('open'); }
+    };
+  }
+}
+</script>
+</body>
+</html>
