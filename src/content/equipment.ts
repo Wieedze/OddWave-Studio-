@@ -2,7 +2,7 @@
 
 export const EQUIPMENT = {
   heroTitle: 'LE MATÉRIEL',
-  heroEyebrow: 'Du convertisseur au master',
+  heroEyebrow: 'La liste complète',
   inventoryTitle: "L'inventaire complet",
   inventoryBody:
     "Tout l'équipement du studio, classé par catégorie. Chaque référence est sélectionnée pour sa transparence et son caractère.",
