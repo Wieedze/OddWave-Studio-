@@ -9,3 +9,8 @@ bun.lockb
 .env
 .env.*
 !.env.example
+
+# Large media — keep videos out of git (GitHub blocks >100MB; LFS/CDN instead).
+public/assets/*.mp4
+public/assets/*.mov
+public/assets/*.webm
