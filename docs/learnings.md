@@ -157,4 +157,25 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
 - **All 7 pages are now built.** The scaffolding components `PageHero` /
   `PagePlaceholder` are no longer used and were removed.
 
+## 2026-06-26 · Portfolio Synth — the interactive rack player (now in scope)
+
+- The user wanted the **Portfolio Synth** (the skeuomorphic rack "lecteur stylé"),
+  so it is now built and embedded in `/portfolio` (replacing the static cover wall,
+  matching the original markup: fixed FloatingLines → title → rack → CTA).
+- Ported from `design-handoff/Portfolio Synth.dc.html`:
+  - **`AudioSynthService`** (service): a live **Web Audio** engine — clicking a
+    cover synthesizes a looping track (sustained 3-voice pad + a seeded step
+    sequencer of kick/hat/snare/pluck), routed through a master gain and stereo
+    analysers. No audio files; titles seed the music. Exposes `toggle`, `setGain`,
+    `readLevels`, `getElapsed`, `dispose`.
+  - **`PortfolioSynth`** (component): the rack faceplate (wood ears, GAIN/TONE
+    knobs, PWR LED, channel filters, readout, screen cover grid, **VU meters**,
+    timeline, jacks). A `requestAnimationFrame` loop drives the VU needle
+    ballistics (idle motion when stopped) and the timeline via refs; the draggable
+    GAIN knob updates the engine.
+  - Covers + filters in `content/portfolioSynth.ts`; the old static `COVERS` /
+    `Cover` and `PortfolioPage.css` were removed.
+- AudioContext is created on first play (user gesture), so SSG/no-JS render the
+  rack statically without audio.
+
 <!-- Add new entries above this line -->

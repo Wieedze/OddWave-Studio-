@@ -1,0 +1,132 @@
+/* Portfolio Synth rack — covers, LED/EQ keyframes, custom scrollbar.
+   Ported from design-handoff/Portfolio Synth.dc.html. */
+
+@keyframes owLedPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes owSynthEq {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.ow-synth-scr::-webkit-scrollbar {
+  width: 10px;
+}
+.ow-synth-scr::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8a5a3c, #c28e57);
+  border-radius: 8px;
+  border: 2px solid #0c0d10;
+}
+.ow-synth-scr::-webkit-scrollbar-track {
+  background: #000;
+  border-radius: 8px;
+}
+
+.cov {
+  position: relative;
+  min-height: 200px;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.cov-art {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.cov:hover .cov-art {
+  transform: scale(1.07);
+}
+.cov:hover {
+  box-shadow:
+    0 8px 26px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(194, 142, 87, 0.5);
+}
+.cov-meta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px 12px 10px;
+  background: linear-gradient(180deg, transparent, rgba(8, 9, 11, 0.92));
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.35s,
+    transform 0.35s;
+}
+.cov:hover .cov-meta {
+  opacity: 1;
+  transform: translateY(0);
+}
+.cov-tag {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  padding: 4px 7px;
+  border-radius: 4px;
+  background: rgba(11, 12, 15, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  font:
+    600 8px/1 'JetBrains Mono';
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e7c9af;
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+.cov:hover .cov-tag {
+  opacity: 1;
+}
+.cov-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -46%) scale(0.82);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(11, 12, 15, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1.5px solid rgba(231, 201, 175, 0.75);
+  color: #e7c9af;
+  font-size: 15px;
+  padding-left: 3px;
+  opacity: 0;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+  z-index: 4;
+  pointer-events: none;
+}
+.cov:hover .cov-play {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+.ow-eq-mini {
+  width: 2px;
+  height: 100%;
+  background: #e7c9af;
+  transform-origin: bottom;
+  animation: owSynthEq 0.7s ease-in-out infinite;
+}

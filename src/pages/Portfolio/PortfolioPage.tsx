@@ -1,34 +1,13 @@
-// Portfolio — discography cover wall. Recreated from
-// design-handoff/Portfolio OddWave.dc.html. A fixed FloatingLines field behind a
-// full-height title, the cover grid scrolling over it, and the CTA.
-// (The standalone "Portfolio Synth" experiment is intentionally out of scope.)
+// Portfolio — recreated from design-handoff/Portfolio OddWave.dc.html. A fixed
+// FloatingLines field behind a full-height title, the interactive "Portfolio
+// Synth" rack player scrolling over it, and the CTA.
 
-import { FloatingLines, Logo } from '@/components';
+import { FloatingLines, Logo, PortfolioSynth } from '@/components';
 import { Button } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
 import { ROUTES } from '@/content/navigation';
-import { PORTFOLIO, COVERS, type Cover } from '@/content/portfolio';
-import './PortfolioPage.css';
-
-function CoverTile({ cover }: { cover: Cover }) {
-  return (
-    <div data-reveal>
-      <div className="ow-cover">
-        <div className="ow-cover-art" style={{ background: cover.art }} />
-        <div className="ow-cover-tag">{cover.tag}</div>
-        <div className="ow-cover-meta">
-          <div style={{ fontFamily: typography.font.display, fontWeight: typography.weight.bold, fontSize: '16px', lineHeight: 1.2, letterSpacing: '-0.01em', color: colors.text.primaryWarm }}>
-            {cover.title}
-          </div>
-          <div style={{ marginTop: '4px', fontFamily: typography.font.body, fontWeight: typography.weight.medium, fontSize: '12px', lineHeight: 1.3, color: 'rgba(241,238,232,.7)' }}>
-            {cover.artist}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+import { PORTFOLIO } from '@/content/portfolio';
 
 export function PortfolioPage() {
   const ref = usePageMotion<HTMLDivElement>();
@@ -94,16 +73,9 @@ export function PortfolioPage() {
           </p>
         </section>
 
-        {/* COVER WALL */}
-        <section style={{ position: 'relative', zIndex: 2, background: colors.ink[900], padding: 'clamp(40px,7vh,90px) 30px clamp(70px,11vh,130px)' }}>
-          <div
-            data-cover-grid
-            style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'clamp(14px,1.4vw,20px)' }}
-          >
-            {COVERS.map((cover) => (
-              <CoverTile key={`${cover.title}-${cover.artist}`} cover={cover} />
-            ))}
-          </div>
+        {/* INTERACTIVE RACK PLAYER */}
+        <section style={{ position: 'relative', zIndex: 2, padding: 'clamp(20px,4vh,40px) 14px clamp(60px,10vh,120px)' }}>
+          <PortfolioSynth />
         </section>
 
         {/* CTA */}
