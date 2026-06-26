@@ -1,0 +1,193 @@
+/* Floating nav — ported from design-handoff/Landing OddWave GSAP.dc.html.
+   At rest: centered monogram only. On hover / focus / .is-open the side link
+   groups slide out symmetrically. Below 860px they collapse to a hamburger. */
+
+.ow-nav-shell {
+  position: fixed;
+  top: 22px;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.ow-nav {
+  position: relative;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 11px 20px;
+  border-radius: 999px;
+  background: rgba(20, 21, 26, 0.46);
+  backdrop-filter: blur(13px) saturate(1.3);
+  -webkit-backdrop-filter: blur(13px) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.34);
+}
+
+.ow-nav-side {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    width 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.25s,
+    margin 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.25s,
+    opacity 0.5s ease,
+    transform 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.25s;
+}
+.ow-nav-left {
+  justify-content: flex-end;
+  transform: translateX(22px);
+  margin-right: 0;
+  pointer-events: none;
+}
+.ow-nav-right {
+  justify-content: flex-start;
+  transform: translateX(-22px);
+  margin-left: 0;
+  pointer-events: none;
+}
+
+.ow-nav:hover .ow-nav-side,
+.ow-nav:focus-within .ow-nav-side,
+.ow-nav.is-open .ow-nav-side {
+  transition:
+    width 0.8s cubic-bezier(0.19, 1, 0.22, 1),
+    margin 0.8s cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 0.6s ease 0.28s,
+    transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.ow-nav:hover .ow-nav-left,
+.ow-nav:focus-within .ow-nav-left,
+.ow-nav.is-open .ow-nav-left {
+  width: 350px;
+  opacity: 1;
+  transform: translateX(0);
+  margin-right: 28px;
+  pointer-events: auto;
+}
+.ow-nav:hover .ow-nav-right,
+.ow-nav:focus-within .ow-nav-right,
+.ow-nav.is-open .ow-nav-right {
+  width: 350px;
+  opacity: 1;
+  transform: translateX(0);
+  margin-left: 28px;
+  pointer-events: auto;
+}
+
+.ow-nav-logo {
+  flex: none;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ow-link {
+  position: relative;
+  font:
+    600 13px/1.5 'Manrope',
+    sans-serif;
+  letter-spacing: 0.02em;
+  color: rgba(241, 238, 232, 0.74);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.25s;
+}
+.ow-link:hover {
+  color: #f1eee8;
+}
+.ow-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  height: 1px;
+  background: #c24e37;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ow-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Intro auto-open (.is-open set by the home timeline): slower than hover. */
+.ow-nav.is-open .ow-nav-side {
+  transition:
+    width 1.15s cubic-bezier(0.19, 1, 0.22, 1),
+    margin 1.15s cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 0.7s ease 0.7s,
+    transform 1.15s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Mobile menu */
+.ow-burger {
+  display: none;
+  pointer-events: auto;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: rgba(20, 21, 26, 0.46);
+  backdrop-filter: blur(13px) saturate(1.3);
+  -webkit-backdrop-filter: blur(13px) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f1eee8;
+  cursor: pointer;
+}
+.ow-menu {
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: rgba(18, 19, 24, 0.78);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.45);
+  min-width: 210px;
+  pointer-events: auto;
+}
+.ow-menu.open {
+  display: flex;
+}
+.ow-mlink {
+  font:
+    600 15px/1.1 'Manrope',
+    sans-serif;
+  letter-spacing: 0.01em;
+  color: rgba(241, 238, 232, 0.82);
+  text-decoration: none;
+  padding: 12px 14px;
+  border-radius: 10px;
+  white-space: nowrap;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.ow-mlink:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #f6eee6;
+}
+
+@media (max-width: 860px) {
+  .ow-nav-side {
+    display: none !important;
+  }
+  .ow-burger {
+    display: flex !important;
+  }
+}
