@@ -142,4 +142,19 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   `sd-irradiation.mp4` / `sd-seabeast.mp4` have a `src` (real, local, gitignored);
   the rest are placeholder tiles. Replace `src` with IPFS gateway URLs later.
 
+## 2026-06-26 · Portfolio page — cover wall (synth out of scope)
+
+- The shipped `Portfolio OddWave.dc.html` markup embedded the standalone
+  **Portfolio Synth** experiment, but the file also carries the **cover data**
+  (12 albums) and the `.ow-cover` CSS of a discography wall. Per the documented
+  intent (a cover wall) and the data present, built `/portfolio` as the **cover
+  wall**: a **fixed FloatingLines** backdrop, a full-height title, the 12-cover
+  grid scrolling over it (hover reveals meta + tag), and the CTA to `/contact`.
+- The Portfolio Synth remains **out of scope** (a separate interactive experiment,
+  no nav/footer by design). Offer to port it as an isolated component later.
+- Covers are placeholder gradient art; replace with the real cover images when
+  the client supplies them. Click-to-listen is noted but not wired (no audio yet).
+- **All 7 pages are now built.** The scaffolding components `PageHero` /
+  `PagePlaceholder` are no longer used and were removed.
+
 <!-- Add new entries above this line -->
