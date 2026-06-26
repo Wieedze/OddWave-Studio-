@@ -114,4 +114,15 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
 - Bio paragraph 1 is rendered in-page (inline `<span>` highlights); the rest of
   the copy is in `content/studio.ts`.
 
+## 2026-06-26 · Le Matériel page built
+
+- Built `/equipment`: hero (`rack-elysia.jpg`), **featured pieces** grid
+  (`1.3fr .7fr`, one tall image + two stacked, captioned), the **full inventory**
+  (`data-cats` two columns) driven by `content/equipment.ts` — 7 categories of
+  `GearItem { name, tag, href? }` rendered as `.ow-gear` rows (external product
+  links open in a new tab; link-less items render as plain text), the detail
+  close-ups (`ssl-elysia-knobs.jpg` uses `contain`), and the CTA to `/#contact`.
+- `.ow-gear` styles + the `@media 860` grid collapses (`data-phares`, `data-cats`)
+  live in `Equipment/EquipmentPage.css`.
+
 <!-- Add new entries above this line -->
