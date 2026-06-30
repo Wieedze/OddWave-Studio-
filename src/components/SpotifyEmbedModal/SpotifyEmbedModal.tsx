@@ -6,16 +6,17 @@ import { useEffect } from 'react';
 import { colors, typography } from '@/design-system/tokens';
 
 interface SpotifyEmbedModalProps {
-  /** Track id or full open.spotify.com/track/<id> URL. */
+  /** A Spotify URL/URI (track, album, playlist, episode) or a bare track id. */
   track: string;
   title?: string;
   onClose: () => void;
 }
 
-/** Extract the bare track id from a URL/URI, or pass an id through. */
-function trackId(input: string): string {
-  const m = input.match(/track[/:]([A-Za-z0-9]+)/);
-  return m ? m[1] : input;
+/** Build the embed path "<type>/<id>" from a Spotify URL/URI, or a bare track id. */
+function embedPath(input: string): string {
+  const m = input.match(/(track|album|playlist|episode|show)[/:]([A-Za-z0-9]+)/);
+  if (m) return `${m[1]}/${m[2]}`;
+  return `track/${input}`;
 }
 
 export function SpotifyEmbedModal({ track, title, onClose }: SpotifyEmbedModalProps) {
@@ -25,7 +26,7 @@ export function SpotifyEmbedModal({ track, title, onClose }: SpotifyEmbedModalPr
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
 
-  const src = `https://open.spotify.com/embed/track/${trackId(track)}?theme=0`;
+  const src = `https://open.spotify.com/embed/${embedPath(track)}?theme=0`;
 
   return (
     <div
