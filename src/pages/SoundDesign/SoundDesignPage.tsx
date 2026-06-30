@@ -218,13 +218,10 @@ export function SoundDesignPage() {
 
       {/* GALLERY */}
       <section id="reel" style={{ background: colors.surface.section, padding: 'clamp(20px,3vh,40px) 30px clamp(70px,11vh,130px)' }}>
-        <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '1780px', margin: '0 auto' }}>
           <div data-reveal style={{ marginBottom: '34px' }}>
-            <div style={{ fontFamily: typography.font.display, fontWeight: typography.weight.bold, fontSize: 'clamp(22px,3vw,34px)', lineHeight: 1, letterSpacing: '-0.02em', color: colors.text.primaryWarm }}>
-              {SOUND_DESIGN.galleryTitle}
-            </div>
           </div>
-          <div data-grid style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '28px' }}>
+          <div data-grid style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '28px' }}>
             {SD_VIDEOS.map((entry) => (
               <div data-reveal key={entry.id}>
                 <GalleryCard entry={entry} onOpen={() => setOpenId(entry.id)} />

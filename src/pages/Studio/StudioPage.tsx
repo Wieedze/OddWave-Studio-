@@ -182,7 +182,7 @@ export function StudioPage() {
           }}
         />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg,#0B0C0F 0%,rgba(11,12,15,.86) 40%,rgba(11,12,15,.32) 78%,transparent 100%)' }} />
-        <div style={{ position: 'relative', maxWidth: '1080px', margin: '0 auto' }}>
+        <div style={{ position: 'relative', maxWidth: '1180px', margin: '0 auto' }}>
           <h2
             data-reveal
             style={{

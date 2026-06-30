@@ -162,7 +162,7 @@ export function GuidancePage() {
 
       {/* FORMULES */}
       <section id="formules" style={{ background: colors.ink[900], padding: 'clamp(60px,9vh,120px) 30px clamp(80px,12vh,140px)', borderTop: SECTION_TOP_RULE }}>
-        <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '1480px', margin: '0 auto' }}>
           <div data-reveal style={{ marginBottom: '16px' }}>
             <MonoLabel size="12px" tracking="0.2em" color={colors.copper.landing}>
               Les formules
@@ -204,12 +204,16 @@ export function GuidancePage() {
             {GUIDANCE_FORMULAS.map((f) => (
               <article key={f.id} className="ow-formula" data-pick onClick={() => pickFormula(f.name)}>
                 <div className="ow-formula-head">
+                  <span className="ow-formula-tag">{f.tag}</span>
                   <h3 className="ow-formula-name">{f.name}</h3>
                   <div className="ow-formula-rule" />
                 </div>
-                <p className="ow-formula-desc">{f.description}</p>
+                <ul className="ow-formula-list">
+                  {f.bullets.map((b) => (
+                    <li key={b}>{b}</li>
+                  ))}
+                </ul>
                 <div className="ow-formula-foot">
-                  <span className="ow-formula-fmt">{f.format}</span>
                   <span className="ow-formula-go">Choisir →</span>
                 </div>
               </article>

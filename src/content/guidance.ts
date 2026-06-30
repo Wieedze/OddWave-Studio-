@@ -41,28 +41,26 @@ export const GUIDANCE_PHASES: readonly Phase[] = [
 ];
 
 export const GUIDANCE_FORMULAS: readonly Formula[] = [
-  new Formula(
-    'starter',
-    'Starter',
-    "Un diagnostic d'1h30 en visio pour faire le point sur votre projet, votre workflow et les premières pistes d'amélioration.",
-    'Visio · 1h30',
-  ),
-  new Formula(
-    'pack-2-4',
-    'Pack 2 à 4 titres',
-    'Suivi complet sur plusieurs morceaux : coaching technique, mix et master, échanges réguliers tout au long de la production.',
-    'Suivi · 2 à 4 titres',
-  ),
-  new Formula(
-    'premium',
-    'Premium',
-    "Développement de projets ou d'albums dans la durée : direction artistique, finalisation, stratégie de sortie.",
-    'Projet · album',
-  ),
-  new Formula(
-    'live-setup',
-    'Live setup',
-    'Construction et optimisation de vos performances scéniques : du routing au rendu sonore en conditions réelles.',
-    'Scène · live',
-  ),
+  new Formula('diagnostic', 'Diagnostic Artistique', 'Entrée', [
+    '1 session approfondie',
+    'Analyse complète + feedback',
+    "Plan d'action personnalisé",
+  ]),
+  new Formula('accompagnement', 'Accompagnement', 'EP 2 à 4 titres ou Album', [
+    'Suivi régulier',
+    'Objectifs + deadlines',
+    'Feedback + coaching technique',
+    'Mixage & Mastering',
+  ]),
+  new Formula('developpement', 'Développement Projet', 'Premium', [
+    'Accompagnement à la production',
+    'Direction artistique',
+    'Feedback + coaching technique',
+    'Mixage & Mastering',
+  ]),
+  new Formula('live-setup', 'Live Setup', 'Option', [
+    'Construction du live',
+    'Routing / exports',
+    'Logique de performance',
+  ]),
 ];

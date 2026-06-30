@@ -1,12 +1,12 @@
-// A guidance "formule" row. Clicking it pre-fills the request form.
+// A guidance "formule" card. Clicking it pre-fills the request form.
 
 export class Formula {
   constructor(
     readonly id: string,
     readonly name: string,
-    /** What the formula covers ("Ce que ça comprend"). */
-    readonly description: string,
-    /** Format label ("Format"), e.g. "Visio · 1h30". */
-    readonly format: string,
+    /** Short qualifier shown as a label (e.g. "Entrée", "Premium"). */
+    readonly tag: string,
+    /** What the formula includes, as bullet points. */
+    readonly bullets: readonly string[],
   ) {}
 }
