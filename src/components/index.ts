@@ -5,3 +5,4 @@ export { FloatingLines } from './FloatingLines';
 export type { FloatingLinesProps, WaveType, WavePosition } from './FloatingLines';
 export { VideoModal } from './VideoModal';
 export { PortfolioSynth } from './PortfolioSynth';
+export { SpotifyEmbedModal } from './SpotifyEmbedModal';

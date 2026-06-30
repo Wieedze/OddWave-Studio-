@@ -1,13 +1,19 @@
-// Portfolio Synth content — covers, channel filters, copy. Verbatim from
-// design-handoff/Portfolio Synth.dc.html. Covers are placeholder gradient art;
-// the audio is fully synthesized (no files), so titles drive the generated track.
+// Portfolio rack content — releases shown in the rack "screen". Clicking a cover
+// opens the official Spotify embed (the audio streams from Spotify; nothing is
+// hosted here). To go live, fill each entry's `image` (real cover art under
+// /assets/covers/…) and `spotify` (the track URL or id). `art` is the gradient
+// fallback shown until a real cover image is provided.
 
 export interface SynthCover {
   readonly title: string;
   readonly artist: string;
   readonly tag: string;
-  /** Placeholder gradient art (CSS background). */
+  /** Gradient fallback (CSS background) shown when no cover image is set. */
   readonly art: string;
+  /** Real cover art, e.g. '/assets/covers/nocturne.jpg'. */
+  readonly image?: string;
+  /** Spotify track URL or id, e.g. 'https://open.spotify.com/track/<id>' or '<id>'. */
+  readonly spotify?: string;
 }
 
 const GRADS = [

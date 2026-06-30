@@ -245,4 +245,17 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   quota. ffmpeg recipe (transcode + `thumbnail`) is the repeatable path for future
   reels.
 
+## 2026-06-26 · Portfolio rack → Spotify embeds (rights-clean)
+
+- Hosting masters/tracks ourselves = copyright issue (the studio mixes/masters but
+  doesn't own the recordings). Decision: **official Spotify embeds**. Public track +
+  embed iframe = sanctioned, free, nothing hosted. Audio always streams from Spotify.
+- Kept the **rack chassis** as the frame: real release covers on the "screen",
+  **click → `SpotifyEmbedModal`** (open.spotify.com/embed/track/<id>). VU meters keep
+  ambient idle motion; GAIN knob is decorative; timeline is static. The generative
+  audio engine (`AudioSynthService`) was **removed** (no longer needed).
+- `SynthCover` gains `image?` (real cover art under /assets/covers/) and `spotify?`
+  (track URL or id). To go live: drop the cover images + paste the Spotify links per
+  release. Covers without a `spotify` simply don't open.
+
 <!-- Add new entries above this line -->
