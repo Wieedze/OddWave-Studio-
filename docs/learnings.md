@@ -212,4 +212,20 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   (H.264/AAC) before pinning, otherwise playback is Safari-only. No ffmpeg in this
   env, so conversion is on the user.
 
+## 2026-06-26 · Videos pinned to IPFS + mocks removed
+
+- All 6 reels **pinned to Pinata** (CIDv1). The Sound Design grid now contains
+  **only real, playable videos** — the 9 mock/placeholder tiles were removed.
+- `VIDEO_SRC` builds gateway URLs from CIDs via `ipfs(cid)`:
+  `${VITE_IPFS_GATEWAY ?? https://gateway.pinata.cloud}/ipfs/${cid}` plus
+  `?pinataGatewayToken=${VITE_IPFS_GATEWAY_TOKEN}` when a dedicated-gateway token
+  is set. Verified the public gateway serves with **HTTP 206 / range requests**
+  (video seeking works).
+- **Secret handling:** the pinning **JWT lives in `.env.local` (gitignored)**, the
+  pin script reads it from env (no secret in the tracked file). `VITE_*` vars are
+  public — only a *gateway* token may go there, never the pinning JWT. The pin
+  script's `-F file=@"…"` quoting fixes filenames with commas (Love, Death & Robots).
+- **Still open:** the 4 `.mov` reels only decode in Safari; re-export to `.mp4`
+  (H.264/AAC) and re-pin for Chrome/Firefox. CID map is in git history / Pinata.
+
 <!-- Add new entries above this line -->
