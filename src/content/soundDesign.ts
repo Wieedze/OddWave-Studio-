@@ -30,12 +30,13 @@ const IPFS_GATEWAY_TOKEN = import.meta.env.VITE_IPFS_GATEWAY_TOKEN as string | u
 const ipfs = (cid: string): string =>
   `${IPFS_GATEWAY}/ipfs/${cid}${IPFS_GATEWAY_TOKEN ? `?pinataGatewayToken=${IPFS_GATEWAY_TOKEN}` : ''}`;
 
-/** Single swap point for video hosting — IPFS CIDs (pinned via scripts/pin-to-pinata.sh). */
+/** Single swap point for video hosting — IPFS CIDs (pinned via scripts/pin-to-pinata.sh).
+ *  The 4 reels are the web-optimized .mp4 (H.264/AAC) versions. */
 export const VIDEO_SRC = {
-  showreel: ipfs('bafybeihjkq2fnhoqlb2lztmzxrh7mcr6ty5jsee665xg5fcb4fxtmftiri'),
-  unreal: ipfs('bafybeic3lnovl55fahuj6mildm4o2numqvx63jlnj7llb3jf6erbtdhy5i'),
-  loveDeathRobots: ipfs('bafybeidw6nfcxd3ks7js2ot5ur5ns7pxwnm4kaxhgjvdpcv6cvqxq5ny5a'),
-  witcher: ipfs('bafybeidomlwort3orhancygd2mvlw6d5ieqxlwwu7sui5gzlkdkj2qv7da'),
+  showreel: ipfs('bafybeifxvfydidqclvoan5fxbepmxk6is7olxxibihq6y3hgmj5ibb27ze'),
+  unreal: ipfs('bafybeibsicarnfv5bamzrhuq5qomn7m6bzkv6b64e7fbrpx53lthnon6oa'),
+  loveDeathRobots: ipfs('bafybeickbaopymtoz4ubc7jdeukn3npwxnsbsfzy3bmuupgh7taghmmgya'),
+  witcher: ipfs('bafybeiebw5mwnq577w2dr2im6t2xf2wnxgdafpdqx6x4lapfjtet334wy4'),
   irradiation: ipfs('bafybeiet2azf5ebvwb2ffzd3xxdzgfk3dgq6o7v6j4vxfmyywyh4grhude'),
   seaBeast: ipfs('bafybeidsa35nqhev7fchhqcb56l7cuuw3w6uywys6serj5zzlwuhzuj2ty'),
 } as const;
@@ -43,10 +44,10 @@ export const VIDEO_SRC = {
 /** Gallery entries. The client's real reels lead; durations on the real ones are
  *  approximate badges (the player shows the true length) — adjust if needed. */
 export const SD_VIDEOS: readonly VideoEntry[] = [
-  new VideoEntry('showreel', 'Showreel', 'Showreel', '1:00', 'Le condensé de nos réalisations en sound design.', '/assets/hero-large.jpg', VIDEO_SRC.showreel),
-  new VideoEntry('unreal', 'Unreal', 'Re-sound design', '1:12', 'Re-sound design complet, démo (720p).', '/assets/stem-bokeh.jpg', VIDEO_SRC.unreal),
-  new VideoEntry('love-death-robots', 'Love, Death & Robots', 'Série', '1:24', "Re-sound design d'une séquence, démo (720p).", '/assets/mastering-bokeh.jpg', VIDEO_SRC.loveDeathRobots),
-  new VideoEntry('witcher', 'The Witcher · S3 E6', 'Série', '0:48', 'Re-sound design, extrait court.', '/assets/converter-blue.jpg', VIDEO_SRC.witcher),
+  new VideoEntry('showreel', 'Showreel', 'Showreel', '1:01', 'Le condensé de nos réalisations en sound design.', '/assets/showreel-poster.jpg', VIDEO_SRC.showreel),
+  new VideoEntry('unreal', 'Unreal', 'Re-sound design', '2:04', 'Re-sound design complet, démo.', '/assets/unreal-poster.jpg', VIDEO_SRC.unreal),
+  new VideoEntry('love-death-robots', 'Love, Death & Robots', 'Série', '1:11', "Re-sound design d'une séquence, démo.", '/assets/love-death-robots-poster.jpg', VIDEO_SRC.loveDeathRobots),
+  new VideoEntry('witcher', 'The Witcher · S3 E6', 'Série', '0:46', 'Re-sound design, extrait court.', '/assets/witcher-poster.jpg', VIDEO_SRC.witcher),
   new VideoEntry('irradiation', 'Irradiation', 'Trailer', '0:40', 'Redesign sonore complet : court CG de Sava Zivkovic.', '/assets/sd-irradiation-poster.jpg', VIDEO_SRC.irradiation),
   new VideoEntry('sea-beast', 'The Sea Beast', 'Film', '0:40', "Redesign sonore : séquence du film d'animation.", '/assets/sd-seabeast-poster.jpg', VIDEO_SRC.seaBeast),
 ];

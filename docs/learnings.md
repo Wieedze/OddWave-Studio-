@@ -228,4 +228,21 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
 - **Still open:** the 4 `.mov` reels only decode in Safari; re-export to `.mp4`
   (H.264/AAC) and re-pin for Chrome/Firefox. CID map is in git history / Pinata.
 
+## 2026-06-26 · .mov reels transcoded to .mp4 + real video thumbnails
+
+- The 4 `.mov` reels never loaded in Chrome/Firefox (QuickTime container). Fixed:
+  installed ffmpeg and **transcoded them to web `.mp4`** (H.264 high/yuv420p, AAC,
+  `-movflags +faststart`). Much smaller too (385MB → ~107MB). Re-pinned the 4
+  `.mp4` to Pinata; `VIDEO_SRC` now points at the new CIDs.
+- **Real thumbnails:** extracted a representative frame per reel with ffmpeg's
+  `thumbnail` filter → `public/assets/<id>-poster.jpg` (committed, small). The grid
+  no longer uses substitute studio photos as posters. Irradiation / Sea Beast keep
+  their existing real-frame posters.
+- Corrected durations from ffprobe: showreel 1:01, witcher 0:46, unreal 2:04,
+  love-death-robots 1:11.
+- The old `.mov` files + their old CIDs are superseded; the originals stay local
+  (gitignored) and the old pins can be removed from the Pinata dashboard to free
+  quota. ffmpeg recipe (transcode + `thumbnail`) is the repeatable path for future
+  reels.
+
 <!-- Add new entries above this line -->

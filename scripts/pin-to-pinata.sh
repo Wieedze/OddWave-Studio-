@@ -31,10 +31,10 @@ ENDPOINT="https://api.pinata.cloud/pinning/pinFileToIPFS"
 FILES=(
   "sd-irradiation.mp4"
   "sd-seabeast.mp4"
-  "THE WITCHER S3 E6 - RESOUND (Short).mov"
-  "LOVE, DEATH & ROBOTS - Re-Sound Design Démo (720P).mov"
-  "SHOWREEL SD 1m.mov"
-  "UNREAL - Re-Sound Design Démo (720P).mov"
+  "showreel.mp4"
+  "witcher.mp4"
+  "unreal.mp4"
+  "love-death-robots.mp4"
 )
 
 # --- Build the auth header(s) ---
