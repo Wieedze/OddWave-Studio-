@@ -195,4 +195,21 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   (`bun run build` → `dist/`), env vars, and the IPFS note for videos. SSG emits a
   real HTML file per route, so no SPA catch-all is needed.
 
+## 2026-06-26 · Real reels added + IPFS pinning
+
+- Added the client's 4 real re-sound-design reels to the Sound Design grid (now
+  lead the gallery): **Showreel**, **Unreal**, **Love, Death & Robots**,
+  **The Witcher S3 E6** — plus the existing Irradiation / Sea Beast. Titles are
+  from the filenames; **cat / dur / note are derived and editable**.
+- **`VIDEO_SRC`** in `content/soundDesign.ts` is the single hosting swap point.
+  Today the reels point to **local** `/assets` paths (dev/Safari only). After
+  pinning, replace each value with the IPFS gateway URL.
+- **`scripts/pin-to-pinata.sh`** pins the 6 videos to Pinata (JWT or API key+secret
+  from env — the user runs it so the secret stays out of the repo) and prints a
+  `filename → CID` map. Then we wire the gateway URLs into `VIDEO_SRC`.
+- **Format caveat (still open):** the 4 reels are `.mov` — Chrome/Firefox don't
+  play `.mov` reliably in `<video>`. They should be re-exported to `.mp4`
+  (H.264/AAC) before pinning, otherwise playback is Safari-only. No ffmpeg in this
+  env, so conversion is on the user.
+
 <!-- Add new entries above this line -->
