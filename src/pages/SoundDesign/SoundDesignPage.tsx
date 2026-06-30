@@ -224,7 +224,7 @@ export function SoundDesignPage() {
               {SOUND_DESIGN.galleryTitle}
             </div>
           </div>
-          <div data-grid style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '20px' }}>
+          <div data-grid style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '28px' }}>
             {SD_VIDEOS.map((entry) => (
               <div data-reveal key={entry.id}>
                 <GalleryCard entry={entry} onOpen={() => setOpenId(entry.id)} />
