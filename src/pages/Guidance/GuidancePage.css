@@ -7,13 +7,13 @@
   position: relative;
   overflow: hidden;
   padding: clamp(36px, 3.6vw, 52px) clamp(30px, 3.4vw, 52px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(60, 34, 20, 0.14);
   border-radius: 16px;
-  background: #0b0c0f;
+  background: #f2e4d2;
   transition: border-color 0.3s;
 }
 .ow-phase:hover {
-  border-color: rgba(194, 78, 55, 0.5);
+  border-color: rgba(194, 78, 55, 0.55);
 }
 .ow-phase-num {
   position: absolute;
@@ -25,7 +25,7 @@
   font-size: clamp(340px, 40vw, 440px);
   line-height: 1;
   letter-spacing: -0.05em;
-  color: rgba(194, 78, 55, 0.12);
+  color: rgba(194, 78, 55, 0.22);
   pointer-events: none;
   user-select: none;
 }
@@ -38,14 +38,14 @@
   margin: 0 0 14px;
   font:
     500 clamp(14px, 1.3vw, 15px) / 1.4 'Manrope';
-  color: #c9885f;
+  color: #a0481f;
 }
 .ow-phase-title {
   margin: 0;
   font:
     800 clamp(34px, 4.4vw, 56px) / 1 'Cabinet Grotesk';
   letter-spacing: -0.025em;
-  color: #f6eee6;
+  color: #1a130d;
   white-space: nowrap;
 }
 .ow-phase-rule {
@@ -68,7 +68,7 @@
   padding-left: 28px;
   font:
     500 clamp(15.5px, 1.5vw, 17px) / 1.45 'Manrope';
-  color: #e2ded6;
+  color: #2a211a;
   text-wrap: pretty;
 }
 .ow-phase-list li::before {
@@ -81,77 +81,88 @@
   background: #c24e37;
 }
 
-/* ---- Formules table ---- */
-.ow-tbl {
+/* ---- Formules : vertical cards ---- */
+.ow-formula-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(16px, 1.8vw, 24px);
+  align-items: stretch;
+}
+.ow-formula {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f2e4d2;
+  border: 1px solid rgba(60, 34, 20, 0.14);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  transition:
+    transform 0.28s cubic-bezier(0.19, 1, 0.22, 1),
+    border-color 0.28s,
+    box-shadow 0.28s;
+}
+.ow-formula:hover {
+  transform: translateY(-4px);
+  border-color: rgba(194, 78, 55, 0.55);
+  box-shadow: 0 30px 72px rgba(0, 0, 0, 0.45);
+}
+.ow-formula-head {
+  padding: clamp(22px, 2.2vw, 30px) clamp(22px, 2.2vw, 28px) clamp(16px, 1.4vw, 20px);
+  background: linear-gradient(180deg, rgba(194, 78, 55, 0.16), rgba(194, 78, 55, 0));
+  border-bottom: 1px solid rgba(60, 34, 20, 0.12);
+}
+.ow-formula-name {
+  margin: 0;
+  font:
+    700 clamp(22px, 2vw, 28px) / 1.1 'Cabinet Grotesk';
+  letter-spacing: -0.015em;
+  color: #1a130d;
+  text-wrap: balance;
+}
+.ow-formula-rule {
+  margin-top: 14px;
+  height: 2px;
   width: 100%;
-  border-collapse: collapse;
+  background: linear-gradient(90deg, #c24e37, rgba(194, 78, 55, 0));
 }
-.ow-tbl th {
-  text-align: left;
+.ow-formula-desc {
+  flex: 1;
+  margin: 0;
+  padding: clamp(20px, 2vw, 26px) clamp(22px, 2.2vw, 28px) clamp(16px, 1.6vw, 22px);
   font:
-    600 11px/1 'JetBrains Mono',
-    monospace;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #7e7a72;
-  padding: 0 28px 18px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-  vertical-align: bottom;
-}
-.ow-tbl td {
-  padding: 28px 28px 28px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  vertical-align: top;
-  transition: border-color 0.3s;
-}
-.ow-tbl tr:hover td {
-  border-bottom-color: rgba(194, 78, 55, 0.5);
-}
-.ow-tbl .c-name {
-  font:
-    700 22px/1.15 'Cabinet Grotesk';
-  letter-spacing: -0.01em;
-  color: #d8d4cc;
-  white-space: nowrap;
-  width: 200px;
-  transition: color 0.25s;
-}
-.ow-tbl tr:hover .c-name {
-  color: #f6eee6;
-}
-.ow-tbl .c-desc {
-  font:
-    400 15px/1.6 'Manrope';
-  color: #9c9890;
+    400 15px/1.62 'Manrope';
+  color: #4a4038;
   text-wrap: pretty;
 }
-.ow-tbl .c-fmt {
+.ow-formula-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: clamp(14px, 1.4vw, 20px) clamp(22px, 2.2vw, 28px) clamp(20px, 1.8vw, 26px);
+  border-top: 1px solid rgba(60, 34, 20, 0.1);
+}
+.ow-formula-fmt {
   font:
     600 11px/1.4 'JetBrains Mono',
     monospace;
   letter-spacing: 0.08em;
-  color: #7e7a72;
-  white-space: nowrap;
-  width: 150px;
+  color: #8a6850;
 }
-.ow-tbl tr[data-pick] {
-  cursor: pointer;
-}
-.ow-tbl .c-go {
-  width: 130px;
-  text-align: right;
+.ow-formula-go {
   font:
     600 11px/1.4 'JetBrains Mono',
     monospace;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #7e7a72;
+  color: #a0481f;
   white-space: nowrap;
   transition:
     color 0.25s,
     transform 0.25s;
 }
-.ow-tbl tr:hover .c-go {
+.ow-formula:hover .ow-formula-go {
   color: #c24e37;
   transform: translateX(3px);
 }
@@ -176,9 +187,6 @@
   }
   .ow-phase-body {
     max-width: 100% !important;
-  }
-  .ow-tbl .c-go {
-    display: none !important;
   }
   [data-form-grid] {
     grid-template-columns: 1fr !important;

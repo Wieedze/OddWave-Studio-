@@ -200,40 +200,21 @@ export function GuidancePage() {
             Pas de tarif figé : chaque accompagnement se construit autour de votre projet. On en parle ensemble.
           </p>
 
-          <table data-reveal className="ow-tbl">
-            <thead>
-              <tr>
-                <th>Formule</th>
-                <th>Ce que ça comprend</th>
-                <th>Format</th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {GUIDANCE_FORMULAS.map((f) => (
-                <tr key={f.id} data-pick onClick={() => pickFormula(f.name)}>
-                  <td className="c-name">{f.name}</td>
-                  <td className="c-desc">{f.description}</td>
-                  <td className="c-fmt">{f.format}</td>
-                  <td className="c-go">Choisir →</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p
-            data-reveal
-            style={{
-              margin: '22px 0 0',
-              fontFamily: typography.font.mono,
-              fontWeight: typography.weight.medium,
-              fontSize: '13px',
-              lineHeight: 1.5,
-              letterSpacing: '0.04em',
-              color: colors.text.faint,
-            }}
-          >
-            Cliquez une formule pour pré-remplir votre demande ↓
-          </p>
+          <div data-reveal className="ow-formula-grid">
+            {GUIDANCE_FORMULAS.map((f) => (
+              <article key={f.id} className="ow-formula" data-pick onClick={() => pickFormula(f.name)}>
+                <div className="ow-formula-head">
+                  <h3 className="ow-formula-name">{f.name}</h3>
+                  <div className="ow-formula-rule" />
+                </div>
+                <p className="ow-formula-desc">{f.description}</p>
+                <div className="ow-formula-foot">
+                  <span className="ow-formula-fmt">{f.format}</span>
+                  <span className="ow-formula-go">Choisir →</span>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
