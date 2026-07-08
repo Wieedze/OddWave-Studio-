@@ -47,7 +47,7 @@ export function SpotifyEmbedModal({ track, title, onClose }: SpotifyEmbedModalPr
         WebkitBackdropFilter: 'blur(10px)',
       }}
     >
-      <div onClick={(e) => e.stopPropagation()} style={{ position: 'relative', width: '100%', maxWidth: '560px' }}>
+      <div onClick={(e) => e.stopPropagation()} style={{ position: 'relative', width: '100%', maxWidth: '720px' }}>
         <button
           type="button"
           onClick={onClose}
@@ -79,8 +79,8 @@ export function SpotifyEmbedModal({ track, title, onClose }: SpotifyEmbedModalPr
           title={title ?? 'Spotify'}
           src={src}
           width="100%"
-          height="352"
-          style={{ border: 0, borderRadius: '14px', boxShadow: '0 40px 120px rgba(0,0,0,.7)' }}
+          height="560"
+          style={{ border: 0, borderRadius: '14px', boxShadow: '0 40px 120px rgba(0,0,0,.7)', display: 'block' }}
           loading="lazy"
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         />
