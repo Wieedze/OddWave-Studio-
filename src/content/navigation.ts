@@ -13,8 +13,9 @@ export const ROUTES = {
   contact: '/contact',
 } as const;
 
-/** Left group of the floating nav. */
+/** Left group of the floating nav (Accueil balances Contact for a symmetric 4+4). */
 export const NAV_LEFT: readonly NavLink[] = [
+  new NavLink('Accueil', ROUTES.home, 'left'),
   new NavLink('Le studio', ROUTES.studio, 'left'),
   new NavLink('Le matériel', ROUTES.equipment, 'left'),
   new NavLink('Accompagnement', ROUTES.guidance, 'left'),
@@ -31,9 +32,5 @@ export const NAV_RIGHT: readonly NavLink[] = [
   new NavLink('Contact', ROUTES.contact, 'right'),
 ];
 
-/** Flat list for the mobile menu (Accueil first). */
-export const MENU_LINKS: readonly NavLink[] = [
-  new NavLink('Accueil', ROUTES.home, 'left'),
-  ...NAV_LEFT,
-  ...NAV_RIGHT,
-];
+/** Flat list for the mobile menu. */
+export const MENU_LINKS: readonly NavLink[] = [...NAV_LEFT, ...NAV_RIGHT];
