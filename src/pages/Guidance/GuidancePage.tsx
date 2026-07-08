@@ -162,7 +162,7 @@ export function GuidancePage() {
 
       {/* RETOUR VIDÉO — card: video + full text side by side */}
       <section style={{ background: colors.surface.section, padding: 'clamp(50px,8vh,110px) 30px' }}>
-        <div data-reveal className="ow-feedback" style={{ maxWidth: '1180px', margin: '0 auto' }}>
+        <div data-reveal className="ow-feedback" style={{ maxWidth: '1360px', margin: '0 auto' }}>
           <div className="ow-feedback-media">
             <video autoPlay muted loop playsInline poster={GUIDANCE_FEEDBACK.poster}>
               <source src={GUIDANCE_FEEDBACK.video} type="video/mp4" />
