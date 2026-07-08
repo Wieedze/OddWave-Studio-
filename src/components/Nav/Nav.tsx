@@ -37,7 +37,7 @@ export function Nav() {
         </div>
 
         <Link to={ROUTES.home} className="ow-nav-logo" aria-label="Accueil">
-          <Logo size={54} stroke={colors.text.primary} />
+          <Logo size={100} stroke={colors.text.primary} />
         </Link>
 
         <div className="ow-nav-side ow-nav-right">

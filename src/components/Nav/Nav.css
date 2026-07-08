@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   gap: 0;
-  padding: 11px 20px;
+  padding: 0px 10px;
   border-radius: 999px;
   background: rgba(20, 21, 26, 0.46);
   backdrop-filter: blur(13px) saturate(1.3);
