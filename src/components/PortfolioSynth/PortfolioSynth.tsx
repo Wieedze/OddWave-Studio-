@@ -265,7 +265,7 @@ export function PortfolioSynth() {
       </div>
     </div>
     {open?.spotify && (
-      <SpotifyEmbedModal track={open.spotify} title={`${open.title} · ${open.artist}`} onClose={() => setOpen(null)} />
+      <SpotifyEmbedModal track={open.spotify} title={open.title} artist={open.artist} work={open.tag} type={open.type} onClose={() => setOpen(null)} />
     )}
     </>
   );
