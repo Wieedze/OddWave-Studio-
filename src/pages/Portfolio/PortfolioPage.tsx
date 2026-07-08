@@ -2,7 +2,7 @@
 // FloatingLines field behind a full-height title, the interactive "Portfolio
 // Synth" rack player scrolling over it, and the CTA.
 
-import { FloatingLines, Logo, PortfolioSynth } from '@/components';
+import { FloatingLines, CtaLogo, PortfolioSynth } from '@/components';
 import { Button } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
@@ -81,9 +81,7 @@ export function PortfolioPage() {
         {/* CTA */}
         <section style={{ background: colors.ink[900], padding: 'clamp(80px,12vh,140px) 30px', borderTop: `1px solid ${colors.border.hair}` }}>
           <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-            <div data-reveal style={{ display: 'inline-block', width: '44px', height: '44px', marginBottom: '28px' }}>
-              <Logo size={44} stroke={colors.copper.landing} />
-            </div>
+            <CtaLogo />
             <h2
               data-reveal
               style={{

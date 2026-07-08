@@ -4,7 +4,7 @@
 
 import type { CSSProperties } from 'react';
 import { FloatingLines } from '@/components';
-import { Logo } from '@/components';
+import { CtaLogo } from '@/components';
 import { Button, MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { useHomeIntro } from '@/hooks';
@@ -244,9 +244,14 @@ export function HomePage() {
 
         <div
           data-intro-el="cta"
-          style={{ position: 'absolute', bottom: '46px', left: 0, right: 0, display: 'flex', justifyContent: 'center' }}
+          style={{ position: 'absolute', bottom: '46px', left: 0, right: 0, display: 'flex', justifyContent: 'center', padding: '0 20px' }}
         >
-          <MonoLabel size="16px" tracking="0.42em" color={colors.copper.warm} style={{ textIndent: '0.42em' }}>
+          <MonoLabel
+            size="clamp(9px, 2.4vw, 16px)"
+            tracking="clamp(0.16em, 1vw, 0.42em)"
+            color={colors.copper.warm}
+            style={{ textIndent: '0.16em', textAlign: 'center', lineHeight: 1.7, maxWidth: '100%' }}
+          >
             {HOME_CTA.eyebrow}
           </MonoLabel>
         </div>
@@ -316,9 +321,7 @@ export function HomePage() {
         style={{ background: colors.ink[900], padding: '96px 30px 86px', borderTop: `1px solid ${colors.border.hairMid}` }}
       >
         <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-          <div data-reveal style={{ display: 'inline-block', width: '46px', height: '46px', marginBottom: '30px' }}>
-            <Logo size={46} stroke={colors.copper.landing} />
-          </div>
+          <CtaLogo />
           <h2
             data-reveal
             style={{

@@ -1,4 +1,5 @@
 export { Logo } from './Logo';
+export { CtaLogo, CTA_LOGO_SIZE } from './CtaLogo';
 export { Nav } from './Nav';
 export { Footer } from './Footer';
 export { FloatingLines } from './FloatingLines';

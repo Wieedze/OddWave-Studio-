@@ -56,8 +56,8 @@ export function Footer() {
 
       <div
         style={{
-          maxWidth: spacing.layout.contentMax,
-          margin: '0 auto',
+          maxWidth: '100%',
+          margin: '0',
           paddingTop: '34px',
           borderTop: `1px solid ${colors.border.hair}`,
           display: 'flex',

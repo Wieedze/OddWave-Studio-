@@ -3,12 +3,13 @@
 // video plays in), the réalisations grid, the modal player, and the CTA.
 
 import { useEffect, useRef, useState } from 'react';
-import { Logo, VideoModal } from '@/components';
+import { CtaLogo, VideoModal } from '@/components';
 import { Button } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
 import { prefersReducedMotion } from '@/helpers';
 import { SOUND_DESIGN, SD_VIDEOS } from '@/content/soundDesign';
+import { ROUTES } from '@/content/navigation';
 import type { VideoEntry } from '@/models';
 import './SoundDesignPage.css';
 
@@ -223,9 +224,7 @@ export function SoundDesignPage() {
       {/* CTA */}
       <section style={{ background: colors.surface.section, padding: 'clamp(80px,12vh,140px) 30px', borderTop: `1px solid ${colors.border.hair}` }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-          <div data-reveal style={{ display: 'inline-block', width: '88px', height: '88px', marginBottom: '28px' }}>
-            <Logo size={88} stroke={colors.copper.landing} />
-          </div>
+          <CtaLogo />
           <h2
             data-reveal
             style={{
@@ -245,7 +244,7 @@ export function SoundDesignPage() {
             {SOUND_DESIGN.ctaBody}
           </p>
           <div data-reveal style={{ marginTop: '36px' }}>
-            <Button to="/#contact" variant="primary" style={{ padding: '16px 32px' }}>
+            <Button to={ROUTES.contact} variant="primary" style={{ padding: '16px 32px' }}>
               {SOUND_DESIGN.ctaLabel}
             </Button>
           </div>

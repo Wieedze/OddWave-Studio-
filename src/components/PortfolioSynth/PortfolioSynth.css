@@ -130,3 +130,50 @@
   transform-origin: bottom;
   animation: owSynthEq 0.7s ease-in-out infinite;
 }
+
+/* --- Touch / no-hover: reveal cover meta, tag and play (hover is unavailable) --- */
+@media (hover: none) {
+  .cov-tag,
+  .cov-meta {
+    opacity: 1;
+  }
+  .cov-meta {
+    transform: none;
+  }
+  .cov-play {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* --- Tablet / phone: keep the rack from overflowing horizontally --- */
+@media (max-width: 720px) {
+  .ow-synth-stage {
+    height: auto;
+    min-height: 0;
+  }
+  /* thinner wooden ears; the centre column must be able to shrink below its
+     min-content (readout / VU meters / brand) or the whole rack overflows right */
+  .ow-synth-rack {
+    grid-template-columns: 16px minmax(0, 1fr) 16px;
+  }
+  .ow-synth-face {
+    min-width: 0;
+    padding: 22px 16px 20px !important;
+  }
+  /* brand + knobs stack instead of overflowing on one line */
+  .ow-synth-head {
+    flex-wrap: wrap;
+    gap: 16px !important;
+  }
+  /* denser cover grid so 2 columns still fit a phone */
+  .ow-synth-grid {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .ow-synth-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}

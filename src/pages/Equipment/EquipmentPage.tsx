@@ -2,11 +2,12 @@
 // Hero, featured pieces grid, full inventory by category, detail close-ups, CTA.
 
 import type { CSSProperties } from 'react';
-import { Logo } from '@/components';
+import { CtaLogo } from '@/components';
 import { Button, MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
 import { EQUIPMENT, FEATURED, DETAILS, GEAR_CATEGORIES, type GearItem, type GearCategory } from '@/content/equipment';
+import { ROUTES } from '@/content/navigation';
 import './EquipmentPage.css';
 
 const captionTitle: CSSProperties = {
@@ -212,9 +213,7 @@ export function EquipmentPage() {
       {/* CTA */}
       <section style={{ background: colors.surface.section, padding: 'clamp(90px,13vh,150px) 30px', borderTop: `1px solid ${colors.border.hair}` }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-          <div data-reveal style={{ display: 'inline-block', width: '44px', height: '44px', marginBottom: '28px' }}>
-            <Logo size={44} stroke={colors.copper.landing} />
-          </div>
+          <CtaLogo />
           <h2
             data-reveal
             style={{
@@ -246,7 +245,7 @@ export function EquipmentPage() {
             {EQUIPMENT.ctaBody}
           </p>
           <div data-reveal style={{ marginTop: '36px' }}>
-            <Button to="/#contact" variant="primary" style={{ padding: '16px 32px' }}>
+            <Button to={ROUTES.contact} variant="primary" style={{ padding: '16px 32px' }}>
               {EQUIPMENT.ctaLabel}
             </Button>
           </div>

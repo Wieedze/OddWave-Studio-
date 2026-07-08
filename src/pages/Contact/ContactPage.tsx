@@ -3,7 +3,7 @@
 // column grid (form / channels), and the "Message envoyé." confirmation state.
 
 import { useState } from 'react';
-import { Logo } from '@/components';
+import { CtaLogo } from '@/components';
 import { MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
@@ -130,9 +130,7 @@ export function ContactPage() {
           <div data-reveal>
             {sent ? (
               <div style={{ padding: '48px 40px', borderRadius: '16px', background: 'rgba(194,78,55,.07)', border: '1px solid rgba(194,78,55,.3)' }}>
-                <div style={{ width: '46px', height: '46px', marginBottom: '22px' }}>
-                  <Logo size={46} stroke={colors.copper.landing} />
-                </div>
+                <CtaLogo centered={false} reveal={false} marginBottom="22px" />
                 <h3
                   style={{
                     margin: '0 0 12px',

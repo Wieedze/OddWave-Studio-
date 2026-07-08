@@ -3,11 +3,12 @@
 // parallax pedagogy band, and the CTA back to the home contact section.
 
 import type { CSSProperties } from 'react';
-import { Logo } from '@/components';
+import { CtaLogo } from '@/components';
 import { Button, MonoLabel } from '@/design-system/primitives';
 import { colors, typography, shadow } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
 import { STUDIO } from '@/content/studio';
+import { ROUTES } from '@/content/navigation';
 import './StudioPage.css';
 
 function SplitMedia({ image, focus, height }: { image: string; focus: string; height: string }) {
@@ -208,9 +209,7 @@ export function StudioPage() {
       {/* CTA */}
       <section style={{ background: colors.ink[900], padding: 'clamp(90px,13vh,150px) 30px', borderTop: `1px solid ${colors.border.hairMid}` }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-          <div data-reveal style={{ display: 'inline-block', width: '44px', height: '44px', marginBottom: '28px' }}>
-            <Logo size={44} stroke={colors.copper.landing} />
-          </div>
+          <CtaLogo />
           <h2
             data-reveal
             style={{
@@ -230,7 +229,7 @@ export function StudioPage() {
             {STUDIO.ctaBody}
           </p>
           <div data-reveal style={{ marginTop: '36px' }}>
-            <Button to="/#contact" variant="primary" style={{ padding: '16px 32px' }}>
+            <Button to={ROUTES.contact} variant="primary" style={{ padding: '16px 32px' }}>
               {STUDIO.ctaLabel}
             </Button>
           </div>

@@ -3,7 +3,7 @@
 // formules table that pre-fills the request form, and the request form itself.
 
 import { useState } from 'react';
-import { Logo } from '@/components';
+import { CtaLogo, Logo } from '@/components';
 import { MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
@@ -247,8 +247,8 @@ export function GuidancePage() {
       <section id="demande" style={{ background: colors.surface.section, padding: 'clamp(70px,11vh,140px) 30px clamp(90px,13vh,150px)', borderTop: SECTION_TOP_RULE }}>
         <div style={{ maxWidth: '760px', margin: '0 auto' }}>
           <div data-reveal style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '18px' }}>
-            <Logo size={38} stroke={colors.copper.landing} />
-            <MonoLabel size="12px" tracking="0.2em" color={colors.copper.landing}>
+            <Logo size={88} stroke={colors.copper.landing} />
+            <MonoLabel size="16px"  color={colors.copper.landing}>
               Demande d'accompagnement
             </MonoLabel>
           </div>
@@ -286,9 +286,7 @@ export function GuidancePage() {
           <div data-reveal>
             {sent ? (
               <div style={{ padding: '44px 38px', borderRadius: '16px', background: 'rgba(194,78,55,.07)', border: '1px solid rgba(194,78,55,.3)' }}>
-                <div style={{ width: '44px', height: '44px', marginBottom: '20px' }}>
-                  <Logo size={44} stroke={colors.copper.landing} />
-                </div>
+                <CtaLogo centered={false} reveal={false} marginBottom="20px" />
                 <h3
                   style={{
                     margin: '0 0 12px',

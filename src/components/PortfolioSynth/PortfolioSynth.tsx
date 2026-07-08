@@ -132,16 +132,16 @@ export function PortfolioSynth() {
 
   return (
     <>
-    <div style={{ height: '90vh', minHeight: '760px', display: 'flex', alignItems: 'stretch', justifyContent: 'center', fontFamily: MONO }}>
-      <div style={{ position: 'relative', width: '100%', maxWidth: '1640px', height: '100%', display: 'grid', gridTemplateColumns: '36px 1fr 36px', borderRadius: '18px', background: '#0B0C0F', boxShadow: '0 50px 120px rgba(0,0,0,.72)' }}>
+    <div className="ow-synth-stage" style={{ height: '90vh', minHeight: '760px', display: 'flex', alignItems: 'stretch', justifyContent: 'center', fontFamily: MONO }}>
+      <div className="ow-synth-rack" style={{ position: 'relative', width: '100%', maxWidth: '1640px', height: '100%', display: 'grid', gridTemplateColumns: '36px 1fr 36px', borderRadius: '18px', background: '#0B0C0F', boxShadow: '0 50px 120px rgba(0,0,0,.72)' }}>
         {ear('left')}
 
         {/* MAIN FACEPLATE */}
-        <div style={{ position: 'relative', padding: '32px 48px 30px', background: 'linear-gradient(180deg,#34363C 0%,#26282D 46%,#1D1F23 100%)', backgroundImage: 'repeating-linear-gradient(180deg,rgba(255,255,255,.04) 0px,rgba(255,255,255,.04) 1px,transparent 1px,transparent 3px)', boxShadow: 'inset 0 2px 0 rgba(255,255,255,.16),inset 0 -14px 34px rgba(0,0,0,.6)', display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+        <div className="ow-synth-face" style={{ position: 'relative', padding: '32px 48px 30px', background: 'linear-gradient(180deg,#34363C 0%,#26282D 46%,#1D1F23 100%)', backgroundImage: 'repeating-linear-gradient(180deg,rgba(255,255,255,.04) 0px,rgba(255,255,255,.04) 1px,transparent 1px,transparent 3px)', boxShadow: 'inset 0 2px 0 rgba(255,255,255,.16),inset 0 -14px 34px rgba(0,0,0,.6)', display: 'flex', flexDirection: 'column', minHeight: 0 }}>
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '60px', background: 'linear-gradient(180deg,rgba(255,255,255,.07),transparent)', pointerEvents: 'none' }} />
 
           {/* HEADER */}
-          <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '24px' }}>
+          <div className="ow-synth-head" style={{ position: 'relative', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '24px' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                 <span style={{ flex: 'none', width: 'clamp(46px,5.4vw,66px)', height: 'clamp(46px,5.4vw,66px)', display: 'block' }}>
@@ -168,7 +168,7 @@ export function PortfolioSynth() {
 
           {/* CHANNEL SELECTOR + READOUT */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginBottom: '18px', flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
               <span style={{ font: `700 8px/1 ${MONO}`, letterSpacing: '0.22em', color: '#6E7077', marginRight: '2px' }}>CANAL</span>
               {SYNTH_FILTERS.map((f) => {
                 const active = filter === f.key;
@@ -209,7 +209,7 @@ export function PortfolioSynth() {
           <div style={{ position: 'relative', borderRadius: '14px', padding: '11px', background: 'linear-gradient(180deg,#101114,#0A0B0D)', boxShadow: 'inset 0 3px 10px rgba(0,0,0,.9),0 1px 0 rgba(255,255,255,.1)', border: '1px solid #000', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
             <div style={{ position: 'absolute', top: '9px', left: '9px', right: '9px', bottom: '9px', borderRadius: '8px', pointerEvents: 'none', zIndex: 3, background: 'linear-gradient(180deg,rgba(194,142,87,.05),transparent 26%)', boxShadow: 'inset 0 0 40px rgba(0,0,0,.6)' }} />
             <div className="ow-synth-scr" style={{ position: 'relative', zIndex: 1, flex: 1, minHeight: 0, overflowY: 'auto', borderRadius: '6px', padding: '2px', backgroundImage: 'radial-gradient(rgba(255,255,255,.025) 1px,transparent 1px)', backgroundSize: '22px 22px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: '16px', alignContent: 'start' }}>
+              <div className="ow-synth-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: '16px', alignContent: 'start' }}>
                 {covers.map((cover) => (
                   <div
                     key={cover.title}
