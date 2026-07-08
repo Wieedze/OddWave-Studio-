@@ -2,6 +2,62 @@
    design-handoff/Accompagnement OddWave.dc.html (phases, formules table,
    form fields, chips, and the mobile overrides). */
 
+/* ---- Retour vidéo card (video + full text) ---- */
+.ow-feedback {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  align-items: stretch;
+  background: #f2e4d2;
+  border: 1px solid rgba(60, 34, 20, 0.14);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 22px 50px -18px rgba(20, 18, 14, 0.4);
+}
+.ow-feedback-media {
+  position: relative;
+  min-height: clamp(320px, 46vh, 560px);
+  background: #1a130d;
+}
+.ow-feedback-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.ow-feedback-text {
+  padding: clamp(30px, 3.2vw, 52px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.ow-feedback-text p {
+  margin: 0 0 14px;
+  font:
+    400 clamp(15px, 1.5vw, 16.5px) / 1.65 'Manrope';
+  color: #2a211a;
+  text-wrap: pretty;
+}
+.ow-feedback-text p:first-of-type {
+  margin-bottom: 18px;
+  font:
+    500 clamp(18px, 1.9vw, 22px) / 1.4 'Manrope';
+  color: #1a130d;
+}
+.ow-feedback-text p:last-of-type {
+  margin-bottom: 0;
+}
+@media (max-width: 860px) {
+  .ow-feedback {
+    grid-template-columns: 1fr;
+  }
+  .ow-feedback-media {
+    min-height: 46vh;
+    max-height: 380px;
+  }
+}
+
 /* ---- Phase cards ---- */
 .ow-phase {
   position: relative;
