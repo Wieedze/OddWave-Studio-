@@ -32,7 +32,7 @@
 
 .ow-nav-side {
   display: flex;
-  gap: 28px;
+  gap: 40px;
   align-items: center;
   width: 0;
   overflow: hidden;
@@ -68,19 +68,19 @@
 .ow-nav:hover .ow-nav-left,
 .ow-nav:focus-within .ow-nav-left,
 .ow-nav.is-open .ow-nav-left {
-  width: 400px;
+  width: 440px;
   opacity: 1;
   transform: translateX(0);
-  margin-right: 28px;
+  margin-right: 34px;
   pointer-events: auto;
 }
 .ow-nav:hover .ow-nav-right,
 .ow-nav:focus-within .ow-nav-right,
 .ow-nav.is-open .ow-nav-right {
-  width: 400px;
+  width: 440px;
   opacity: 1;
   transform: translateX(0);
-  margin-left: 28px;
+  margin-left: 34px;
   pointer-events: auto;
 }
 
