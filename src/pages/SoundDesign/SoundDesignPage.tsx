@@ -4,7 +4,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Logo, VideoModal } from '@/components';
-import { Button, MonoLabel } from '@/design-system/primitives';
+import { Button } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
 import { prefersReducedMotion } from '@/helpers';

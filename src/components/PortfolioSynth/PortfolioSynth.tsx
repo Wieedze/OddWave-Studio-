@@ -19,7 +19,7 @@ export function PortfolioSynth() {
   const needleL = useRef<HTMLSpanElement>(null);
   const needleR = useRef<HTMLSpanElement>(null);
   const gainNeedle = useRef<HTMLSpanElement>(null);
-  const gainRef = useRef(SYNTH.defaultGain);
+  const gainRef = useRef<number>(SYNTH.defaultGain);
 
   const [filter, setFilter] = useState<ChannelFilter['key']>('all');
   const [hover, setHover] = useState<{ title: string; artist: string; tag: string } | null>(null);
