@@ -5,9 +5,10 @@ export type NavSide = 'left' | 'right';
 export class NavLink {
   constructor(
     readonly label: string,
+    /** Internal route ("/studio") or, when `external`, an absolute URL. */
     readonly to: string,
     readonly side: NavSide,
-    /** Renders as the copper primary pill (the Contact link). */
-    readonly primary: boolean = false,
+    /** External link → renders a plain <a> opening in a new tab. */
+    readonly external: boolean = false,
   ) {}
 }

@@ -20,10 +20,14 @@ export const NAV_LEFT: readonly NavLink[] = [
   new NavLink('Accompagnement', ROUTES.guidance, 'left'),
 ];
 
+/** Sleeping Tracks Records — the label's external site. */
+export const LABEL_URL = 'https://www.sleepingtracksrecords.com/';
+
 /** Right group of the floating nav. */
 export const NAV_RIGHT: readonly NavLink[] = [
   new NavLink('Sound design', ROUTES.soundDesign, 'right'),
   new NavLink('Portfolio', ROUTES.portfolio, 'right'),
+  new NavLink('Label', LABEL_URL, 'right', true),
   new NavLink('Contact', ROUTES.contact, 'right'),
 ];
 

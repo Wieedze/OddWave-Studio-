@@ -10,6 +10,13 @@ import type { NavLink as NavLinkModel } from '@/models';
 import './Nav.css';
 
 function NavLinkItem({ link }: { link: NavLinkModel }) {
+  if (link.external) {
+    return (
+      <a href={link.to} className="ow-link" target="_blank" rel="noopener noreferrer">
+        {link.label}
+      </a>
+    );
+  }
   return (
     <Link to={link.to} className="ow-link">
       {link.label}
@@ -53,11 +60,17 @@ export function Nav() {
       </button>
 
       <div className={menuOpen ? 'ow-menu open' : 'ow-menu'}>
-        {MENU_LINKS.map((link) => (
-          <Link key={link.to} to={link.to} className="ow-mlink" onClick={() => setMenuOpen(false)}>
-            {link.label}
-          </Link>
-        ))}
+        {MENU_LINKS.map((link) =>
+          link.external ? (
+            <a key={link.to} href={link.to} className="ow-mlink" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>
+              {link.label}
+            </a>
+          ) : (
+            <Link key={link.to} to={link.to} className="ow-mlink" onClick={() => setMenuOpen(false)}>
+              {link.label}
+            </Link>
+          ),
+        )}
       </div>
     </div>
   );
