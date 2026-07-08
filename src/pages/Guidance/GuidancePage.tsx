@@ -7,7 +7,7 @@ import { Logo } from '@/components';
 import { MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
-import { GUIDANCE_INTRO, GUIDANCE_PHASES, GUIDANCE_FORMULAS } from '@/content/guidance';
+import { GUIDANCE_INTRO, GUIDANCE_PHASES, GUIDANCE_FORMULAS, GUIDANCE_FEEDBACK } from '@/content/guidance';
 import { GuidanceForm } from './GuidanceForm';
 import './GuidancePage.css';
 
@@ -157,6 +157,53 @@ export function GuidancePage() {
               </div>
             </article>
           ))}
+        </div>
+      </section>
+
+      {/* RETOUR VIDÉO — sticky video, text reveals over it on scroll */}
+      <section style={{ position: 'relative', background: colors.surface.section }}>
+        <div style={{ position: 'sticky', top: 0, height: '100vh', width: '100%', overflow: 'hidden' }}>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={GUIDANCE_FEEDBACK.poster}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          >
+            <source src={GUIDANCE_FEEDBACK.video} type="video/mp4" />
+          </video>
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg,rgba(11,12,15,.74) 0%,rgba(11,12,15,.5) 38%,rgba(11,12,15,.58) 68%,rgba(11,12,15,.85) 100%)' }} />
+        </div>
+        <div style={{ position: 'relative', zIndex: 1, marginTop: '-100vh' }}>
+          <div style={{ maxWidth: '780px', margin: '0 auto', padding: '0 30px' }}>
+            <div aria-hidden style={{ height: '40vh' }} />
+            <div data-reveal style={{ marginBottom: 'min(22vh, 170px)' }}>
+              <MonoLabel size="12px" tracking="0.2em" color={colors.copper.warm}>
+                {GUIDANCE_FEEDBACK.eyebrow}
+              </MonoLabel>
+            </div>
+            {GUIDANCE_FEEDBACK.paragraphs.map((paragraph, i) => (
+              <p
+                key={i}
+                data-reveal
+                style={{
+                  margin: `0 0 ${i < GUIDANCE_FEEDBACK.paragraphs.length - 1 ? 'min(38vh, 300px)' : '0'}`,
+                  fontFamily: typography.font.body,
+                  fontWeight: i === 0 ? typography.weight.medium : typography.weight.regular,
+                  fontSize: i === 0 ? 'clamp(22px, 3vw, 34px)' : 'clamp(17px, 1.8vw, 21px)',
+                  lineHeight: i === 0 ? 1.32 : 1.65,
+                  letterSpacing: i === 0 ? '-0.01em' : '0',
+                  color: i === 0 ? colors.text.primaryWarm : 'rgba(241,238,232,.86)',
+                  textWrap: 'pretty',
+                  textShadow: '0 2px 30px rgba(0,0,0,.55)',
+                }}
+              >
+                {paragraph}
+              </p>
+            ))}
+            <div aria-hidden style={{ height: '18vh' }} />
+          </div>
         </div>
       </section>
 

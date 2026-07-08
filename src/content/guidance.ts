@@ -11,6 +11,24 @@ export const GUIDANCE_INTRO = {
   body: "Quatre phases, des livrables concrets à chaque étape. La démarche s'adapte à vos besoins, votre budget et vos délais, en résidence sur place, à distance, ou en hybride.",
 } as const;
 
+// Feedback video (muted, sped-up OBS capture) hosted on IPFS, with the text that
+// reveals over it. Gateway is configurable via VITE_IPFS_GATEWAY (+ token).
+const IPFS_GATEWAY = ((import.meta.env.VITE_IPFS_GATEWAY as string | undefined) ?? 'https://gateway.pinata.cloud').replace(/\/+$/, '');
+const IPFS_GATEWAY_TOKEN = import.meta.env.VITE_IPFS_GATEWAY_TOKEN as string | undefined;
+const ipfs = (cid: string): string => `${IPFS_GATEWAY}/ipfs/${cid}${IPFS_GATEWAY_TOKEN ? `?pinataGatewayToken=${IPFS_GATEWAY_TOKEN}` : ''}`;
+
+export const GUIDANCE_FEEDBACK = {
+  eyebrow: 'Le retour vidéo',
+  video: ipfs('bafybeieoydeohvwajref3kp6ringrgpqkeh5glbocpeftzpdxv3ho2msmu'),
+  poster: '/assets/feedback-poster.jpg',
+  paragraphs: [
+    "Travailler avec notre studio, c'est bénéficier d'un regard extérieur à chaque étape du processus.",
+    "En amont, nous réalisons une analyse complète de votre projet afin d'identifier les points forts, les axes d'amélioration et de partir des meilleures bases possibles.",
+    "Une fois le travail terminé, vous recevez un retour vidéo personnalisé expliquant les interventions réalisées, les choix artistiques et techniques effectués, ainsi que les problématiques rencontrées durant le mixage ou le mastering.",
+    "Cette approche vous permet non seulement de comprendre ce qui a été fait sur vos morceaux, mais aussi de développer vos compétences de production pour faire évoluer durablement vos futures compositions.",
+  ],
+} as const;
+
 export const GUIDANCE_PHASES: readonly Phase[] = [
   new Phase('1', 'Comprendre l’artiste avant de produire quoi que ce soit.', 'Diagnostic & Vision', [
     'Écoute approfondie du projet',
