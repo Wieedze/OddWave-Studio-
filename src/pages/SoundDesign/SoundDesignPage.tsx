@@ -12,7 +12,7 @@ import { SOUND_DESIGN, SD_VIDEOS } from '@/content/soundDesign';
 import type { VideoEntry } from '@/models';
 import './SoundDesignPage.css';
 
-const HERO_REVEAL_AT = 9; // seconds of playback before the title appears (handoff)
+const HERO_REVEAL_AT = 0.6; // delay (s) before the title reveals — matches the other pages' hero intro
 
 function GalleryCard({ entry, onOpen }: { entry: VideoEntry; onOpen: () => void }) {
   const posterGradient = `linear-gradient(180deg,rgba(11,12,15,.05),rgba(11,12,15,.1)),url('${entry.posterImg}')`;
@@ -101,21 +101,10 @@ export function SoundDesignPage() {
       return;
     }
 
-    let done = false;
-    const reveal = () => {
-      if (done) return;
-      done = true;
-      setHeroShown(true);
-    };
-    const onTime = () => {
-      if (video.currentTime >= HERO_REVEAL_AT) reveal();
-    };
-    video.addEventListener('timeupdate', onTime);
-    const fallback = window.setTimeout(reveal, (HERO_REVEAL_AT + 2.5) * 1000);
-    return () => {
-      video.removeEventListener('timeupdate', onTime);
-      clearTimeout(fallback);
-    };
+    // Reveal the title/eyebrow shortly after mount (same intro timing as the
+    // other pages) rather than waiting for the video to play in.
+    const timer = window.setTimeout(() => setHeroShown(true), HERO_REVEAL_AT * 1000);
+    return () => clearTimeout(timer);
   }, []);
 
   function toggleSound(): void {
@@ -142,10 +131,10 @@ export function SoundDesignPage() {
           muted
           loop
           playsInline
-          poster="/assets/sd-irradiation-poster.jpg"
+          poster="/assets/showreel-poster.jpg"
           style={{ position: 'absolute', inset: '-6% 0 0 0', width: '100%', height: '112%', objectFit: 'cover', objectPosition: 'center 28%', willChange: 'transform, clip-path' }}
         >
-          <source src="/assets/sd-irradiation.mp4" type="video/mp4" />
+          <source src="/assets/showreel.mp4" type="video/mp4" />
         </video>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg,rgba(11,12,15,.32) 0%,rgba(11,12,15,.05) 20%,transparent 46%,rgba(11,12,15,.5) 82%,rgba(11,12,15,.86) 100%)' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 95% at 18% 92%,rgba(11,12,15,.6) 0%,transparent 52%)' }} />
@@ -234,8 +223,8 @@ export function SoundDesignPage() {
       {/* CTA */}
       <section style={{ background: colors.surface.section, padding: 'clamp(80px,12vh,140px) 30px', borderTop: `1px solid ${colors.border.hair}` }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-          <div data-reveal style={{ display: 'inline-block', width: '44px', height: '44px', marginBottom: '28px' }}>
-            <Logo size={44} stroke={colors.copper.landing} />
+          <div data-reveal style={{ display: 'inline-block', width: '88px', height: '88px', marginBottom: '28px' }}>
+            <Logo size={88} stroke={colors.copper.landing} />
           </div>
           <h2
             data-reveal
