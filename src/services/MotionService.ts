@@ -18,12 +18,20 @@ export interface MotionOptions {
   heroSelector?: string;
   /** Force-disable motion (defaults to the OS reduced-motion preference). */
   reduceMotion?: boolean;
+  /**
+   * Fired once the hero intro has visually landed (partway through the last
+   * text tween, once its ease-out has settled the element; immediately under
+   * reduced motion / when the page has no hero text). Lets a page defer
+   * revealing below-the-hero content until the intro is done.
+   */
+  onHeroIntroComplete?: () => void;
 }
 
 export class MotionService {
   private ctx: ReturnType<typeof gsap.context> | null = null;
   private readonly reduce: boolean;
   private readonly heroSelector: string;
+  private readonly onHeroIntroComplete?: () => void;
 
   constructor(
     private readonly root: HTMLElement,
@@ -31,6 +39,7 @@ export class MotionService {
   ) {
     this.reduce = options.reduceMotion ?? prefersReducedMotion();
     this.heroSelector = options.heroSelector ?? '[data-hero]';
+    this.onHeroIntroComplete = options.onHeroIntroComplete;
     gsap.registerPlugin(ScrollTrigger);
   }
 
@@ -76,6 +85,7 @@ export class MotionService {
   private buildHeroTitleEyebrow(): void {
     const title = this.root.querySelector<HTMLElement>('[data-hero-title]');
     const eyebrow = this.root.querySelector<HTMLElement>('[data-hero-eyebrow]');
+    const done = this.onHeroIntroComplete;
     for (const el of [title, eyebrow]) {
       if (el) gsap.set(el, { autoAlpha: 0, filter: 'blur(14px)', y: 22 });
     }
@@ -83,10 +93,23 @@ export class MotionService {
       for (const el of [title, eyebrow]) {
         if (el) gsap.set(el, { autoAlpha: 1, filter: 'blur(0px)', y: 0 });
       }
+      done?.();
+      return;
+    }
+    const last = eyebrow ?? title;
+    if (!last) {
+      done?.();
       return;
     }
     if (title) gsap.to(title, { autoAlpha: 1, filter: 'blur(0px)', y: 0, duration: 1.5, ease: 'power2.out', delay: 0.7 });
     if (eyebrow) gsap.to(eyebrow, { autoAlpha: 1, filter: 'blur(0px)', y: 0, duration: 1.5, ease: 'power2.out', delay: 1.25 });
+    if (done) {
+      // Hand off partway through the last tween, not at its mathematical end:
+      // with power2.out the text is visually settled around 45% in, and the
+      // follow-up content should overlap the invisible tail of the blur.
+      const lastDelay = last === eyebrow ? 1.25 : 0.7;
+      gsap.delayedCall(lastDelay + 0.65, done);
+    }
   }
 
   private buildHeroReveals(): void {

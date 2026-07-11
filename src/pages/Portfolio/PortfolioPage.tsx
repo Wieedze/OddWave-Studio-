@@ -1,16 +1,22 @@
 // Portfolio — recreated from design-handoff/Portfolio OddWave.dc.html. A fixed
 // FloatingLines field behind the title, the interactive "Portfolio Synth" rack
-// player sitting directly under the hero text, and the CTA.
+// player sitting directly under the hero text, and the CTA. The synth stays
+// mounted (its space is reserved, no layout shift) but is revealed only once
+// the hero intro has played, so the title/eyebrow always land first.
 
+import { useState } from 'react';
 import { FloatingLines, CtaLogo, PortfolioSynth } from '@/components';
 import { Button } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
+import { cx } from '@/helpers';
 import { ROUTES } from '@/content/navigation';
 import { PORTFOLIO } from '@/content/portfolio';
+import './PortfolioPage.css';
 
 export function PortfolioPage() {
-  const ref = usePageMotion<HTMLDivElement>();
+  const [heroDone, setHeroDone] = useState(false);
+  const ref = usePageMotion<HTMLDivElement>({ onHeroIntroComplete: () => setHeroDone(true) });
 
   return (
     <div ref={ref} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden', minHeight: '100vh' }}>
@@ -73,9 +79,11 @@ export function PortfolioPage() {
           </p>
         </section>
 
-        {/* INTERACTIVE RACK PLAYER */}
+        {/* INTERACTIVE RACK PLAYER (revealed once the hero intro is done) */}
         <section style={{ position: 'relative', zIndex: 2, padding: '15vh 14px clamp(60px,10vh,120px)' }}>
-          <PortfolioSynth />
+          <div className={cx('portfolio-player-enter', heroDone && 'is-in')}>
+            <PortfolioSynth />
+          </div>
         </section>
 
         {/* CTA */}

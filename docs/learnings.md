@@ -267,4 +267,34 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   `clamp(20px,4vh,40px)` top padding as the only gap, so the player sits right
   under the hero text.
 
+## 2026-07-11 · Portfolio synth revealed after the hero intro
+
+- `MotionService` gained an opt-in `onHeroIntroComplete` callback (fires once,
+  ~0.65s after the eyebrow tween starts, when its ease-out has visually
+  settled the text at roughly 45% progress; waiting for the tween's
+  mathematical end felt laggy. Immediate under reduced motion or when the
+  page has no hero text). Only Portfolio passes it; other pages untouched.
+- The synth stays **mounted from the start so its space is reserved** (no
+  layout shift, ScrollTrigger positions stay valid, no refresh needed). It is
+  hidden in CSS (`.portfolio-player-enter`) and revealed with the handoff's
+  hero-reveal motion (1.1s, `ease.ui` cubic-bezier(.19,1,.22,1), 26px rise)
+  when the callback flips `heroDone`.
+- Gotchas learned: pages must **not** import a service class directly (the
+  hook layer is the sole page-service boundary); custom easings are forbidden,
+  reuse one of the three canonical curves from `tokens/motion.ts`; and
+  conditionally *mounting* below-hero content causes a visible layout jump —
+  prefer mount-always + CSS reveal.
+
+## 2026-07-11 · Article "Le" dropped from section names (handoff deviation)
+
+- User request: "Le Studio" / "Le Matériel" / "Le Portfolio" become "Studio" /
+  "Matériel" / "Portfolio" in the hero titles (`content/studio.ts`,
+  `content/equipment.ts`, `content/portfolio.ts`), the nav labels
+  (`content/navigation.ts`) and the footer sitemap (`content/site.ts`).
+- Left as-is: the Contact page's non-clickable "Le studio" info row (it reads
+  as a sentence, not a section name) and the hero eyebrows.
+- Nav balance: "Accompagnement" (14 chars) became "Coaching" (8) in the navbar
+  only, so both sides of the logo disc weigh almost the same (left 31 chars vs
+  right 30). The Guidance page hero and the footer keep "Accompagnement".
+
 <!-- Add new entries above this line -->
