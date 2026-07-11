@@ -57,13 +57,11 @@ export function useHomeIntro<T extends HTMLElement = HTMLDivElement>() {
         // close behind it instead of lagging a full step after the nav opens.
         const step = 0.85 * speed;
         const gNav = step; // nav appears
-        const navOpenAt = gNav + 0.3 * speed; // nav starts opening
         const gTitle = gNav + 0.42 * speed; // ODDWAVE comes in just as the nav opens
         const gStudio = gTitle + 0.5 * speed; // "studio" shortly after the title
 
         if (img) tl.to(img, { filter: 'blur(7px)', duration: 1.5 * speed, ease: 'power1.inOut' }, 0);
         if (nav) tl.to(nav, { autoAlpha: 1, y: 0, duration: 0.64 * speed, ease: 'power2.out' }, gNav);
-        tl.add(() => nav?.classList.add('is-open'), navOpenAt);
         if (letters.length)
           tl.to(letters, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 1.8 * speed, ease: 'power2.out' }, gTitle);
 
@@ -82,19 +80,6 @@ export function useHomeIntro<T extends HTMLElement = HTMLDivElement>() {
           scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: true },
         });
       }
-
-      // ---- Nav auto-closes on first scroll down ----
-      let navAuto = !reduce;
-      ScrollTrigger.create({
-        start: 12,
-        end: 'max',
-        onEnter: () => {
-          if (navAuto && nav) {
-            nav.classList.remove('is-open');
-            navAuto = false;
-          }
-        },
-      });
 
       // ---- Generic reveals ----
       root.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el) => {

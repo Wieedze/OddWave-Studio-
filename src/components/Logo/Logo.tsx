@@ -21,7 +21,7 @@ export function Logo({
   stroke = colors.text.primary,
   fill = 'none',
   strokeWidth = 20,
-  size = 34,
+  size = 62,
   title = 'OddWave',
   style,
 }: LogoProps) {

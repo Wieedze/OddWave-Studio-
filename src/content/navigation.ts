@@ -10,24 +10,26 @@ export const ROUTES = {
   guidance: '/guidance',
   soundDesign: '/sound-design',
   portfolio: '/portfolio',
+  exports: '/exports',
   contact: '/contact',
 } as const;
+
+/** Sleeping Tracks Records — the label's external site. */
+export const LABEL_URL = 'https://www.sleepingtracksrecords.com/';
 
 /** Left group of the floating nav. */
 export const NAV_LEFT: readonly NavLink[] = [
   new NavLink('Le studio', ROUTES.studio, 'left'),
   new NavLink('Le matériel', ROUTES.equipment, 'left'),
-  new NavLink('Accompagnement', ROUTES.guidance, 'left'),
+  new NavLink('Sound design', ROUTES.soundDesign, 'left'),
+  new NavLink('Label', LABEL_URL, 'left', true),
 ];
-
-/** Sleeping Tracks Records — the label's external site. */
-export const LABEL_URL = 'https://www.sleepingtracksrecords.com/';
 
 /** Right group of the floating nav. */
 export const NAV_RIGHT: readonly NavLink[] = [
-  new NavLink('Sound design', ROUTES.soundDesign, 'right'),
+  new NavLink('Accompagnement', ROUTES.guidance, 'right'),
   new NavLink('Portfolio', ROUTES.portfolio, 'right'),
-  new NavLink('Label', LABEL_URL, 'right', true),
+  new NavLink('Export', ROUTES.exports, 'right'),
   new NavLink('Contact', ROUTES.contact, 'right'),
 ];
 
