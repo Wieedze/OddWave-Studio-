@@ -52,20 +52,23 @@ function PrestationPanel({ service }: { service: ServiceItem }) {
       >
         {service.title}
       </h3>
-      <p
-        style={{
-          margin: 0,
-          fontFamily: typography.font.body,
-          fontWeight: typography.weight.regular,
-          fontSize: '16.5px',
-          lineHeight: 1.85,
-          color: colors.text.mutedCool,
-          textWrap: 'pretty',
-          maxWidth: '60ch',
-        }}
-      >
-        {service.body}
-      </p>
+      {service.body.map((paragraph, i) => (
+        <p
+          key={i}
+          style={{
+            margin: i === 0 ? 0 : '14px 0 0',
+            fontFamily: typography.font.body,
+            fontWeight: typography.weight.regular,
+            fontSize: '16.5px',
+            lineHeight: 1.85,
+            color: colors.text.mutedCool,
+            textWrap: 'pretty',
+            maxWidth: '60ch',
+          }}
+        >
+          {paragraph}
+        </p>
+      ))}
       <a
         href={service.ctaHref}
         style={{
@@ -318,7 +321,7 @@ export function HomePage() {
       {/* CONTACT / CTA */}
       <section
         id="contact"
-        style={{ background: colors.ink[900], padding: '96px 30px 86px', borderTop: `1px solid ${colors.border.hairMid}` }}
+        style={{ background: colors.ink[900], padding: '44px 30px 60px', borderTop: `1px solid ${colors.border.hairMid}` }}
       >
         <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
           <CtaLogo />
@@ -340,7 +343,7 @@ export function HomePage() {
           <p
             data-reveal
             style={{
-              margin: '28px auto 0',
+              margin: '18px auto 0',
               maxWidth: '480px',
               fontFamily: typography.font.body,
               fontWeight: typography.weight.regular,
@@ -352,7 +355,7 @@ export function HomePage() {
           >
             {HOME_CTA.body}
           </p>
-          <div data-reveal style={{ marginTop: '40px' }}>
+          <div data-reveal style={{ marginTop: '26px' }}>
             <Button to={ROUTES.contact} variant="primary" style={{ padding: '17px 34px' }}>
               {HOME_CTA.buttonLabel}
             </Button>

@@ -6,8 +6,8 @@ export class ServiceItem {
   constructor(
     readonly id: string,
     readonly title: string,
-    /** Full body copy (verbatim French from the handoff). */
-    readonly body: string,
+    /** Body copy as paragraphs (verbatim French, split only at sentence boundaries). */
+    readonly body: readonly string[],
     /** Background image path under /assets. */
     readonly image: string,
     /** Which side the media block sits on. */
