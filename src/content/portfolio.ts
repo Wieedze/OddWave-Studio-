@@ -8,16 +8,3 @@ export const PORTFOLIO = {
   ctaTitle: "Le prochain, c'est le vôtre.",
   ctaLabel: 'Nous contacter →',
 } as const;
-
-/** YouTube réalisations embedded under the synth rack. */
-export interface PortfolioVideo {
-  /** YouTube video id (the `v=` parameter). */
-  readonly id: string;
-  readonly title: string;
-  readonly note: string;
-}
-
-export const PORTFOLIO_VIDEOS: readonly PortfolioVideo[] = [
-  { id: '8bXkfoIFBXc', title: 'Alice 2049', note: 'Timagin Production' },
-  { id: 'v98TYYpbjXo', title: 'Hadra : Utopies Ephémères', note: 'Film réalisé par Timothé Fournol' },
-];

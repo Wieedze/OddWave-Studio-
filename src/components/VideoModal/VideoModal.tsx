@@ -79,7 +79,16 @@ export function VideoModal({ entry, onClose }: VideoModalProps) {
         }}
       >
         <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', overflow: 'hidden', background: '#000' }}>
-          {entry.isPlayable ? (
+          {entry.youtubeId ? (
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${entry.youtubeId}?autoplay=1&rel=0`}
+              title={entry.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0, background: '#000' }}
+            />
+          ) : entry.isPlayable ? (
             <video
               src={entry.src}
               poster={entry.posterImg}

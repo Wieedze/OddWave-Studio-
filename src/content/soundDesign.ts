@@ -50,4 +50,6 @@ export const SD_VIDEOS: readonly VideoEntry[] = [
   new VideoEntry('witcher', 'The Witcher · S3 E6', 'Série', '0:46', 'Re-sound design, extrait court.', '/assets/witcher-poster.jpg', VIDEO_SRC.witcher),
   new VideoEntry('irradiation', 'Irradiation', 'Trailer', '0:40', 'Redesign sonore complet : court CG de Sava Zivkovic.', '/assets/sd-irradiation-poster.jpg', VIDEO_SRC.irradiation),
   new VideoEntry('sea-beast', 'The Sea Beast', 'Film', '0:40', "Redesign sonore : séquence du film d'animation.", '/assets/sd-seabeast-poster.jpg', VIDEO_SRC.seaBeast),
+  new VideoEntry('alice-2049', 'Alice 2049', 'Court métrage', '2:20', 'Réalisation Timagin Production.', 'https://i.ytimg.com/vi/8bXkfoIFBXc/maxresdefault.jpg', undefined, '8bXkfoIFBXc'),
+  new VideoEntry('hadra-utopies', 'Hadra : Utopies Ephémères', 'Film', '1:06:00', 'Film réalisé par Timothé Fournol.', 'https://i.ytimg.com/vi/v98TYYpbjXo/maxresdefault.jpg', undefined, 'v98TYYpbjXo'),
 ];

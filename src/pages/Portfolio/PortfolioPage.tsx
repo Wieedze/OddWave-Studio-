@@ -11,7 +11,7 @@ import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
 import { cx } from '@/helpers';
 import { ROUTES } from '@/content/navigation';
-import { PORTFOLIO, PORTFOLIO_VIDEOS } from '@/content/portfolio';
+import { PORTFOLIO } from '@/content/portfolio';
 import './PortfolioPage.css';
 
 export function PortfolioPage() {
@@ -83,34 +83,6 @@ export function PortfolioPage() {
         <section style={{ position: 'relative', zIndex: 2, padding: '15vh 14px clamp(60px,10vh,120px)' }}>
           <div className={cx('portfolio-player-enter', heroDone && 'is-in')}>
             <PortfolioSynth />
-          </div>
-        </section>
-
-        {/* VIDEO REALISATIONS (YouTube embeds) */}
-        <section style={{ position: 'relative', zIndex: 2, padding: '0 24px clamp(80px,12vh,140px)' }}>
-          <div className="portfolio-videos">
-            {PORTFOLIO_VIDEOS.map((video) => (
-              <figure key={video.id} data-reveal style={{ margin: 0 }}>
-                <div className="portfolio-video-frame">
-                  <iframe
-                    src={`https://www.youtube-nocookie.com/embed/${video.id}`}
-                    title={video.title}
-                    loading="lazy"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  />
-                </div>
-                <figcaption style={{ marginTop: '14px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <span style={{ fontFamily: typography.font.display, fontWeight: typography.weight.bold, fontSize: '18px', letterSpacing: '-0.01em', color: colors.text.primaryWarm }}>
-                    {video.title}
-                  </span>
-                  <span style={{ fontFamily: typography.font.mono, fontWeight: typography.weight.semibold, fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase', color: colors.text.muted }}>
-                    {video.note}
-                  </span>
-                </figcaption>
-              </figure>
-            ))}
           </div>
         </section>
 
