@@ -247,7 +247,7 @@ export function GuidancePage() {
       <section id="demande" style={{ background: colors.surface.section, padding: 'clamp(70px,11vh,140px) 30px clamp(90px,13vh,150px)', borderTop: SECTION_TOP_RULE }}>
         <div style={{ maxWidth: '760px', margin: '0 auto' }}>
           <div data-reveal style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '18px' }}>
-            <Logo size={88} stroke={colors.copper.landing} />
+            <Logo size={161} stroke={colors.copper.landing} />
             <MonoLabel size="16px"  color={colors.copper.landing}>
               Demande d'accompagnement
             </MonoLabel>

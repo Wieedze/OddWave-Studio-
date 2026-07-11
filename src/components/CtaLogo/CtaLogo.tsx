@@ -6,7 +6,7 @@ import { Logo } from '@/components/Logo';
 import { colors } from '@/design-system/tokens';
 
 /** The single source of truth for the CTA mark size (px). */
-export const CTA_LOGO_SIZE = 88;
+export const CTA_LOGO_SIZE = 322;
 
 interface CtaLogoProps {
   /** Mark size in px. Defaults to the shared CTA size. */
@@ -19,7 +19,7 @@ interface CtaLogoProps {
   reveal?: boolean;
 }
 
-export function CtaLogo({ size = CTA_LOGO_SIZE, marginBottom = 28, centered = true, reveal = true }: CtaLogoProps) {
+export function CtaLogo({ size = CTA_LOGO_SIZE, marginBottom = 16, centered = true, reveal = true }: CtaLogoProps) {
   return (
     <div
       data-reveal={reveal ? '' : undefined}

@@ -211,7 +211,7 @@ export function EquipmentPage() {
       </section>
 
       {/* CTA */}
-      <section style={{ background: colors.surface.section, padding: 'clamp(90px,13vh,150px) 30px', borderTop: `1px solid ${colors.border.hair}` }}>
+      <section style={{ background: colors.surface.section, padding: 'clamp(44px,6.5vh,74px) 30px clamp(56px,8.5vh,96px)', borderTop: `1px solid ${colors.border.hair}` }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
           <CtaLogo />
           <h2
@@ -232,7 +232,7 @@ export function EquipmentPage() {
           <p
             data-reveal
             style={{
-              margin: '24px auto 0',
+              margin: '16px auto 0',
               maxWidth: '460px',
               fontFamily: typography.font.body,
               fontWeight: typography.weight.regular,
@@ -244,7 +244,7 @@ export function EquipmentPage() {
           >
             {EQUIPMENT.ctaBody}
           </p>
-          <div data-reveal style={{ marginTop: '36px' }}>
+          <div data-reveal style={{ marginTop: '24px' }}>
             <Button to={ROUTES.contact} variant="primary" style={{ padding: '16px 32px' }}>
               {EQUIPMENT.ctaLabel}
             </Button>

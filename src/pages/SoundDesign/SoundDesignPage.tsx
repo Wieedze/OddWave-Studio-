@@ -222,7 +222,7 @@ export function SoundDesignPage() {
       </section>
 
       {/* CTA */}
-      <section style={{ background: colors.surface.section, padding: 'clamp(80px,12vh,140px) 30px', borderTop: `1px solid ${colors.border.hair}` }}>
+      <section style={{ background: colors.surface.section, padding: 'clamp(40px,6vh,70px) 30px clamp(52px,8vh,90px)', borderTop: `1px solid ${colors.border.hair}` }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
           <CtaLogo />
           <h2
@@ -240,10 +240,10 @@ export function SoundDesignPage() {
           >
             {SOUND_DESIGN.ctaTitle}
           </h2>
-          <p data-reveal style={{ margin: '24px auto 0', maxWidth: '460px', fontFamily: typography.font.body, fontWeight: typography.weight.regular, fontSize: '17px', lineHeight: 1.6, color: colors.text.secondary, textWrap: 'pretty' }}>
+          <p data-reveal style={{ margin: '16px auto 0', maxWidth: '460px', fontFamily: typography.font.body, fontWeight: typography.weight.regular, fontSize: '17px', lineHeight: 1.6, color: colors.text.secondary, textWrap: 'pretty' }}>
             {SOUND_DESIGN.ctaBody}
           </p>
-          <div data-reveal style={{ marginTop: '36px' }}>
+          <div data-reveal style={{ marginTop: '24px' }}>
             <Button to={ROUTES.contact} variant="primary" style={{ padding: '16px 32px' }}>
               {SOUND_DESIGN.ctaLabel}
             </Button>

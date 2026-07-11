@@ -68,7 +68,7 @@ export function Footer() {
         }}
       >
         <Link to={ROUTES.home} style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
-          <Logo size={24} stroke={colors.text.primary} />
+          <Logo size={43} stroke={colors.text.primary} />
           <span
             style={{
               fontFamily: typography.font.display,

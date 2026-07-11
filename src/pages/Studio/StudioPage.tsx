@@ -207,7 +207,7 @@ export function StudioPage() {
       </section>
 
       {/* CTA */}
-      <section style={{ background: colors.ink[900], padding: 'clamp(90px,13vh,150px) 30px', borderTop: `1px solid ${colors.border.hairMid}` }}>
+      <section style={{ background: colors.ink[900], padding: 'clamp(44px,6.5vh,74px) 30px clamp(56px,8.5vh,96px)', borderTop: `1px solid ${colors.border.hairMid}` }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
           <CtaLogo />
           <h2
@@ -225,10 +225,10 @@ export function StudioPage() {
           >
             {STUDIO.ctaTitle}
           </h2>
-          <p data-reveal style={{ ...bodyParagraph, margin: '24px auto 0', maxWidth: '460px', fontSize: '17px', lineHeight: 1.6 }}>
+          <p data-reveal style={{ ...bodyParagraph, margin: '16px auto 0', maxWidth: '460px', fontSize: '17px', lineHeight: 1.6 }}>
             {STUDIO.ctaBody}
           </p>
-          <div data-reveal style={{ marginTop: '36px' }}>
+          <div data-reveal style={{ marginTop: '24px' }}>
             <Button to={ROUTES.contact} variant="primary" style={{ padding: '16px 32px' }}>
               {STUDIO.ctaLabel}
             </Button>
