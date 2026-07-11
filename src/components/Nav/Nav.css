@@ -14,25 +14,39 @@
   pointer-events: none;
 }
 
+/* Wrapper carrying the single contour drop-shadow. It sits OVER the clipped bar
+   so the shadow follows the revealed shape and is never itself clipped. */
+.ow-nav-fx {
+  position: relative;
+  pointer-events: none;
+  filter: drop-shadow(0 0 0.8px rgba(255, 255, 255, 0.2)) drop-shadow(0 0 0.8px rgba(255, 255, 255, 0.16))
+    drop-shadow(0 10px 30px rgba(0, 0, 0, 0.42));
+}
+
+/* Fixed-width bar, revealed via clip-path — NO width animation, so nothing moves
+   in layout and the centred elements never jitter. clip-path also clips pointer
+   events: at rest only the disc is interactive; the empty sides let clicks through. */
 .ow-nav {
   position: relative;
   height: 90px;
-  width: 90px;
-  pointer-events: auto;
-  transition: width 0.85s cubic-bezier(0.19, 1, 0.22, 1);
-}
-/* Open on hover, or on KEYBOARD focus only (:focus-visible) — a mouse click on
-   a link must not keep the nav deployed after navigating away. Kept in separate
-   rules so an unsupported :has() can never invalidate the :hover rule. */
-.ow-nav:hover {
   width: 900px;
+  pointer-events: auto;
+  clip-path: inset(0 405px round 999px);
+  transition: clip-path 0.85s cubic-bezier(0.19, 1, 0.22, 1);
+}
+/* Open on hover of the bar OR the (out-of-bar) logo, on keyboard focus, or when
+   JS deploys it. Split so an unsupported :has() can never kill the :hover rule. */
+.ow-nav:hover {
+  clip-path: inset(0 round 999px);
+}
+.ow-nav-shell:has(.ow-nav-logo:hover) .ow-nav {
+  clip-path: inset(0 round 999px);
 }
 .ow-nav:has(:focus-visible) {
-  width: 900px;
+  clip-path: inset(0 round 999px);
 }
-/* Auto-deploy driven by JS (open on page arrival, collapse on scroll). */
 .ow-nav.is-open {
-  width: 900px;
+  clip-path: inset(0 round 999px);
 }
 
 /* Fond = union barre+disque, même couleur, pas de border. Contour = drop-shadow. */
@@ -40,8 +54,6 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  filter: drop-shadow(0 0 0.8px rgba(255, 255, 255, 0.2)) drop-shadow(0 0 0.8px rgba(255, 255, 255, 0.16))
-    drop-shadow(0 10px 30px rgba(0, 0, 0, 0.42));
 }
 .ow-nav-bg .bar {
   position: absolute;
@@ -74,49 +86,40 @@
   pointer-events: none;
 }
 
+/* No opacity fade needed — the clip-path wipe reveals the groups. */
 .ow-nav-side {
   display: flex;
-  gap: 24px;
+  gap: 18px; /* minimum; space-between stretches the real gaps evenly */
   align-items: center;
   white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.45s ease;
 }
-.ow-nav:hover .ow-nav-side {
-  opacity: 1;
-  transition: opacity 0.6s ease 0.2s;
-}
-.ow-nav:has(:focus-visible) .ow-nav-side {
-  opacity: 1;
-  transition: opacity 0.6s ease 0.2s;
-}
-.ow-nav.is-open .ow-nav-side {
-  opacity: 1;
-  transition: opacity 0.6s ease 0.2s;
-}
-/* Groups fill each half up to the centred logo; the margins keep the innermost
-   links clear of the 90px disc. */
+/* Groups are JUSTIFIED across each half: outermost links anchored at a fixed
+   inset from the rounded bar ends, innermost clear of the 90px disc, and the
+   remaining space distributed evenly between links on both sides. */
 .ow-nav-left {
   flex: 1 1 0;
   min-width: 0;
-  justify-content: flex-end;
-  margin-right: 52px;
+  justify-content: space-between;
+  margin-right: 74px;
+  padding-left: 38px;
 }
 .ow-nav-right {
   flex: 1 1 0;
   min-width: 0;
-  justify-content: flex-start;
-  margin-left: 52px;
+  justify-content: space-between;
+  margin-left: 74px;
+  padding-right: 38px;
 }
 
-/* Pinned to the nav centre (out of the flex flow) — the bar grows symmetrically
-   around it, so the logo stays perfectly still while opening / closing. */
+/* Pinned to a STABLE centre on the shell (not the animating bar) → the logo
+   never moves while the bar deploys. top:45px = the disc centre (the bar sits at
+   the shell top and the disc is 90px tall). */
 .ow-nav-logo {
   position: absolute;
-  top: 50%;
+  top: 45px;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 2;
+  z-index: 3;
   width: 90px;
   height: 90px;
   display: flex;
@@ -220,6 +223,7 @@
 @media (max-width: 920px) {
   .ow-nav {
     width: 90px !important;
+    clip-path: none !important;
   }
   .ow-nav-side {
     display: none !important;
