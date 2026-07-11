@@ -1,6 +1,6 @@
 // Portfolio — recreated from design-handoff/Portfolio OddWave.dc.html. A fixed
-// FloatingLines field behind a full-height title, the interactive "Portfolio
-// Synth" rack player scrolling over it, and the CTA.
+// FloatingLines field behind the title, the interactive "Portfolio Synth" rack
+// player sitting directly under the hero text, and the CTA.
 
 import { FloatingLines, CtaLogo, PortfolioSynth } from '@/components';
 import { Button } from '@/design-system/primitives';
@@ -40,7 +40,7 @@ export function PortfolioPage() {
       {/* SCROLLING CONTENT */}
       <div style={{ position: 'relative', zIndex: 1 }}>
         {/* TITLE */}
-        <section style={{ position: 'relative', height: '100vh', minHeight: '640px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' }}>
+        <section style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: 'clamp(140px, 22vh, 220px) 24px 0' }}>
           <h1
             data-hero-title
             style={{
@@ -74,12 +74,12 @@ export function PortfolioPage() {
         </section>
 
         {/* INTERACTIVE RACK PLAYER */}
-        <section style={{ position: 'relative', zIndex: 2, padding: 'clamp(20px,4vh,40px) 14px clamp(60px,10vh,120px)' }}>
+        <section style={{ position: 'relative', zIndex: 2, padding: '15vh 14px clamp(60px,10vh,120px)' }}>
           <PortfolioSynth />
         </section>
 
         {/* CTA */}
-        <section style={{ background: colors.ink[900], padding: 'clamp(80px,12vh,140px) 30px', borderTop: `1px solid ${colors.border.hair}` }}>
+        <section style={{ background: colors.ink[900], padding: 'clamp(40px,6vh,70px) 30px clamp(52px,8vh,90px)', borderTop: `1px solid ${colors.border.hair}` }}>
           <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
             <CtaLogo />
             <h2
@@ -97,7 +97,7 @@ export function PortfolioPage() {
             >
               {PORTFOLIO.ctaTitle}
             </h2>
-            <div data-reveal style={{ marginTop: '34px' }}>
+            <div data-reveal style={{ marginTop: '24px' }}>
               <Button to={ROUTES.contact} variant="primary" style={{ padding: '16px 32px' }}>
                 {PORTFOLIO.ctaLabel}
               </Button>

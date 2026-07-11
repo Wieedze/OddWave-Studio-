@@ -258,4 +258,13 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   (track URL or id). To go live: drop the cover images + paste the Spotify links per
   release. Covers without a `spotify` simply don't open.
 
+## 2026-07-11 · Portfolio hero glued to the synth (handoff deviation)
+
+- User-requested deviation from the handoff: the Portfolio title section is no
+  longer `height:100vh` with centered text (that left ~half a viewport of dead
+  space above the rack). It is now content-height with
+  `padding: clamp(140px,22vh,220px) 24px 0`; the synth section keeps its
+  `clamp(20px,4vh,40px)` top padding as the only gap, so the player sits right
+  under the hero text.
+
 <!-- Add new entries above this line -->
