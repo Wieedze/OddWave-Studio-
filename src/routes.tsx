@@ -8,6 +8,7 @@ import { EquipmentPage } from '@/pages/Equipment';
 import { GuidancePage } from '@/pages/Guidance';
 import { SoundDesignPage } from '@/pages/SoundDesign';
 import { PortfolioPage } from '@/pages/Portfolio';
+import { ExportsPage } from '@/pages/Exports';
 import { ContactPage } from '@/pages/Contact';
 
 export const routes: RouteRecord[] = [
@@ -21,6 +22,7 @@ export const routes: RouteRecord[] = [
       { path: 'guidance', element: <GuidancePage /> },
       { path: 'sound-design', element: <SoundDesignPage /> },
       { path: 'portfolio', element: <PortfolioPage /> },
+      { path: 'exports', element: <ExportsPage /> },
       { path: 'contact', element: <ContactPage /> },
     ],
   },
