@@ -34,22 +34,25 @@ export function Footer() {
             <MonoLabel as="div" color={colors.text.fainter} size="11px" tracking="0.16em" style={{ marginBottom: '4px' }}>
               {column.heading}
             </MonoLabel>
-            {column.links.map((link) => (
-              <Link
-                key={link.label}
-                to={link.to}
-                style={{
-                  fontFamily: typography.font.body,
-                  fontWeight: typography.weight.medium,
-                  fontSize: '14px',
-                  lineHeight: 1,
-                  color: 'rgba(241,238,232,.78)',
-                  textDecoration: 'none',
-                }}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {column.links.map((link) => {
+              const linkStyle = {
+                fontFamily: typography.font.body,
+                fontWeight: typography.weight.medium,
+                fontSize: '14px',
+                lineHeight: 1,
+                color: 'rgba(241,238,232,.78)',
+                textDecoration: 'none',
+              } as const;
+              return link.external ? (
+                <a key={link.label} href={link.to} target="_blank" rel="noreferrer" style={linkStyle}>
+                  {link.label}
+                </a>
+              ) : (
+                <Link key={link.label} to={link.to} style={linkStyle}>
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
         ))}
       </nav>

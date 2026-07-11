@@ -34,8 +34,10 @@ export function useHomeIntro<T extends HTMLElement = HTMLDivElement>() {
       const heroSection = root.querySelector('#top');
       const img = root.querySelector<HTMLElement>('[data-hero-img]');
       // Nav lives in the shared layout (outside this page root), so query the
-      // document for the single floating pill.
+      // document. The logo sits OUTSIDE the bar (its own element) — fade it in
+      // together with the bar, or it would stay visible during the intro.
       const nav = document.querySelector<HTMLElement>('.ow-nav');
+      const navLogo = document.querySelector<HTMLElement>('.ow-nav-logo');
       const letters = Array.from(root.querySelectorAll<HTMLElement>('#top [data-ltr]'));
       const studio = root.querySelector<HTMLElement>('[data-intro-el="studio"]');
       const cta = root.querySelector<HTMLElement>('[data-intro-el="cta"]');
@@ -44,10 +46,13 @@ export function useHomeIntro<T extends HTMLElement = HTMLDivElement>() {
       if (reduce) {
         gsap.set([...letters, studio, cta].filter(Boolean), { autoAlpha: 1, y: 0, filter: 'blur(0px)' });
         if (nav) gsap.set(nav, { autoAlpha: 1, y: 0 });
+        if (navLogo) gsap.set(navLogo, { autoAlpha: 1 });
         if (img) gsap.set(img, { filter: 'blur(7px)' });
       } else {
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.05 });
         if (nav) gsap.set(nav, { autoAlpha: 0, y: -8 });
+        // autoAlpha only (no y) so the logo keeps its translate(-50%,-50%) centring.
+        if (navLogo) gsap.set(navLogo, { autoAlpha: 0 });
         if (cta) gsap.set(cta, { autoAlpha: 0, y: 14 });
         if (letters.length) gsap.set(letters, { autoAlpha: 0, y: 40, filter: 'blur(12px)' });
         if (studio) gsap.set(studio, { autoAlpha: 0, y: 24, filter: 'blur(12px)' });
@@ -62,6 +67,7 @@ export function useHomeIntro<T extends HTMLElement = HTMLDivElement>() {
 
         if (img) tl.to(img, { filter: 'blur(7px)', duration: 1.5 * speed, ease: 'power1.inOut' }, 0);
         if (nav) tl.to(nav, { autoAlpha: 1, y: 0, duration: 0.64 * speed, ease: 'power2.out' }, gNav);
+        if (navLogo) tl.to(navLogo, { autoAlpha: 1, duration: 0.64 * speed, ease: 'power2.out' }, gNav);
         if (letters.length)
           tl.to(letters, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 1.8 * speed, ease: 'power2.out' }, gTitle);
 

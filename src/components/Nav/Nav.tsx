@@ -71,35 +71,40 @@ export function Nav() {
 
   return (
     <div className="ow-nav-shell">
-      <nav className={open ? 'ow-nav is-open' : 'ow-nav'} aria-label="Navigation principale">
-        {/* fond en un seul bloc : union barre + disque */}
-        <div className="ow-nav-bg">
-          <div className="bar" />
-          <div className="disc" />
-        </div>
-
-        <div className="ow-nav-content">
-          <div className="ow-nav-side ow-nav-left">
-            {NAV_LEFT.map((link) => (
-              <NavLinkItem key={link.to} link={link} />
-            ))}
+      {/* .ow-nav-fx carries the contour drop-shadow (unclipped); .ow-nav is a
+          FIXED-width bar revealed via clip-path — no width animation, so nothing
+          shifts in layout and the centred elements never jitter. */}
+      <div className="ow-nav-fx">
+        <nav className={open ? 'ow-nav is-open' : 'ow-nav'} aria-label="Navigation principale">
+          {/* fond en un seul bloc : union barre + disque */}
+          <div className="ow-nav-bg">
+            <div className="bar" />
+            <div className="disc" />
           </div>
-          <div className="ow-nav-side ow-nav-right">
-            {NAV_RIGHT.map((link) => (
-              <NavLinkItem key={link.to} link={link} />
-            ))}
-          </div>
-        </div>
 
-        {/* Absolutely centered on the nav so it never shifts while the bar
-            deploys / retracts (no sub-pixel flex jitter). */}
-        <Link to={ROUTES.home} className="ow-nav-logo" aria-label="Accueil">
-          {/* le <span> porte la taille + la correction optique (voir Nav.css) */}
-          <span>
-            <Logo size={108} stroke={colors.text.primary} />
-          </span>
-        </Link>
-      </nav>
+          <div className="ow-nav-content">
+            <div className="ow-nav-side ow-nav-left">
+              {NAV_LEFT.map((link) => (
+                <NavLinkItem key={link.to} link={link} />
+              ))}
+            </div>
+            <div className="ow-nav-side ow-nav-right">
+              {NAV_RIGHT.map((link) => (
+                <NavLinkItem key={link.to} link={link} />
+              ))}
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      {/* Logo OUT of the clipped/filtered bar: always sharp, pinned to a stable
+          centre → zero jitter while the bar deploys / retracts. */}
+      <Link to={ROUTES.home} className="ow-nav-logo" aria-label="Accueil">
+        {/* le <span> porte la taille + la correction optique (voir Nav.css) */}
+        <span>
+          <Logo size={108} stroke={colors.text.primary} />
+        </span>
+      </Link>
 
       <button
         type="button"

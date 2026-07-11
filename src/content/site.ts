@@ -1,6 +1,6 @@
 // Site-wide content: brand, footer sitemap, legal caption.
 
-import { ROUTES } from './navigation';
+import { LABEL_URL, ROUTES } from './navigation';
 
 export const SITE = {
   name: 'OddWave Studio',
@@ -10,7 +10,9 @@ export const SITE = {
 
 export interface FooterLink {
   readonly label: string;
+  /** Internal route ("/studio") or, when `external`, an absolute URL. */
   readonly to: string;
+  readonly external?: boolean;
 }
 
 export interface FooterColumn {
@@ -32,11 +34,15 @@ export const FOOTER_COLUMNS: readonly FooterColumn[] = [
     links: [
       { label: 'Accompagnement', to: ROUTES.guidance },
       { label: 'Sound design', to: ROUTES.soundDesign },
+      { label: "Guide d'export", to: ROUTES.exports },
     ],
   },
   {
     heading: 'Travaux',
-    links: [{ label: 'Portfolio', to: ROUTES.portfolio }],
+    links: [
+      { label: 'Portfolio', to: ROUTES.portfolio },
+      { label: 'Label', to: LABEL_URL, external: true },
+    ],
   },
   {
     heading: 'Contact',
