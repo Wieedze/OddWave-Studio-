@@ -8,7 +8,7 @@ import { Button } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
 import { prefersReducedMotion } from '@/helpers';
-import { SOUND_DESIGN, SD_VIDEOS } from '@/content/soundDesign';
+import { SOUND_DESIGN, SD_VIDEOS, VIDEO_SRC } from '@/content/soundDesign';
 import { ROUTES } from '@/content/navigation';
 import type { VideoEntry } from '@/models';
 import './SoundDesignPage.css';
@@ -135,7 +135,11 @@ export function SoundDesignPage() {
           poster="/assets/showreel-poster.jpg"
           style={{ position: 'absolute', inset: '-6% 0 0 0', width: '100%', height: '112%', objectFit: 'cover', objectPosition: 'center 28%', willChange: 'transform, clip-path' }}
         >
-          <source src="/assets/showreel.mp4" type="video/mp4" />
+          {/* IPFS source (same pinned mp4 as the gallery): /assets/*.mp4 are
+              gitignored AND above the 25 MiB Workers static-asset limit, so a
+              local path can never resolve in prod. */}
+          <source src={VIDEO_SRC.showreel} type="video/mp4" />
+
         </video>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg,rgba(11,12,15,.32) 0%,rgba(11,12,15,.05) 20%,transparent 46%,rgba(11,12,15,.5) 82%,rgba(11,12,15,.86) 100%)' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 95% at 18% 92%,rgba(11,12,15,.6) 0%,transparent 52%)' }} />
