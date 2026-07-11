@@ -2,7 +2,7 @@
 // (Bio paragraph 1 carries inline highlights and is rendered in the page.)
 
 export const STUDIO = {
-  heroTitle: 'LE STUDIO',
+  heroTitle: 'STUDIO',
   heroEyebrow: "Le lieu · l'ingénieur",
 
   engineerName: 'Théo Grozdanic',

@@ -3,7 +3,7 @@
 // "Portfolio Synth" object).
 
 export const PORTFOLIO = {
-  heroTitle: 'LE PORTFOLIO',
+  heroTitle: 'PORTFOLIO',
   heroIntro: 'Une sélection de masters, mixes et productions signés OddWaveStudio. Cliquez une pochette pour écouter.',
   ctaTitle: "Le prochain, c'est le vôtre.",
   ctaLabel: 'Nous contacter →',

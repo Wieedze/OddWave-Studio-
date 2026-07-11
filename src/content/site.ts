@@ -23,8 +23,8 @@ export const FOOTER_COLUMNS: readonly FooterColumn[] = [
   {
     heading: 'Studio',
     links: [
-      { label: 'Le studio', to: ROUTES.studio },
-      { label: 'Le matériel', to: ROUTES.equipment },
+      { label: 'Studio', to: ROUTES.studio },
+      { label: 'Matériel', to: ROUTES.equipment },
     ],
   },
   {

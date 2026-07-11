@@ -1,7 +1,7 @@
 // Le Matériel content — verbatim from design-handoff/Materiel OddWave.dc.html.
 
 export const EQUIPMENT = {
-  heroTitle: 'LE MATÉRIEL',
+  heroTitle: 'MATÉRIEL',
   heroEyebrow: 'La liste complète',
   inventoryTitle: "L'inventaire complet",
   inventoryBody:
