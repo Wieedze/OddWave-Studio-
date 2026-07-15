@@ -301,7 +301,7 @@ export function HomePage() {
           >
             {STUDIO.pedagogyTitle}
           </h2>
-          <p data-reveal style={{ ...bodyParagraph, margin: '26px 0 0', maxWidth: '540px', fontSize: '17px', lineHeight: 1.75, color: '#C8C4BC' }}>
+          <p data-reveal style={{ ...bodyParagraph, margin: '26px 0 0', maxWidth: '680px', fontSize: '17px', lineHeight: 1.75, color: '#C8C4BC' }}>
             {STUDIO.pedagogyBody}
           </p>
         </div>
@@ -333,7 +333,7 @@ export function HomePage() {
             data-reveal
             style={{
               margin: '18px auto 0',
-              maxWidth: '480px',
+              maxWidth: '620px',
               fontFamily: typography.font.body,
               fontWeight: typography.weight.regular,
               fontSize: '17px',
