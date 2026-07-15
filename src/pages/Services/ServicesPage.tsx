@@ -172,18 +172,16 @@ export function ServicesPage() {
 
       {/* SCROLLING CONTENT — over the fixed backdrop */}
       <div style={{ position: 'relative', zIndex: 1 }}>
-        {/* TITLE */}
+        {/* TITLE — top padding instead of a full-height section (same shape as
+            Portfolio) so the first panel sits within reach of the first scroll */}
         <section
           style={{
             position: 'relative',
-            height: '100vh',
-            minHeight: '640px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
             textAlign: 'center',
-            padding: '0 24px',
+            padding: 'clamp(140px, 22vh, 220px) 24px 0',
           }}
         >
           <h1
@@ -208,6 +206,8 @@ export function ServicesPage() {
             </MonoLabel>
           </div>
         </section>
+
+        <div aria-hidden style={spacer('min(16vh, 160px)')} />
 
         {SERVICES.map((service, i) => (
           <div key={service.id}>
