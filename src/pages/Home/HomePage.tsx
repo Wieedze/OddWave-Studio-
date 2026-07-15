@@ -296,9 +296,6 @@ export function HomePage() {
               lineHeight: 1.06,
               letterSpacing: '-0.025em',
               color: colors.text.primaryWarm,
-              // balance, not pretty: the sentence cannot fit one line, so break
-              // it evenly at the colon instead of orphaning "donner les clés."
-              textWrap: 'balance',
             }}
           >
             {STUDIO.pedagogyTitle}
