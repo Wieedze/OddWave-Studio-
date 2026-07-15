@@ -210,7 +210,7 @@ export function GuidancePage() {
             data-reveal
             style={{
               margin: '0 0 46px',
-              maxWidth: '520px',
+              maxWidth: '900px',
               fontFamily: typography.font.body,
               fontWeight: typography.weight.regular,
               fontSize: '16px',
@@ -272,7 +272,6 @@ export function GuidancePage() {
             data-reveal
             style={{
               margin: '0 0 40px',
-              maxWidth: '540px',
               fontFamily: typography.font.body,
               fontWeight: typography.weight.regular,
               fontSize: '17px',

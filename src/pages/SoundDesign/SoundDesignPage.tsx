@@ -212,7 +212,7 @@ export function SoundDesignPage() {
             className={heroTextClass}
             style={{
               margin: '22px 0 0',
-              maxWidth: '540px',
+              maxWidth: '640px',
               fontFamily: typography.font.body,
               fontWeight: typography.weight.regular,
               fontSize: '17px',

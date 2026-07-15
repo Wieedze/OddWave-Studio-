@@ -7,7 +7,10 @@ export const HOME = {
   /** Bottom eyebrow line of the hero (kept from the landing handoff). */
   heroEyebrow: 'Production · Mixage · Mastering · Sound design',
 
-  /** Studio presentation + history, shown right under the hero. */
+  /** Studio presentation + history, shown right under the hero as a split
+      (text + SSL console photo, the former Studio page hero image). */
+  introEyebrow: 'Le studio · Depuis plus de 15 ans',
+  introImage: '/assets/studio-hero-ssl.jpg',
   intro: [
     "OddWave Studio est un studio de production musicale fort de plus de 15 ans d'expérience dans le domaine de l'audio.",
     "De la direction de production à la finalisation, en passant par l'enregistrement, le sound design, l'arrangement, le mixage et le mastering, le studio offre une gamme complète de services.",

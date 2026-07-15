@@ -26,12 +26,14 @@ function Letter({ char }: { char: string }) {
   );
 }
 
-function SplitMedia({ image, focus, height }: { image: string; focus: string; height: string }) {
+function SplitMedia({ image, focus, height, order }: { image: string; focus: string; height: string; order?: number }) {
+  // `order` must live on this root (the grid item), or the mobile
+  // [data-split-media] override cannot re-stack the image first.
   return (
     <div
       data-split-media
       data-reveal
-      style={{ position: 'relative', height, borderRadius: '18px', overflow: 'hidden', boxShadow: shadow.media }}
+      style={{ position: 'relative', height, borderRadius: '18px', overflow: 'hidden', boxShadow: shadow.media, order }}
     >
       <div style={{ position: 'absolute', inset: 0, background: `url('${image}') ${focus}/cover no-repeat` }} />
     </div>
@@ -157,31 +159,41 @@ export function HomePage() {
       {/* PRÉSENTATION + HISTORIQUE */}
       <section style={{ background: colors.surface.section, padding: 'clamp(70px,11vh,130px) 30px clamp(36px,5vh,64px)' }}>
         <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
-          <p
-            data-reveal
-            style={{
-              margin: 0,
-              maxWidth: '820px',
-              fontFamily: typography.font.display,
-              fontWeight: typography.weight.bold,
-              fontSize: 'clamp(24px,3vw,40px)',
-              lineHeight: 1.25,
-              letterSpacing: '-0.02em',
-              color: colors.text.primaryWarm,
-              textWrap: 'pretty',
-            }}
-          >
-            {introLead}
-          </p>
-          {introRest.map((paragraph, i) => (
-            <p
-              key={i}
-              data-reveal
-              style={{ ...bodyParagraph, margin: '22px 0 0', maxWidth: '720px', fontSize: '17px', lineHeight: 1.75 }}
-            >
-              {paragraph}
-            </p>
-          ))}
+          <div data-split style={{ display: 'grid', gridTemplateColumns: '1.08fr .92fr', gap: 'clamp(40px,5vw,72px)', alignItems: 'center' }}>
+            <div data-split-text style={{ order: 1 }}>
+              <div data-reveal style={{ marginBottom: '16px' }}>
+                <MonoLabel size="12px" tracking="0.2em" color={colors.copper.landing}>
+                  {HOME.introEyebrow}
+                </MonoLabel>
+              </div>
+              <p
+                data-reveal
+                style={{
+                  margin: 0,
+                  maxWidth: '560px',
+                  fontFamily: typography.font.display,
+                  fontWeight: typography.weight.bold,
+                  fontSize: 'clamp(22px,2.4vw,32px)',
+                  lineHeight: 1.3,
+                  letterSpacing: '-0.02em',
+                  color: colors.text.primaryWarm,
+                  textWrap: 'pretty',
+                }}
+              >
+                {introLead}
+              </p>
+              {introRest.map((paragraph, i) => (
+                <p
+                  key={i}
+                  data-reveal
+                  style={{ ...bodyParagraph, margin: '20px 0 0', maxWidth: '520px', fontSize: '17px', lineHeight: 1.75 }}
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+            <SplitMedia image={HOME.introImage} focus="center 50%" height="min(64vh,560px)" order={2} />
+          </div>
         </div>
       </section>
 
@@ -251,9 +263,7 @@ export function HomePage() {
                 {STUDIO.envParagraph2}
               </p>
             </div>
-            <div style={{ order: 2 }}>
-              <SplitMedia image="/assets/cabin-mic.jpg" focus="center" height="min(64vh,560px)" />
-            </div>
+            <SplitMedia image="/assets/cabin-mic.jpg" focus="center" height="min(64vh,560px)" order={2} />
           </div>
         </div>
       </section>

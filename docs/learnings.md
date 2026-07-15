@@ -338,4 +338,23 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   the pedagogy band. The mobile CSS blocks moved with their markup
   (`[data-svc]` → ServicesPage.css, `[data-split]` → HomePage.css).
 
+## 2026-07-15 · Home intro split, senseless line breaks, mobile split-order bug
+
+- Home presentation section became a text + photo split (client feedback:
+  "il faudrait une photo"): eyebrow "Le studio · Depuis plus de 15 ans",
+  lead + body paragraphs left, the orphaned `/assets/studio-hero-ssl.jpg`
+  (ex-Studio hero) right. Photo alternation on the page stays
+  right → left → right.
+- "Retours à la ligne inutiles" (client screenshot on Guidance formules):
+  the culprit is over-narrow paragraph `maxWidth` in wide sections, not
+  `<br>` (there are none). Widened: Guidance formules intro 520→900px (one
+  line), Guidance demande intro maxWidth dropped (fills the 760px column),
+  Sound Design heroIntro 540→640px (one line). Kept narrow on purpose:
+  split columns, centered CTA paragraphs, text over the pedagogy gradient.
+- **Gotcha (mobile split stacking):** CSS `order` only applies to direct
+  grid/flex items. Sections that wrapped `SplitMedia` in a
+  `<div style={{order:2}}>` never re-stacked image-first on mobile because
+  `[data-split-media]{order:1}` hit the nested element. Fix: `SplitMedia`
+  takes an `order` prop on its root and is always a direct grid child.
+
 <!-- Add new entries above this line -->
