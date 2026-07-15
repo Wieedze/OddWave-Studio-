@@ -1,5 +1,46 @@
-/* Services mobile overrides — the prestation panels' @media(max-width:860px)
-   block, moved with the panels from the landing (design-handoff/Landing OddWave
+/* Services page.
+
+   Entrance of the prestation panels: same mechanism as the Portfolio synth.
+   The panels are mounted from the start so their space is reserved (no layout
+   shift); they stay invisible until the hero intro completes (see
+   ServicesPage.tsx), then rise into place with the handoff's hero-reveal
+   motion (1.1s, ease.ui, 26px rise). */
+
+.services-panels-enter {
+  opacity: 0;
+  transform: translateY(26px);
+  visibility: hidden;
+}
+
+.services-panels-enter.is-in {
+  visibility: visible;
+  animation: services-panels-in 1.1s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+@keyframes services-panels-in {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services-panels-enter {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+  }
+  .services-panels-enter.is-in {
+    animation: none;
+  }
+}
+
+/* Mobile overrides — the prestation panels' @media(max-width:860px) block,
+   moved with the panels from the landing (design-handoff/Landing OddWave
    GSAP.dc.html). Panels stack to a single column, image first. */
 
 @media (max-width: 860px) {

@@ -43,11 +43,13 @@ The three prestation panels, moved from the landing (client feedback, July 2026)
   zIndex 1 content wrapper). Title section (`SERVICES`, hero outline treatment,
   top padding `clamp(140px,22vh,220px)` like Portfolio, not full-height so the
   first panel sits close) + mono eyebrow "Mastering · Stem mastering · Mixage".
-- **Prestations:** three alternating image/text glass cards (Mastering, Stem
-  Mastering, Mixage). Image pinned; text card de-blurs (`blur 18px→0`, rise) on
-  scroll (ScrollTrigger scrub `top 80% → top 34%`). Full copy in
-  `content/services.ts` (verbatim from the landing handoff). Each has a
-  "Demander un devis →" link to `/#contact`.
+- **Prestations:** three image/text glass cards (Mastering, Stem Mastering,
+  Mixage), all centered (client request; only the image side alternates inside
+  the card). The panels stay mounted but hidden until the hero intro completes
+  (same `onHeroIntroComplete` + CSS reveal mechanism as the Portfolio synth),
+  then each card de-blurs (`blur 18px→0`, rise) on scroll (ScrollTrigger scrub
+  `top 80% → top 34%`). Full copy in `content/services.ts` (verbatim from the
+  landing handoff). Each has a "Demander un devis →" link to `/#contact`.
 - **CTA:** centred monogram, H2 "Donnons une dimension à votre son.",
   paragraph, copper button "Démarrer un projet →".
 

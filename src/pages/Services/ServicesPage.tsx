@@ -5,11 +5,12 @@
 // scroll over it. Motion runs through the shared MotionService (hero
 // title/eyebrow intro, panel de-blur, reveals).
 
-import type { CSSProperties } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { FloatingLines, CtaLogo } from '@/components';
 import { Button, MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
+import { cx } from '@/helpers';
 import { SERVICES, SERVICES_PAGE } from '@/content/services';
 import { ROUTES } from '@/content/navigation';
 import type { ServiceItem } from '@/models';
@@ -105,7 +106,7 @@ function PrestationPanel({ service }: { service: ServiceItem }) {
         background: 'transparent',
         padding: '0 clamp(20px, 4vw, 64px)',
         display: 'flex',
-        justifyContent: imageRight ? 'flex-end' : 'flex-start',
+        justifyContent: 'center',
       }}
     >
       <div
@@ -143,7 +144,8 @@ function PrestationPanel({ service }: { service: ServiceItem }) {
 const spacer = (height: string): CSSProperties => ({ height });
 
 export function ServicesPage() {
-  const ref = usePageMotion<HTMLDivElement>();
+  const [heroDone, setHeroDone] = useState(false);
+  const ref = usePageMotion<HTMLDivElement>({ onHeroIntroComplete: () => setHeroDone(true) });
 
   return (
     <div ref={ref} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden', minHeight: '100vh' }}>
@@ -209,12 +211,16 @@ export function ServicesPage() {
 
         <div aria-hidden style={spacer('min(16vh, 160px)')} />
 
-        {SERVICES.map((service, i) => (
-          <div key={service.id}>
-            <PrestationPanel service={service} />
-            {i < SERVICES.length - 1 && <div aria-hidden style={spacer('min(32vh, 360px)')} />}
-          </div>
-        ))}
+        {/* Panels stay mounted (space reserved) but are revealed only once the
+            hero intro has played, so the SERVICES title always lands first. */}
+        <div className={cx('services-panels-enter', heroDone && 'is-in')}>
+          {SERVICES.map((service, i) => (
+            <div key={service.id}>
+              <PrestationPanel service={service} />
+              {i < SERVICES.length - 1 && <div aria-hidden style={spacer('min(32vh, 360px)')} />}
+            </div>
+          ))}
+        </div>
 
         <div aria-hidden style={spacer('min(28vh, 300px)')} />
 
