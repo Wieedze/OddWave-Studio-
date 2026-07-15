@@ -1,9 +1,9 @@
 // Services — the three "prestations" glass panels, moved here from the landing
 // (client feedback, July 2026: the landing now presents the studio; the
-// services get their own page). Layout preserved from the landing handoff:
-// sticky FloatingLines field behind alternating glass panels, final CTA.
-// Motion runs through the shared MotionService (hero title/eyebrow intro,
-// panel de-blur, reveals).
+// services get their own page). The FloatingLines backdrop is FIXED like on
+// Portfolio (client request): it stays put while the title, panels and CTA
+// scroll over it. Motion runs through the shared MotionService (hero
+// title/eyebrow intro, panel de-blur, reveals).
 
 import type { CSSProperties } from 'react';
 import { FloatingLines, CtaLogo } from '@/components';
@@ -146,126 +146,122 @@ export function ServicesPage() {
   const ref = usePageMotion<HTMLDivElement>();
 
   return (
-    <div ref={ref} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden' }}>
-      {/* STICKY FLOATINGLINES + TITLE + PANELS */}
-      <div data-hero style={{ position: 'relative', background: colors.surface.section }}>
-        <div style={{ position: 'sticky', top: 0, height: '100vh', width: '100%', overflow: 'hidden', zIndex: 0, pointerEvents: 'none' }}>
-          <div style={{ position: 'absolute', inset: 0 }}>
-            <FloatingLines
-              linesGradient={['#C24E37', '#D98E5A', '#8A5A3C']}
-              enabledWaves={['top', 'middle', 'bottom']}
-              lineCount={[3, 4, 3]}
-              lineDistance={[9, 7, 5]}
-              animationSpeed={0.7}
-              interactive
-              parallax
-              bendRadius={16.0}
-              bendStrength={-1.6}
-              mouseDamping={0.08}
-              mixBlendMode="screen"
-            />
-          </div>
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'radial-gradient(120% 90% at 50% 50%,transparent 30%,rgba(11,12,15,.55) 100%)',
-            }}
+    <div ref={ref} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden', minHeight: '100vh' }}>
+      {/* FIXED FLOATINGLINES BACKDROP (same behavior as Portfolio) */}
+      <section
+        data-hero
+        style={{ position: 'fixed', top: 0, left: 0, height: '100vh', minHeight: '640px', width: '100%', overflow: 'hidden', background: colors.surface.section, zIndex: 0 }}
+      >
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+          <FloatingLines
+            linesGradient={['#C24E37', '#D98E5A', '#8A5A3C']}
+            enabledWaves={['top', 'middle', 'bottom']}
+            lineCount={[3, 4, 3]}
+            lineDistance={[9, 7, 5]}
+            animationSpeed={0.7}
+            interactive
+            parallax={false}
+            bendRadius={16.0}
+            bendStrength={-1.6}
+            mouseDamping={0.08}
+            mixBlendMode="screen"
           />
         </div>
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'linear-gradient(180deg,rgba(11,12,15,.4) 0%,rgba(11,12,15,0) 32%,rgba(11,12,15,0) 70%,rgba(11,12,15,.35) 100%)' }} />
+      </section>
 
-        <div style={{ position: 'relative', zIndex: 2, marginTop: '-100vh' }}>
-          {/* TITLE */}
-          <section
-            style={{
-              position: 'relative',
-              height: '100vh',
-              minHeight: '640px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              textAlign: 'center',
-              padding: '0 24px',
-            }}
-          >
-            <h1
-              data-hero-title
-              style={{
-                margin: 0,
-                fontFamily: typography.font.display,
-                fontWeight: typography.weight.black,
-                fontSize: 'clamp(48px, 11vw, 170px)',
-                lineHeight: 0.86,
-                letterSpacing: '-0.03em',
-                color: colors.heroTitle.fill,
-                WebkitTextStroke: colors.heroTitle.stroke,
-                textShadow: '0 4px 60px rgba(0,0,0,.55)',
-              }}
-            >
-              {SERVICES_PAGE.heroTitle}
-            </h1>
-            <div data-hero-eyebrow style={{ margin: '18px 0 0' }}>
-              <MonoLabel size="13px" tracking="0.32em" color={colors.copper.warm} style={{ textIndent: '0.32em' }}>
-                {SERVICES_PAGE.heroEyebrow}
-              </MonoLabel>
-            </div>
-          </section>
-
-          {SERVICES.map((service, i) => (
-            <div key={service.id}>
-              <PrestationPanel service={service} />
-              {i < SERVICES.length - 1 && <div aria-hidden style={spacer('min(32vh, 360px)')} />}
-            </div>
-          ))}
-
-          <div aria-hidden style={spacer('min(28vh, 300px)')} />
-        </div>
-      </div>
-
-      {/* CTA */}
-      <section
-        style={{ background: colors.ink[900], padding: '44px 30px 60px', borderTop: `1px solid ${colors.border.hairMid}` }}
-      >
-        <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-          <CtaLogo />
-          <h2
-            data-reveal
+      {/* SCROLLING CONTENT — over the fixed backdrop */}
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        {/* TITLE */}
+        <section
+          style={{
+            position: 'relative',
+            height: '100vh',
+            minHeight: '640px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+            padding: '0 24px',
+          }}
+        >
+          <h1
+            data-hero-title
             style={{
               margin: 0,
               fontFamily: typography.font.display,
-              fontWeight: typography.weight.bold,
-              fontSize: 'clamp(40px, 6.5vw, 88px)',
-              lineHeight: 0.98,
+              fontWeight: typography.weight.black,
+              fontSize: 'clamp(48px, 11vw, 170px)',
+              lineHeight: 0.86,
               letterSpacing: '-0.03em',
-              color: colors.text.primaryWarm,
-              textWrap: 'balance',
+              color: colors.heroTitle.fill,
+              WebkitTextStroke: colors.heroTitle.stroke,
+              textShadow: '0 4px 60px rgba(0,0,0,.55)',
             }}
           >
-            {SERVICES_PAGE.ctaTitle}
-          </h2>
-          <p
-            data-reveal
-            style={{
-              margin: '18px auto 0',
-              maxWidth: '480px',
-              fontFamily: typography.font.body,
-              fontWeight: typography.weight.regular,
-              fontSize: '17px',
-              lineHeight: 1.6,
-              color: colors.text.secondary,
-              textWrap: 'pretty',
-            }}
-          >
-            {SERVICES_PAGE.ctaBody}
-          </p>
-          <div data-reveal style={{ marginTop: '26px' }}>
-            <Button to={ROUTES.contact} variant="primary" style={{ padding: '17px 34px' }}>
-              {SERVICES_PAGE.ctaLabel}
-            </Button>
+            {SERVICES_PAGE.heroTitle}
+          </h1>
+          <div data-hero-eyebrow style={{ margin: '18px 0 0' }}>
+            <MonoLabel size="13px" tracking="0.32em" color={colors.copper.warm} style={{ textIndent: '0.32em' }}>
+              {SERVICES_PAGE.heroEyebrow}
+            </MonoLabel>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {SERVICES.map((service, i) => (
+          <div key={service.id}>
+            <PrestationPanel service={service} />
+            {i < SERVICES.length - 1 && <div aria-hidden style={spacer('min(32vh, 360px)')} />}
+          </div>
+        ))}
+
+        <div aria-hidden style={spacer('min(28vh, 300px)')} />
+
+        {/* CTA */}
+        <section
+          style={{ background: colors.ink[900], padding: '44px 30px 60px', borderTop: `1px solid ${colors.border.hairMid}` }}
+        >
+          <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
+            <CtaLogo />
+            <h2
+              data-reveal
+              style={{
+                margin: 0,
+                fontFamily: typography.font.display,
+                fontWeight: typography.weight.bold,
+                fontSize: 'clamp(40px, 6.5vw, 88px)',
+                lineHeight: 0.98,
+                letterSpacing: '-0.03em',
+                color: colors.text.primaryWarm,
+                textWrap: 'balance',
+              }}
+            >
+              {SERVICES_PAGE.ctaTitle}
+            </h2>
+            <p
+              data-reveal
+              style={{
+                margin: '18px auto 0',
+                maxWidth: '480px',
+                fontFamily: typography.font.body,
+                fontWeight: typography.weight.regular,
+                fontSize: '17px',
+                lineHeight: 1.6,
+                color: colors.text.secondary,
+                textWrap: 'pretty',
+              }}
+            >
+              {SERVICES_PAGE.ctaBody}
+            </p>
+            <div data-reveal style={{ marginTop: '26px' }}>
+              <Button to={ROUTES.contact} variant="primary" style={{ padding: '17px 34px' }}>
+                {SERVICES_PAGE.ctaLabel}
+              </Button>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

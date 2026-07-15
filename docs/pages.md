@@ -37,10 +37,11 @@ engineer); the three prestation panels moved to `/services`.
 
 The three prestation panels, moved from the landing (client feedback, July 2026).
 
-- **Backdrop + title:** sticky `100vh` `FloatingLines` (Three.js) ambient field +
-  radial vignette; content overlaps via `margin-top:-100vh`; full-height title
-  section (`SERVICES`, hero outline treatment) + mono eyebrow "Mastering · Stem
-  mastering · Mixage".
+- **Backdrop + title:** FIXED full-viewport `FloatingLines` (Three.js) ambient
+  field (same behavior as Portfolio, client request): it stays put while the
+  title, panels and CTA scroll over it (`position:fixed` zIndex 0 + relative
+  zIndex 1 content wrapper). Full-height title section (`SERVICES`, hero
+  outline treatment) + mono eyebrow "Mastering · Stem mastering · Mixage".
 - **Prestations:** three alternating image/text glass cards (Mastering, Stem
   Mastering, Mixage). Image pinned; text card de-blurs (`blur 18px→0`, rise) on
   scroll (ScrollTrigger scrub `top 80% → top 34%`). Full copy in

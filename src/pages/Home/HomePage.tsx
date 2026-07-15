@@ -235,8 +235,9 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* ENVIRONNEMENT */}
-      <section style={{ background: colors.ink[900], padding: 'clamp(80px,12vh,140px) 30px' }}>
+      {/* ENVIRONNEMENT — same surface as the intro/Théo sections (client
+          feedback: one background color across the page) */}
+      <section style={{ background: colors.surface.section, padding: 'clamp(80px,12vh,140px) 30px' }}>
         <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
           <div data-split style={{ display: 'grid', gridTemplateColumns: '1.08fr .92fr', gap: 'clamp(40px,5vw,72px)', alignItems: 'center' }}>
             <div data-split-text style={{ order: 1 }}>
@@ -309,7 +310,7 @@ export function HomePage() {
       {/* CONTACT / CTA */}
       <section
         id="contact"
-        style={{ background: colors.ink[900], padding: '44px 30px 60px', borderTop: `1px solid ${colors.border.hairMid}` }}
+        style={{ background: colors.surface.section, padding: '44px 30px 60px', borderTop: `1px solid ${colors.border.hairMid}` }}
       >
         <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
           <CtaLogo />
