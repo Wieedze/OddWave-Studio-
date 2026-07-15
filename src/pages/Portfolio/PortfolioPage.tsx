@@ -56,7 +56,8 @@ export function PortfolioPage() {
               fontSize: 'clamp(54px, 12vw, 170px)',
               lineHeight: 0.86,
               letterSpacing: '-0.03em',
-              color: colors.text.primaryWarm,
+              color: colors.heroTitle.fill,
+              WebkitTextStroke: colors.heroTitle.stroke,
               textShadow: '0 2px 60px rgba(0,0,0,.5)',
             }}
           >

@@ -4,8 +4,6 @@ export const EQUIPMENT = {
   heroTitle: 'MATÉRIEL',
   heroEyebrow: 'La liste complète',
   inventoryTitle: "L'inventaire complet",
-  inventoryBody:
-    "Tout l'équipement du studio, classé par catégorie. Chaque référence est sélectionnée pour sa transparence et son caractère.",
   ctaTitle: 'Un projet en tête ?',
   ctaBody: 'Dites-nous ce que vous cherchez à faire : on définit ensemble la meilleure chaîne pour votre son.',
   ctaLabel: 'Nous contacter →',
@@ -23,17 +21,12 @@ export interface GearCategory {
   readonly items: readonly GearItem[];
 }
 
-/** Featured pieces ("pièces phares") and detail close-ups carry captions. */
+/** Featured pieces ("pièces phares") carry a title caption. */
 export const FEATURED = {
-  main: { image: '/assets/materiel-console.jpg', title: 'SSL & Elysia channel strip', sub: 'Le cœur de la chaîne' },
+  main: { image: '/assets/materiel-console.jpg', title: 'SSL & Elysia channel strip' },
   topRight: { image: '/assets/machine-tubetech.jpg', title: 'Tube-Tech' },
   bottomRight: { image: '/assets/machine-channelstrip.jpg', title: 'Elysia & SSL Fusion' },
 } as const;
-
-export const DETAILS = [
-  { image: '/assets/ssl-elysia-knobs.jpg', fit: 'contain', title: 'SSL Fusion & Elysia', sub: 'Couleur & largeur stéréo' },
-  { image: '/assets/converter-blue.jpg', fit: 'cover', title: 'Conversion & monitoring', sub: "Le point d'entrée du signal" },
-] as const;
 
 export const GEAR_CATEGORIES: readonly GearCategory[] = [
   {

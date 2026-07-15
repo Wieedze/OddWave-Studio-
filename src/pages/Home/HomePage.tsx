@@ -210,8 +210,8 @@ export function HomePage() {
               fontSize: 'clamp(64px, 15vw, 236px)',
               lineHeight: 0.92,
               letterSpacing: '0.01em',
-              color: 'rgba(255,253,251,.9)',
-              WebkitTextStroke: '1.4px rgba(194,78,55,.85)',
+              color: colors.heroTitle.fill,
+              WebkitTextStroke: colors.heroTitle.stroke,
               textShadow: '0 2px 40px rgba(0,0,0,.3)',
             }}
           >

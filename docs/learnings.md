@@ -297,4 +297,25 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   only, so both sides of the logo disc weigh almost the same (left 31 chars vs
   right 30). The Guidance page hero and the footer keep "Accompagnement".
 
+## 2026-07-15 · Client feedback batch (handoff deviations, requested by Théo)
+
+- **Hero outline everywhere:** the landing `h1` treatment (near-white fill +
+  `-webkit-text-stroke` copper) became a token, `colors.heroTitle`, applied to
+  the `h1` of all 8 pages. The handoff only had it on the landing; client
+  feedback overrides.
+- **Sound Design heroIntro:** new paragraph under the hero title
+  (`content/soundDesign.ts`), same style/reveal as the Portfolio heroIntro.
+- **Portfolio rack enlarged:** stage `96vh/min 820px` (was `90vh/760px`),
+  rack max-width `1800px` (was `1640px`), cover grid `minmax(200px,1fr)`
+  (was `240px`) so more covers show at once. Mobile media queries unchanged.
+- **Matériel lightened:** removed the "Le cœur de la chaîne" caption, the
+  inventory intro paragraph (`inventoryBody`) and the whole DÉTAILS close-ups
+  section (+ its `DETAILS` content export).
+- **Export intro:** replaced by the client's sentence ("Un export bien préparé
+  est la première étape…"), rendered as a body paragraph (too long for the
+  0.32em-tracked MonoLabel).
+- Pending (not done): `/` to become the studio presentation (history + Théo
+  portrait) and the current home service panels to move to a `/services` page;
+  waiting for the client's final copy and validation of the route change.
+
 <!-- Add new entries above this line -->

@@ -81,7 +81,8 @@ export function StudioPage() {
               fontSize: 'clamp(48px, 11vw, 180px)',
               lineHeight: 0.86,
               letterSpacing: '-0.03em',
-              color: colors.text.primaryWarm,
+              color: colors.heroTitle.fill,
+              WebkitTextStroke: colors.heroTitle.stroke,
               textShadow: '0 4px 60px rgba(0,0,0,.55)',
             }}
           >

@@ -68,6 +68,11 @@ dark: `rgba(255,255,255,.06 → .18)`. light: `rgba(20,18,14,.08 → .14)`.
 
 landing: `background:#C24E37; color:#fff`. system page: `#AC3F20`.
 
+### Hero page titles (`colors.heroTitle`)
+
+Every page `h1` uses the landing hero treatment (client feedback, July 2026):
+fill `rgba(255,253,251,.9)` + outline `-webkit-text-stroke: 1.4px rgba(194,78,55,.85)`.
+
 ## Typography
 
 - **Display:** **Cabinet Grotesk** — 700 / 800 / 900. Headings letter-spacing

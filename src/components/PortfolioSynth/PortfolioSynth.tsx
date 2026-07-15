@@ -132,8 +132,8 @@ export function PortfolioSynth() {
 
   return (
     <>
-    <div className="ow-synth-stage" style={{ height: '90vh', minHeight: '760px', display: 'flex', alignItems: 'stretch', justifyContent: 'center', fontFamily: MONO }}>
-      <div className="ow-synth-rack" style={{ position: 'relative', width: '100%', maxWidth: '1640px', height: '100%', display: 'grid', gridTemplateColumns: '36px 1fr 36px', borderRadius: '18px', background: '#0B0C0F', boxShadow: '0 50px 120px rgba(0,0,0,.72)' }}>
+    <div className="ow-synth-stage" style={{ height: '96vh', minHeight: '820px', display: 'flex', alignItems: 'stretch', justifyContent: 'center', fontFamily: MONO }}>
+      <div className="ow-synth-rack" style={{ position: 'relative', width: '100%', maxWidth: '1800px', height: '100%', display: 'grid', gridTemplateColumns: '36px 1fr 36px', borderRadius: '18px', background: '#0B0C0F', boxShadow: '0 50px 120px rgba(0,0,0,.72)' }}>
         {ear('left')}
 
         {/* MAIN FACEPLATE */}
@@ -209,7 +209,7 @@ export function PortfolioSynth() {
           <div style={{ position: 'relative', borderRadius: '14px', padding: '11px', background: 'linear-gradient(180deg,#101114,#0A0B0D)', boxShadow: 'inset 0 3px 10px rgba(0,0,0,.9),0 1px 0 rgba(255,255,255,.1)', border: '1px solid #000', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
             <div style={{ position: 'absolute', top: '9px', left: '9px', right: '9px', bottom: '9px', borderRadius: '8px', pointerEvents: 'none', zIndex: 3, background: 'linear-gradient(180deg,rgba(194,142,87,.05),transparent 26%)', boxShadow: 'inset 0 0 40px rgba(0,0,0,.6)' }} />
             <div className="ow-synth-scr" style={{ position: 'relative', zIndex: 1, flex: 1, minHeight: 0, overflowY: 'auto', borderRadius: '6px', padding: '2px', backgroundImage: 'radial-gradient(rgba(255,255,255,.025) 1px,transparent 1px)', backgroundSize: '22px 22px' }}>
-              <div className="ow-synth-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: '16px', alignContent: 'start' }}>
+              <div className="ow-synth-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: '16px', alignContent: 'start' }}>
                 {covers.map((cover) => (
                   <div
                     key={cover.title}

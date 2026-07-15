@@ -101,6 +101,13 @@ export const selection = {
   text: '#FFFFFF',
 } as const;
 
+/** Hero page titles — near-white fill with the landing copper outline.
+    Client feedback (July 2026): every page title carries the landing outline. */
+export const heroTitle = {
+  fill: 'rgba(255,253,251,.9)',
+  stroke: '1.4px rgba(194,78,55,.85)',
+} as const;
+
 export const colors = {
   ink,
   surface,
@@ -112,6 +119,7 @@ export const colors = {
   text,
   border,
   selection,
+  heroTitle,
 } as const;
 
 export type Colors = typeof colors;
