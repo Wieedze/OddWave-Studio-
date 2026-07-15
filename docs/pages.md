@@ -5,9 +5,11 @@ Each page has one route. Exact copy, colors, and measures live in the matching
 appear on every page (except `Portfolio Synth`, a standalone experiment with no
 nav/footer, intentionally out of scope for now).
 
-## `/` Home — `Landing OddWave GSAP.dc.html`
+## `/` Home — `Landing OddWave GSAP.dc.html` (hero) + `Studio OddWave.dc.html` (sections)
 
-Brand entry point; all logos/links point here.
+Brand entry point; all logos/links point here. Restructured per client feedback
+(July 2026): the landing now presents the studio (presentation + history +
+engineer); the three prestation panels moved to `/services`.
 
 - **Hero** (`#top`, `100vh`, `min-height:680px`): full-viewport blurred photo
   (`hero.jpg`, `center 40%`) that sharpens on load; giant `ODDWAVE` wordmark
@@ -18,30 +20,39 @@ Brand entry point; all logos/links point here.
   Mastering · Sound design". Intro timeline: photo sharp → nav appears & expands
   → title + eyebrow → "studio". Hero parallax on scroll. Nav auto-closes on first
   scroll down.
-- **Mid section:** sticky `100vh` `FloatingLines` (Three.js) ambient field +
-  radial vignette; a blurred top mask; content overlaps via `margin-top:-100vh`.
-- **Prestations:** three alternating image/text glass cards (Mastering, Stem
-  Mastering, Mixage). Image pinned; text card de-blurs (`blur 18px→0`, rise) on
-  scroll (ScrollTrigger scrub `top 80% → top 34%`). Full copy in the file. Each
-  has a "Demander un devis →" link to `#contact`.
-- **Contact/CTA** (`#contact`): centred monogram, H2 "Donnons une dimension à
-  votre son.", paragraph, copper button "Démarrer un projet →".
+- **Présentation + historique:** the client's own copy (`content/home.ts`,
+  draft pending his final wording): a display-type lead paragraph + 3 body
+  paragraphs, max-width 1180 container.
+- **Studio sections** (from `Studio OddWave.dc.html`): bio split (portrait
+  `theo-portrait.jpg` + "Théo Grozdanic / Ingénieur du son · Producteur ·
+  Formateur" + 2 paragraphs); residence split; pedagogy parallax band.
+  `[data-split]` grid `.92fr 1.08fr`, gap `clamp(40px,5vw,72px)`, media
+  `height:min(72vh,640px)`, radius 18px.
+- **Contact/CTA** (`#contact`): centred monogram, H2 "Venez voir le studio.",
+  paragraph, copper button "Nous contacter →".
 - **Footer:** sitemap (Studio / Prestations / Travaux / Contact), monogram +
   "OddWave Studio", FR/EN, "© 2026 · Mastering · Production · Accompagnement".
 
-FloatingLines props (from the file): gradient `['#C24E37','#D98E5A','#8A5A3C']`,
-waves top/middle/bottom, lineCount `[3,4,3]`, lineDistance `[9,7,5]`,
-animationSpeed `0.7`, interactive, parallax, bendRadius `16`, bendStrength `-1.6`,
-mouseDamping `0.08`, mixBlendMode `screen`.
+## `/services` Services — panels from `Landing OddWave GSAP.dc.html`
 
-## `/studio` Le Studio — `Studio OddWave.dc.html`
+The three prestation panels, moved from the landing (client feedback, July 2026).
 
-Present the space and the engineer. Hero (SSL console photo); bio split
-(portrait `theo-portrait.jpg` + "Théo Grozdanic / Ingénieur du son · Producteur ·
-Formateur" + 2 paragraphs); residence split; pedagogy parallax band; CTA "Venez
-voir le studio." → home `/#contact`. `[data-split]` grid `.92fr 1.08fr`, gap
-`clamp(40px,5vw,72px)`, media `height:min(72vh,640px)`, radius 18px, shadow
-`0 34px 80px rgba(0,0,0,.55)`.
+- **Backdrop + title:** sticky `100vh` `FloatingLines` (Three.js) ambient field +
+  radial vignette; content overlaps via `margin-top:-100vh`; full-height title
+  section (`SERVICES`, hero outline treatment) + mono eyebrow "Mastering · Stem
+  mastering · Mixage".
+- **Prestations:** three alternating image/text glass cards (Mastering, Stem
+  Mastering, Mixage). Image pinned; text card de-blurs (`blur 18px→0`, rise) on
+  scroll (ScrollTrigger scrub `top 80% → top 34%`). Full copy in
+  `content/services.ts` (verbatim from the landing handoff). Each has a
+  "Demander un devis →" link to `/#contact`.
+- **CTA:** centred monogram, H2 "Donnons une dimension à votre son.",
+  paragraph, copper button "Démarrer un projet →".
+
+FloatingLines props (from the landing file): gradient
+`['#C24E37','#D98E5A','#8A5A3C']`, waves top/middle/bottom, lineCount `[3,4,3]`,
+lineDistance `[9,7,5]`, animationSpeed `0.7`, interactive, parallax, bendRadius
+`16`, bendStrength `-1.6`, mouseDamping `0.08`, mixBlendMode `screen`.
 
 ## `/equipment` Le Matériel — `Materiel OddWave.dc.html`
 

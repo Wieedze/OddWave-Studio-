@@ -1,7 +1,7 @@
 // Home landing intro — ported from the GSAP timeline in
 // design-handoff/Landing OddWave GSAP.dc.html. Letter-by-letter title, nav
-// appear + auto-open, eyebrow, "studio", hero parallax, nav auto-close on first
-// scroll, reveals, and the prestation cards de-blurring on scroll.
+// appear + auto-open, eyebrow, "studio", hero parallax, reveals, and the
+// studio sections' scroll parallax (shared MotionService logic).
 //
 // Selectors (set on the markup by HomePage):
 //   #top                      hero section
@@ -11,13 +11,14 @@
 //   [data-intro-el="cta"]     the bottom eyebrow line
 //   .ow-nav                   the floating nav pill
 //   [data-reveal]             generic reveals
-//   [data-svc] / [data-svc-card]  prestation section / its text card
+//   [data-parallax="x"]       vertical scroll parallax (value = intensity)
 
 import { useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { prefersReducedMotion } from '@/helpers';
 import { motion } from '@/design-system/tokens';
+import { MotionService } from '@/services';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
 export function useHomeIntro<T extends HTMLElement = HTMLDivElement>() {
@@ -103,20 +104,8 @@ export function useHomeIntro<T extends HTMLElement = HTMLDivElement>() {
         });
       });
 
-      // ---- Prestation cards de-blur on scroll ----
-      root.querySelectorAll<HTMLElement>('[data-svc]').forEach((section) => {
-        const card = section.querySelector<HTMLElement>('[data-svc-card]');
-        if (!card) return;
-        if (reduce) {
-          gsap.set(card, { autoAlpha: 1, filter: 'blur(0px)', y: 0 });
-          return;
-        }
-        gsap.set(card, { autoAlpha: 0, filter: 'blur(18px)', y: 24 });
-        const stl = gsap.timeline({
-          scrollTrigger: { trigger: section, start: 'top 80%', end: 'top 34%', scrub: 1 },
-        });
-        stl.to(card, { autoAlpha: 1, filter: 'blur(0px)', y: 0, duration: 1, ease: 'power2.out' }, 0);
-      });
+      // ---- Section scroll parallax (shared engine logic) ----
+      MotionService.applyParallax(root, reduce);
 
       ScrollTrigger.refresh();
     }, root);

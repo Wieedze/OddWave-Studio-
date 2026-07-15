@@ -1,10 +1,9 @@
-// Le Studio content — verbatim from design-handoff/Studio OddWave.dc.html.
-// (Bio paragraph 1 carries inline highlights and is rendered in the page.)
+// Studio content — verbatim from design-handoff/Studio OddWave.dc.html.
+// Since the July 2026 client feedback these sections live on the landing
+// (the /studio page is gone). Bio paragraph 1 carries inline highlights and
+// is rendered in HomePage.
 
 export const STUDIO = {
-  heroTitle: 'STUDIO',
-  heroEyebrow: "Le lieu · l'ingénieur",
-
   engineerName: 'Théo Grozdanic',
   engineerRole: 'Ingénieur du son · Producteur · Formateur',
   bioParagraph2:

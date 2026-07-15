@@ -318,4 +318,24 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   portrait) and the current home service panels to move to a `/services` page;
   waiting for the client's final copy and validation of the route change.
 
+## 2026-07-15 · Home/Services restructure (client feedback)
+
+- The landing now presents the studio: hero (unchanged) → presentation +
+  history copy (`content/home.ts`, client's draft with grammar corrections;
+  he will send final wording) → the former Studio page sections (bio,
+  environment, pedagogy band from `content/studio.ts`) → CTA "Venez voir le
+  studio." (`#contact` id kept for the footer's "Demander un devis" link).
+- The three prestation panels + "Donnons une dimension à votre son." CTA moved
+  to a new `/services` page (`content/services.ts`, copy verbatim); the
+  `/studio` route and `pages/Studio` are gone; nav "Studio" became "Services";
+  footer: "Studio" links to `/`, "Services" added under Prestations.
+- Rationale (validated with Max): the client said "naviguer vers les différents
+  services", i.e. a separate services destination; stacking the 3 long panels
+  under the studio sections would make the landing endless.
+- Motion plumbing: the `[data-svc]` card de-blur moved from `useHomeIntro` into
+  `MotionService` (static `applyServicePanels`, also run by `init()`), and
+  parallax became `MotionService.applyParallax`, reused by `useHomeIntro` for
+  the pedagogy band. The mobile CSS blocks moved with their markup
+  (`[data-svc]` → ServicesPage.css, `[data-split]` → HomePage.css).
+
 <!-- Add new entries above this line -->

@@ -1,10 +1,21 @@
-// Landing "prestations" — verbatim copy from design-handoff/Landing OddWave GSAP.dc.html.
-// Do not edit the French copy; it is the client's exact wording. The bodies are
-// split into paragraphs at sentence boundaries only (user request, 2026-07-11).
+// Services page content. The three "prestations" panels are verbatim copy from
+// design-handoff/Landing OddWave GSAP.dc.html (do not edit the French copy; the
+// bodies are split into paragraphs at sentence boundaries only, user request
+// 2026-07-11). They moved here from the landing per client feedback (July
+// 2026): the landing now presents the studio, and the services live on /services.
 
 import { ServiceItem } from '@/models';
 
-export const HOME_SERVICES: readonly ServiceItem[] = [
+export const SERVICES_PAGE = {
+  heroTitle: 'SERVICES',
+  heroEyebrow: 'Mastering · Stem mastering · Mixage',
+  /** Final CTA block (verbatim, formerly the landing CTA). */
+  ctaTitle: 'Donnons une dimension à votre son.',
+  ctaBody: 'À distance ou en résidence. Dites-nous où vous en êtes, on vous répond avec une proposition adaptée.',
+  ctaLabel: 'Démarrer un projet →',
+} as const;
+
+export const SERVICES: readonly ServiceItem[] = [
   new ServiceItem(
     'mastering',
     'Mastering',
@@ -43,11 +54,3 @@ export const HOME_SERVICES: readonly ServiceItem[] = [
     'center 60%',
   ),
 ];
-
-/** Final CTA block on the landing (verbatim). */
-export const HOME_CTA = {
-  title: 'Donnons une dimension à votre son.',
-  body: 'À distance ou en résidence. Dites-nous où vous en êtes, on vous répond avec une proposition adaptée.',
-  buttonLabel: 'Démarrer un projet →',
-  eyebrow: 'Production · Mixage · Mastering · Sound design',
-} as const;

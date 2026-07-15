@@ -5,7 +5,7 @@ export type NavSide = 'left' | 'right';
 export class NavLink {
   constructor(
     readonly label: string,
-    /** Internal route ("/studio") or, when `external`, an absolute URL. */
+    /** Internal route ("/services") or, when `external`, an absolute URL. */
     readonly to: string,
     readonly side: NavSide,
     /** External link → renders a plain <a> opening in a new tab. */

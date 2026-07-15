@@ -1,16 +1,18 @@
-// Home — the GSAP landing. Recreated from design-handoff/Landing OddWave GSAP.dc.html.
-// Letter-by-letter hero, sticky FloatingLines mid-section, alternating prestation
-// glass panels, final CTA. Motion is wired by useHomeIntro.
+// Home — the GSAP landing, restructured per client feedback (July 2026): it now
+// presents the studio. Letter-by-letter hero (from design-handoff/Landing
+// OddWave GSAP.dc.html), then the studio presentation + history, the engineer
+// and environment splits, the pedagogy band (all from design-handoff/Studio
+// OddWave.dc.html) and the contact CTA. The three prestation panels moved to
+// /services. Motion is wired by useHomeIntro.
 
 import type { CSSProperties } from 'react';
-import { FloatingLines } from '@/components';
 import { CtaLogo } from '@/components';
 import { Button, MonoLabel } from '@/design-system/primitives';
-import { colors, typography } from '@/design-system/tokens';
+import { colors, typography, shadow } from '@/design-system/tokens';
 import { useHomeIntro } from '@/hooks';
-import { HOME_SERVICES, HOME_CTA } from '@/content/homeServices';
+import { HOME } from '@/content/home';
+import { STUDIO } from '@/content/studio';
 import { ROUTES } from '@/content/navigation';
-import type { ServiceItem } from '@/models';
 import './HomePage.css';
 
 const HERO_WORD_LEFT = ['O', 'D', 'D'];
@@ -24,139 +26,31 @@ function Letter({ char }: { char: string }) {
   );
 }
 
-function PrestationPanel({ service }: { service: ServiceItem }) {
-  const imageRight = service.imageSide === 'right';
-  const columns = imageRight ? '.96fr 1.04fr' : '1.04fr .96fr';
-
-  const textBlock = (
-    <div
-      data-svc-text
-      style={{
-        padding: 'clamp(34px, 3.4vw, 62px)',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        textAlign: 'left',
-      }}
-    >
-      <h3
-        style={{
-          margin: '0 0 24px',
-          fontFamily: typography.font.display,
-          fontWeight: typography.weight.bold,
-          fontSize: 'clamp(34px, 3.4vw, 56px)',
-          lineHeight: 1,
-          letterSpacing: '-0.025em',
-          color: colors.text.surfaceBright,
-        }}
-      >
-        {service.title}
-      </h3>
-      {service.body.map((paragraph, i) => (
-        <p
-          key={i}
-          style={{
-            margin: i === 0 ? 0 : '14px 0 0',
-            fontFamily: typography.font.body,
-            fontWeight: typography.weight.regular,
-            fontSize: '16.5px',
-            lineHeight: 1.85,
-            color: colors.text.mutedCool,
-            textWrap: 'pretty',
-            maxWidth: '60ch',
-          }}
-        >
-          {paragraph}
-        </p>
-      ))}
-      <a
-        href={service.ctaHref}
-        style={{
-          marginTop: '32px',
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '9px',
-          fontFamily: typography.font.body,
-          fontWeight: typography.weight.semibold,
-          fontSize: '14px',
-          lineHeight: 1,
-          color: colors.text.primary,
-          textDecoration: 'none',
-          borderBottom: '1px solid rgba(194,142,87,.85)',
-          paddingBottom: '5px',
-          alignSelf: 'flex-start',
-        }}
-      >
-        {service.ctaLabel}
-      </a>
-    </div>
-  );
-
-  const mediaBlock = (
-    <div data-svc-img style={{ position: 'relative', overflow: 'hidden', minHeight: 'clamp(440px, 64vh, 720px)' }}>
-      <div style={{ position: 'absolute', inset: 0, willChange: 'transform, opacity, filter' }}>
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: `url('${service.image}') ${service.imageFocus} / cover no-repeat`,
-          }}
-        />
-      </div>
-    </div>
-  );
-
+function SplitMedia({ image, focus, height }: { image: string; focus: string; height: string }) {
   return (
-    <section
-      data-svc
-      style={{
-        position: 'relative',
-        background: 'transparent',
-        padding: '0 clamp(20px, 4vw, 64px)',
-        display: 'flex',
-        justifyContent: imageRight ? 'flex-end' : 'flex-start',
-      }}
+    <div
+      data-split-media
+      data-reveal
+      style={{ position: 'relative', height, borderRadius: '18px', overflow: 'hidden', boxShadow: shadow.media }}
     >
-      <div
-        data-reveal
-        data-svc-card
-        style={{
-          width: '100%',
-          maxWidth: '1500px',
-          display: 'grid',
-          gridTemplateColumns: columns,
-          borderRadius: '8px',
-          overflow: 'hidden',
-          background: 'rgba(14,15,18,.62)',
-          backdropFilter: 'blur(28px) saturate(120%)',
-          WebkitBackdropFilter: 'blur(28px) saturate(120%)',
-          border: '1px solid rgba(246,238,230,.10)',
-          boxShadow: '0 50px 130px rgba(0,0,0,.55)',
-        }}
-      >
-        {imageRight ? (
-          <>
-            {textBlock}
-            {mediaBlock}
-          </>
-        ) : (
-          <>
-            {mediaBlock}
-            {textBlock}
-          </>
-        )}
-      </div>
-    </section>
+      <div style={{ position: 'absolute', inset: 0, background: `url('${image}') ${focus}/cover no-repeat` }} />
+    </div>
   );
 }
 
-const spacer = (height: string): CSSProperties => ({ height });
+const bodyParagraph: CSSProperties = {
+  fontFamily: typography.font.body,
+  fontWeight: typography.weight.regular,
+  color: colors.text.secondary,
+  textWrap: 'pretty',
+};
 
 export function HomePage() {
   const rootRef = useHomeIntro<HTMLDivElement>();
+  const [introLead, ...introRest] = HOME.intro;
 
   return (
-    <div ref={rootRef} style={{ background: colors.ink[900], color: colors.text.primary }}>
+    <div ref={rootRef} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden' }}>
       {/* HERO */}
       <section
         id="top"
@@ -255,68 +149,152 @@ export function HomePage() {
             color={colors.copper.warm}
             style={{ textIndent: '0.16em', textAlign: 'center', lineHeight: 1.7, maxWidth: '100%' }}
           >
-            {HOME_CTA.eyebrow}
+            {HOME.heroEyebrow}
           </MonoLabel>
         </div>
       </section>
 
-      {/* MID SECTION + PRESTATIONS */}
-      <div style={{ position: 'relative', background: colors.surface.section }}>
-        <div style={{ position: 'sticky', top: 0, height: '100vh', width: '100%', overflow: 'hidden', zIndex: 0, pointerEvents: 'none' }}>
-          <div style={{ position: 'absolute', inset: 0 }}>
-            <FloatingLines
-              linesGradient={['#C24E37', '#D98E5A', '#8A5A3C']}
-              enabledWaves={['top', 'middle', 'bottom']}
-              lineCount={[3, 4, 3]}
-              lineDistance={[9, 7, 5]}
-              animationSpeed={0.7}
-              interactive
-              parallax
-              bendRadius={16.0}
-              bendStrength={-1.6}
-              mouseDamping={0.08}
-              mixBlendMode="screen"
-            />
-          </div>
-          <div
+      {/* PRÉSENTATION + HISTORIQUE */}
+      <section style={{ background: colors.surface.section, padding: 'clamp(70px,11vh,130px) 30px clamp(36px,5vh,64px)' }}>
+        <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
+          <p
+            data-reveal
             style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'radial-gradient(120% 90% at 50% 50%,transparent 30%,rgba(11,12,15,.55) 100%)',
+              margin: 0,
+              maxWidth: '820px',
+              fontFamily: typography.font.display,
+              fontWeight: typography.weight.bold,
+              fontSize: 'clamp(24px,3vw,40px)',
+              lineHeight: 1.25,
+              letterSpacing: '-0.02em',
+              color: colors.text.primaryWarm,
+              textWrap: 'pretty',
             }}
-          />
-        </div>
-
-        <div style={{ position: 'relative', zIndex: 2, marginTop: '-100vh' }}>
-          <div
-            aria-hidden
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: '420px',
-              zIndex: 1,
-              pointerEvents: 'none',
-              backdropFilter: 'blur(52px)',
-              WebkitBackdropFilter: 'blur(52px)',
-              WebkitMaskImage: 'linear-gradient(180deg,#000 0%,#000 30%,transparent 100%)',
-              maskImage: 'linear-gradient(180deg,#000 0%,#000 30%,transparent 100%)',
-              background: 'linear-gradient(180deg,rgba(11,12,15,.85) 0%,rgba(11,12,15,.35) 45%,transparent 100%)',
-            }}
-          />
-          <div aria-hidden style={spacer('min(34vh, 380px)')} />
-
-          {HOME_SERVICES.map((service, i) => (
-            <div key={service.id}>
-              <PrestationPanel service={service} />
-              {i < HOME_SERVICES.length - 1 && <div aria-hidden style={spacer('min(32vh, 360px)')} />}
-            </div>
+          >
+            {introLead}
+          </p>
+          {introRest.map((paragraph, i) => (
+            <p
+              key={i}
+              data-reveal
+              style={{ ...bodyParagraph, margin: '22px 0 0', maxWidth: '720px', fontSize: '17px', lineHeight: 1.75 }}
+            >
+              {paragraph}
+            </p>
           ))}
-
-          <div aria-hidden style={spacer('min(28vh, 300px)')} />
         </div>
-      </div>
+      </section>
+
+      {/* THÉO GROZDANIC */}
+      <section style={{ background: colors.surface.section, padding: 'clamp(36px,5vh,64px) 30px clamp(80px,12vh,140px)' }}>
+        <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
+          <div data-split style={{ display: 'grid', gridTemplateColumns: '.92fr 1.08fr', gap: 'clamp(40px,5vw,72px)', alignItems: 'center' }}>
+            <SplitMedia image="/assets/theo-portrait.jpg" focus="center 28%" height="min(72vh,640px)" />
+            <div data-split-text>
+              <h2
+                data-reveal
+                style={{
+                  margin: '0 0 10px',
+                  fontFamily: typography.font.display,
+                  fontWeight: typography.weight.bold,
+                  fontSize: 'clamp(36px,4.6vw,64px)',
+                  lineHeight: 1,
+                  letterSpacing: '-0.025em',
+                  color: colors.text.primaryWarm,
+                }}
+              >
+                {STUDIO.engineerName}
+              </h2>
+              <div data-reveal style={{ marginBottom: '26px' }}>
+                <MonoLabel as="div" size="13px" tracking="0.06em" color={colors.copper.warm} style={{ textTransform: 'none', lineHeight: 1.5 }}>
+                  {STUDIO.engineerRole}
+                </MonoLabel>
+              </div>
+              <p data-reveal style={{ ...bodyParagraph, margin: '0 0 20px', maxWidth: '520px', fontSize: '16px', lineHeight: 1.75 }}>
+                D'une passion devenue expertise : à 18 ans, il enregistre et mixe les groupes locaux dans son propre studio.
+                Technicien son sur scène, puis producteur, il lance <span style={{ color: colors.copper.highlight }}>OddWave</span> et{' '}
+                <span style={{ color: colors.copper.highlight }}>Earthworm</span>, signe sur des labels reconnus et tourne à travers le monde.
+              </p>
+              <p data-reveal style={{ ...bodyParagraph, margin: 0, maxWidth: '520px', fontSize: '16px', lineHeight: 1.75 }}>
+                {STUDIO.bioParagraph2}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ENVIRONNEMENT */}
+      <section style={{ background: colors.ink[900], padding: 'clamp(80px,12vh,140px) 30px' }}>
+        <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
+          <div data-split style={{ display: 'grid', gridTemplateColumns: '1.08fr .92fr', gap: 'clamp(40px,5vw,72px)', alignItems: 'center' }}>
+            <div data-split-text style={{ order: 1 }}>
+              <h2
+                data-reveal
+                style={{
+                  margin: '0 0 24px',
+                  maxWidth: '520px',
+                  fontFamily: typography.font.display,
+                  fontWeight: typography.weight.bold,
+                  fontSize: 'clamp(34px,4.6vw,60px)',
+                  lineHeight: 1.04,
+                  letterSpacing: '-0.025em',
+                  color: colors.text.primaryWarm,
+                  textWrap: 'pretty',
+                }}
+              >
+                {STUDIO.envTitle}
+              </h2>
+              <p data-reveal style={{ ...bodyParagraph, margin: '0 0 20px', maxWidth: '500px', fontSize: '17px', lineHeight: 1.75 }}>
+                {STUDIO.envParagraph1}
+              </p>
+              <p data-reveal style={{ ...bodyParagraph, margin: 0, maxWidth: '500px', fontSize: '17px', lineHeight: 1.75 }}>
+                {STUDIO.envParagraph2}
+              </p>
+            </div>
+            <div style={{ order: 2 }}>
+              <SplitMedia image="/assets/cabin-mic.jpg" focus="center" height="min(64vh,560px)" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* APPROCHE PÉDAGOGIQUE — parallax band */}
+      <section style={{ position: 'relative', padding: 'clamp(100px,15vh,170px) 30px', overflow: 'hidden' }}>
+        <div
+          data-parallax="0.14"
+          style={{
+            position: 'absolute',
+            inset: '-10% 0',
+            height: '120%',
+            background: "url('/assets/session.jpg') center/cover no-repeat",
+            willChange: 'transform',
+            WebkitMaskImage: 'linear-gradient(90deg, transparent 6%, rgba(0,0,0,.35) 36%, #000 66%)',
+            maskImage: 'linear-gradient(90deg, transparent 6%, rgba(0,0,0,.35) 36%, #000 66%)',
+          }}
+        />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg,#0B0C0F 0%,rgba(11,12,15,.86) 40%,rgba(11,12,15,.32) 78%,transparent 100%)' }} />
+        <div style={{ position: 'relative', maxWidth: '1180px', margin: '0 auto' }}>
+          <h2
+            data-reveal
+            style={{
+              margin: 0,
+              maxWidth: '760px',
+              fontFamily: typography.font.display,
+              fontWeight: typography.weight.bold,
+              fontSize: 'clamp(32px,4.6vw,58px)',
+              lineHeight: 1.06,
+              letterSpacing: '-0.025em',
+              color: colors.text.primaryWarm,
+              textWrap: 'pretty',
+            }}
+          >
+            {STUDIO.pedagogyTitle}
+          </h2>
+          <p data-reveal style={{ ...bodyParagraph, margin: '26px 0 0', maxWidth: '540px', fontSize: '17px', lineHeight: 1.75, color: '#C8C4BC' }}>
+            {STUDIO.pedagogyBody}
+          </p>
+        </div>
+      </section>
 
       {/* CONTACT / CTA */}
       <section
@@ -338,7 +316,7 @@ export function HomePage() {
               textWrap: 'balance',
             }}
           >
-            {HOME_CTA.title}
+            {STUDIO.ctaTitle}
           </h2>
           <p
             data-reveal
@@ -353,11 +331,11 @@ export function HomePage() {
               textWrap: 'pretty',
             }}
           >
-            {HOME_CTA.body}
+            {STUDIO.ctaBody}
           </p>
           <div data-reveal style={{ marginTop: '26px' }}>
             <Button to={ROUTES.contact} variant="primary" style={{ padding: '17px 34px' }}>
-              {HOME_CTA.buttonLabel}
+              {STUDIO.ctaLabel}
             </Button>
           </div>
         </div>

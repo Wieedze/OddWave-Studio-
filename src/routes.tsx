@@ -3,7 +3,7 @@
 import type { RouteRecord } from 'vite-react-ssg';
 import { RootLayout } from '@/layout/RootLayout';
 import { HomePage } from '@/pages/Home';
-import { StudioPage } from '@/pages/Studio';
+import { ServicesPage } from '@/pages/Services';
 import { EquipmentPage } from '@/pages/Equipment';
 import { GuidancePage } from '@/pages/Guidance';
 import { SoundDesignPage } from '@/pages/SoundDesign';
@@ -17,7 +17,7 @@ export const routes: RouteRecord[] = [
     element: <RootLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: 'studio', element: <StudioPage /> },
+      { path: 'services', element: <ServicesPage /> },
       { path: 'equipment', element: <EquipmentPage /> },
       { path: 'guidance', element: <GuidancePage /> },
       { path: 'sound-design', element: <SoundDesignPage /> },

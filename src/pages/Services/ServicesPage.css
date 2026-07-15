@@ -1,0 +1,20 @@
+/* Services mobile overrides — the prestation panels' @media(max-width:860px)
+   block, moved with the panels from the landing (design-handoff/Landing OddWave
+   GSAP.dc.html). Panels stack to a single column, image first. */
+
+@media (max-width: 860px) {
+  [data-svc] > [data-svc-card] {
+    grid-template-columns: 1fr !important;
+    gap: 26px !important;
+  }
+
+  [data-svc-img] {
+    order: 1 !important;
+    min-height: 46vh !important;
+    max-height: 360px !important;
+  }
+
+  [data-svc-text] {
+    order: 2 !important;
+  }
+}
