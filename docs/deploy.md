@@ -28,7 +28,7 @@ Environment variables for the build:
 - `VITE_WEB3FORMS_KEY` = the Web3Forms key.
 - If the build image needs a Bun pin: `BUN_VERSION` = `1.3.14` (or the version in use).
 
-vite-react-ssg emits a real HTML file per route (`/`, `/studio/index.html`, …),
+vite-react-ssg emits a real HTML file per route (`/`, `/services/index.html`, …),
 so deep links work without an SPA catch-all. No `_redirects` needed.
 
 ## Videos (IPFS)

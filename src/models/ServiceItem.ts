@@ -1,4 +1,4 @@
-// A landing "prestation" panel: alternating image / text glass card.
+// A "prestation" panel (Services page): alternating image / text glass card.
 
 export type ImageSide = 'left' | 'right';
 

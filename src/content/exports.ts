@@ -10,7 +10,7 @@ export interface ExportPage {
 export const EXPORTS = {
   eyebrow: 'Guide',
   title: "Guide d'export",
-  intro: 'Préparez vos fichiers pour le mix & mastering.',
+  intro: 'Un export bien préparé est la première étape vers un mixage et un mastering de haute qualité.',
   pages: [
     { src: '/assets/exports/export-1.png', alt: "Guide d'export OddWave — couverture" },
     { src: '/assets/exports/export-2.png', alt: "Guide d'export — pourquoi préparer correctement vos exports" },

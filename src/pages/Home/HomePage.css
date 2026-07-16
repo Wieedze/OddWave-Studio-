@@ -1,24 +1,23 @@
-/* Landing mobile overrides — ported from the @media(max-width:860px) block of
-   design-handoff/Landing OddWave GSAP.dc.html. Prestation panels stack to a
-   single column (image first), and the hero wordmark scales up by viewport. */
+/* Home mobile overrides. The hero wordmark scale is ported from the
+   @media(max-width:860px) block of design-handoff/Landing OddWave GSAP.dc.html;
+   the split-section stack comes with the studio sections (design-handoff/Studio
+   OddWave.dc.html) now living on the landing (client feedback, July 2026). */
 
 @media (max-width: 860px) {
   #top h1 {
     font-size: clamp(56px, 19vw, 340px) !important;
   }
 
-  [data-svc] > [data-svc-card] {
+  [data-split] {
     grid-template-columns: 1fr !important;
-    gap: 26px !important;
+    gap: 34px !important;
   }
-
-  [data-svc-img] {
+  [data-split-media] {
     order: 1 !important;
-    min-height: 46vh !important;
-    max-height: 360px !important;
+    height: 54vh !important;
+    max-height: 420px !important;
   }
-
-  [data-svc-text] {
+  [data-split-text] {
     order: 2 !important;
   }
 }

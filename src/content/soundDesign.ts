@@ -10,6 +10,7 @@ import { VideoEntry } from '@/models';
 export const SOUND_DESIGN = {
   heroEyebrow: "Donner une voix à l'image",
   heroTitle: 'SOUND DESIGN',
+  heroIntro: "Un extrait des différents travaux de son à l'image réalisés au studio.",
   soundLabel: 'Son',
   galleryTitle: 'Réalisations',
   ctaTitle: 'Un projet à sonoriser ?',

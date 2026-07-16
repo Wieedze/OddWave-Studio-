@@ -4,7 +4,6 @@
 // 6 A4 guide pages scrolling over the backdrop.
 
 import { FloatingLines } from '@/components';
-import { MonoLabel } from '@/design-system/primitives';
 import { usePageMotion } from '@/hooks';
 import { colors, typography } from '@/design-system/tokens';
 import { EXPORTS } from '@/content/exports';
@@ -52,17 +51,28 @@ export function ExportsPage() {
               lineHeight: 0.86,
               letterSpacing: '-0.03em',
               textTransform: 'uppercase',
-              color: colors.text.primaryWarm,
+              color: colors.heroTitle.fill,
+              WebkitTextStroke: colors.heroTitle.stroke,
               textShadow: '0 4px 60px rgba(0,0,0,.55)',
             }}
           >
             {EXPORTS.title}
           </h1>
-          <div data-hero-eyebrow style={{ margin: '18px 0 0' }}>
-            <MonoLabel size="13px" tracking="0.32em" color={colors.copper.warm} style={{ textIndent: '0.32em' }}>
-              {EXPORTS.intro}
-            </MonoLabel>
-          </div>
+          <p
+            data-hero-eyebrow
+            style={{
+              margin: '24px 0 0',
+              maxWidth: '540px',
+              fontFamily: typography.font.body,
+              fontWeight: typography.weight.regular,
+              fontSize: '17px',
+              lineHeight: 1.7,
+              color: 'rgba(241,238,232,.84)',
+              textWrap: 'pretty',
+            }}
+          >
+            {EXPORTS.intro}
+          </p>
         </section>
 
         {/* DOCUMENT — the 6 guide pages, scrolling over the backdrop */}

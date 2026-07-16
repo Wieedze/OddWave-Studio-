@@ -80,7 +80,8 @@ export function GuidancePage() {
               fontSize: 'clamp(44px, 9.5vw, 150px)',
               lineHeight: 0.86,
               letterSpacing: '-0.03em',
-              color: colors.text.primaryWarm,
+              color: colors.heroTitle.fill,
+              WebkitTextStroke: colors.heroTitle.stroke,
               textShadow: '0 4px 60px rgba(0,0,0,.55)',
             }}
           >
@@ -209,7 +210,7 @@ export function GuidancePage() {
             data-reveal
             style={{
               margin: '0 0 46px',
-              maxWidth: '520px',
+              maxWidth: '900px',
               fontFamily: typography.font.body,
               fontWeight: typography.weight.regular,
               fontSize: '16px',
@@ -271,7 +272,6 @@ export function GuidancePage() {
             data-reveal
             style={{
               margin: '0 0 40px',
-              maxWidth: '540px',
               fontFamily: typography.font.body,
               fontWeight: typography.weight.regular,
               fontSize: '17px',

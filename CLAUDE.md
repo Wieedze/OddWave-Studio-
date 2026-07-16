@@ -58,8 +58,8 @@ design-handoff/     original .dc.html references + helper JS (read-only, do not 
 
 | Route | Page component | Handoff file |
 |---|---|---|
-| `/` | `HomePage` | Landing OddWave GSAP.dc.html |
-| `/studio` | `StudioPage` | Studio OddWave.dc.html |
+| `/` | `HomePage` | Landing OddWave GSAP.dc.html (hero) + Studio OddWave.dc.html (sections) |
+| `/services` | `ServicesPage` | Landing OddWave GSAP.dc.html (prestation panels) |
 | `/equipment` | `EquipmentPage` | Materiel OddWave.dc.html |
 | `/guidance` | `GuidancePage` | Accompagnement OddWave.dc.html |
 | `/sound-design` | `SoundDesignPage` | Sound Design OddWave.dc.html |

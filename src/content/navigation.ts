@@ -5,7 +5,7 @@ import { NavLink } from '@/models';
 
 export const ROUTES = {
   home: '/',
-  studio: '/studio',
+  services: '/services',
   equipment: '/equipment',
   guidance: '/guidance',
   soundDesign: '/sound-design',
@@ -19,7 +19,7 @@ export const LABEL_URL = 'https://www.sleepingtracksrecords.com/';
 
 /** Left group of the floating nav. */
 export const NAV_LEFT: readonly NavLink[] = [
-  new NavLink('Studio', ROUTES.studio, 'left'),
+  new NavLink('Services', ROUTES.services, 'left'),
   new NavLink('Matériel', ROUTES.equipment, 'left'),
   new NavLink('Sound design', ROUTES.soundDesign, 'left'),
   new NavLink('Label', LABEL_URL, 'left', true),

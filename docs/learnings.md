@@ -297,4 +297,64 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   only, so both sides of the logo disc weigh almost the same (left 31 chars vs
   right 30). The Guidance page hero and the footer keep "Accompagnement".
 
+## 2026-07-15 · Client feedback batch (handoff deviations, requested by Théo)
+
+- **Hero outline everywhere:** the landing `h1` treatment (near-white fill +
+  `-webkit-text-stroke` copper) became a token, `colors.heroTitle`, applied to
+  the `h1` of all 8 pages. The handoff only had it on the landing; client
+  feedback overrides.
+- **Sound Design heroIntro:** new paragraph under the hero title
+  (`content/soundDesign.ts`), same style/reveal as the Portfolio heroIntro.
+- **Portfolio rack enlarged:** stage `96vh/min 820px` (was `90vh/760px`),
+  rack max-width `1800px` (was `1640px`), cover grid `minmax(200px,1fr)`
+  (was `240px`) so more covers show at once. Mobile media queries unchanged.
+- **Matériel lightened:** removed the "Le cœur de la chaîne" caption, the
+  inventory intro paragraph (`inventoryBody`) and the whole DÉTAILS close-ups
+  section (+ its `DETAILS` content export).
+- **Export intro:** replaced by the client's sentence ("Un export bien préparé
+  est la première étape…"), rendered as a body paragraph (too long for the
+  0.32em-tracked MonoLabel).
+- Pending (not done): `/` to become the studio presentation (history + Théo
+  portrait) and the current home service panels to move to a `/services` page;
+  waiting for the client's final copy and validation of the route change.
+
+## 2026-07-15 · Home/Services restructure (client feedback)
+
+- The landing now presents the studio: hero (unchanged) → presentation +
+  history copy (`content/home.ts`, client's draft with grammar corrections;
+  he will send final wording) → the former Studio page sections (bio,
+  environment, pedagogy band from `content/studio.ts`) → CTA "Venez voir le
+  studio." (`#contact` id kept for the footer's "Demander un devis" link).
+- The three prestation panels + "Donnons une dimension à votre son." CTA moved
+  to a new `/services` page (`content/services.ts`, copy verbatim); the
+  `/studio` route and `pages/Studio` are gone; nav "Studio" became "Services";
+  footer: "Studio" links to `/`, "Services" added under Prestations.
+- Rationale (validated with Max): the client said "naviguer vers les différents
+  services", i.e. a separate services destination; stacking the 3 long panels
+  under the studio sections would make the landing endless.
+- Motion plumbing: the `[data-svc]` card de-blur moved from `useHomeIntro` into
+  `MotionService` (static `applyServicePanels`, also run by `init()`), and
+  parallax became `MotionService.applyParallax`, reused by `useHomeIntro` for
+  the pedagogy band. The mobile CSS blocks moved with their markup
+  (`[data-svc]` → ServicesPage.css, `[data-split]` → HomePage.css).
+
+## 2026-07-15 · Home intro split, senseless line breaks, mobile split-order bug
+
+- Home presentation section became a text + photo split (client feedback:
+  "il faudrait une photo"): eyebrow "Le studio · Depuis plus de 15 ans",
+  lead + body paragraphs left, the orphaned `/assets/studio-hero-ssl.jpg`
+  (ex-Studio hero) right. Photo alternation on the page stays
+  right → left → right.
+- "Retours à la ligne inutiles" (client screenshot on Guidance formules):
+  the culprit is over-narrow paragraph `maxWidth` in wide sections, not
+  `<br>` (there are none). Widened: Guidance formules intro 520→900px (one
+  line), Guidance demande intro maxWidth dropped (fills the 760px column),
+  Sound Design heroIntro 540→640px (one line). Kept narrow on purpose:
+  split columns, centered CTA paragraphs, text over the pedagogy gradient.
+- **Gotcha (mobile split stacking):** CSS `order` only applies to direct
+  grid/flex items. Sections that wrapped `SplitMedia` in a
+  `<div style={{order:2}}>` never re-stacked image-first on mobile because
+  `[data-split-media]{order:1}` hit the nested element. Fix: `SplitMedia`
+  takes an `order` prop on its root and is always a direct grid child.
+
 <!-- Add new entries above this line -->

@@ -1,12 +1,14 @@
-// Le Matériel — gear showcase. Recreated from design-handoff/Materiel OddWave.dc.html.
-// Hero, featured pieces grid, full inventory by category, detail close-ups, CTA.
+// Le Matériel — gear showcase. Recreated from design-handoff/Materiel OddWave.dc.html,
+// lightened per client feedback (July 2026): no caption subtitles, no inventory
+// intro paragraph, no detail close-ups section. Hero, featured pieces grid,
+// full inventory by category, CTA.
 
 import type { CSSProperties } from 'react';
 import { CtaLogo } from '@/components';
 import { Button, MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
-import { EQUIPMENT, FEATURED, DETAILS, GEAR_CATEGORIES, type GearItem, type GearCategory } from '@/content/equipment';
+import { EQUIPMENT, FEATURED, GEAR_CATEGORIES, type GearItem, type GearCategory } from '@/content/equipment';
 import { ROUTES } from '@/content/navigation';
 import './EquipmentPage.css';
 
@@ -15,16 +17,6 @@ const captionTitle: CSSProperties = {
   fontWeight: typography.weight.bold,
   color: colors.text.primaryWarm,
   textShadow: '0 1px 14px rgba(0,0,0,.7)',
-};
-const captionSub: CSSProperties = {
-  fontFamily: typography.font.mono,
-  fontWeight: typography.weight.semibold,
-  fontSize: '12px',
-  lineHeight: 1,
-  letterSpacing: '0.06em',
-  color: colors.copper.highlight,
-  marginTop: '8px',
-  textShadow: '0 1px 10px rgba(0,0,0,.8)',
 };
 
 function GearRow({ item }: { item: GearItem }) {
@@ -106,7 +98,8 @@ export function EquipmentPage() {
               fontSize: 'clamp(48px, 11vw, 170px)',
               lineHeight: 0.86,
               letterSpacing: '-0.03em',
-              color: colors.text.primaryWarm,
+              color: colors.heroTitle.fill,
+              WebkitTextStroke: colors.heroTitle.stroke,
               textShadow: '0 4px 60px rgba(0,0,0,.55)',
             }}
           >
@@ -128,7 +121,6 @@ export function EquipmentPage() {
               <div style={{ position: 'absolute', inset: 0, background: `url('${FEATURED.main.image}') center/cover no-repeat` }} />
               <div style={{ position: 'absolute', left: '24px', bottom: '22px' }}>
                 <div style={{ ...captionTitle, fontSize: '28px', lineHeight: 1 }}>{FEATURED.main.title}</div>
-                <div style={captionSub}>{FEATURED.main.sub}</div>
               </div>
             </div>
             <div style={{ display: 'grid', gridTemplateRows: '2.1fr 1fr', gap: '22px' }}>
@@ -166,45 +158,9 @@ export function EquipmentPage() {
           >
             {EQUIPMENT.inventoryTitle}
           </h2>
-          <p
-            data-reveal
-            style={{
-              margin: '0 0 56px',
-              maxWidth: '560px',
-              fontFamily: typography.font.body,
-              fontWeight: typography.weight.regular,
-              fontSize: '16px',
-              lineHeight: 1.7,
-              color: colors.text.muted,
-              textWrap: 'pretty',
-            }}
-          >
-            {EQUIPMENT.inventoryBody}
-          </p>
-          <div data-cats style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(40px,5vw,80px)' }}>
+          <div data-cats style={{ marginTop: '48px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(40px,5vw,80px)' }}>
             {GEAR_CATEGORIES.map((category) => (
               <CategoryBlock key={category.label} category={category} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* DÉTAILS — gros plans */}
-      <section style={{ background: colors.surface.section, padding: 'clamp(50px,8vh,100px) 30px clamp(40px,6vh,70px)' }}>
-        <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
-          <div data-phares style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '18px' }}>
-            {DETAILS.map((detail) => (
-              <div
-                key={detail.title}
-                data-reveal
-                style={{ position: 'relative', height: 'min(40vh,340px)', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 30px 70px rgba(0,0,0,.5)', background: colors.surface.section }}
-              >
-                <div style={{ position: 'absolute', inset: 0, background: `url('${detail.image}') center/${detail.fit} no-repeat` }} />
-                <div style={{ position: 'absolute', left: '22px', bottom: '20px' }}>
-                  <div style={{ ...captionTitle, fontSize: '19px', lineHeight: 1, textShadow: '0 1px 12px rgba(0,0,0,.7)' }}>{detail.title}</div>
-                  <div style={{ ...captionSub, fontSize: '11px', marginTop: '7px' }}>{detail.sub}</div>
-                </div>
-              </div>
             ))}
           </div>
         </div>

@@ -201,12 +201,28 @@ export function SoundDesignPage() {
               fontSize: 'clamp(44px, 9.5vw, 168px)',
               lineHeight: 0.86,
               letterSpacing: '-0.03em',
-              color: colors.text.primaryWarm,
+              color: colors.heroTitle.fill,
+              WebkitTextStroke: colors.heroTitle.stroke,
               textShadow: '0 4px 60px rgba(0,0,0,.55)',
             }}
           >
             {SOUND_DESIGN.heroTitle}
           </h1>
+          <p
+            className={heroTextClass}
+            style={{
+              margin: '22px 0 0',
+              maxWidth: '640px',
+              fontFamily: typography.font.body,
+              fontWeight: typography.weight.regular,
+              fontSize: '17px',
+              lineHeight: 1.7,
+              color: 'rgba(241,238,232,.84)',
+              textWrap: 'pretty',
+            }}
+          >
+            {SOUND_DESIGN.heroIntro}
+          </p>
         </div>
       </section>
 

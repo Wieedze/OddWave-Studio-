@@ -10,7 +10,7 @@ export const SITE = {
 
 export interface FooterLink {
   readonly label: string;
-  /** Internal route ("/studio") or, when `external`, an absolute URL. */
+  /** Internal route ("/services") or, when `external`, an absolute URL. */
   readonly to: string;
   readonly external?: boolean;
 }
@@ -25,13 +25,14 @@ export const FOOTER_COLUMNS: readonly FooterColumn[] = [
   {
     heading: 'Studio',
     links: [
-      { label: 'Studio', to: ROUTES.studio },
+      { label: 'Studio', to: ROUTES.home },
       { label: 'Matériel', to: ROUTES.equipment },
     ],
   },
   {
     heading: 'Prestations',
     links: [
+      { label: 'Services', to: ROUTES.services },
       { label: 'Accompagnement', to: ROUTES.guidance },
       { label: 'Sound design', to: ROUTES.soundDesign },
       { label: "Guide d'export", to: ROUTES.exports },

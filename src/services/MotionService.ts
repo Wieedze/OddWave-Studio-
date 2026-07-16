@@ -6,6 +6,7 @@
 //   [data-hero-eyebrow]  hero eyebrow: appears just after the title
 //   [data-reveal]        reveals (intro inside the hero, otherwise on scroll)
 //   [data-parallax="x"]  vertical scroll parallax (value = intensity)
+//   [data-svc] / [data-svc-card]  prestation panel: card de-blurs on scroll
 //
 // It owns a gsap.context for clean teardown and honors prefers-reduced-motion.
 
@@ -50,6 +51,7 @@ export class MotionService {
       this.buildHeroTitleEyebrow();
       this.buildHeroReveals();
       this.buildScrollReveals();
+      this.buildServicePanels();
       this.buildParallax();
       ScrollTrigger.refresh();
     }, this.root);
@@ -143,9 +145,38 @@ export class MotionService {
     });
   }
 
+  private buildServicePanels(): void {
+    MotionService.applyServicePanels(this.root, this.reduce);
+  }
+
   private buildParallax(): void {
-    if (this.reduce) return;
-    this.root.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
+    MotionService.applyParallax(this.root, this.reduce);
+  }
+
+  /** Prestation panels ([data-svc] > [data-svc-card]): scrubbed de-blur on
+      scroll, ported from the landing GSAP timeline. Static so useHomeIntro
+      (which owns its own gsap context) can reuse it. */
+  static applyServicePanels(root: HTMLElement, reduce: boolean): void {
+    root.querySelectorAll<HTMLElement>('[data-svc]').forEach((section) => {
+      const card = section.querySelector<HTMLElement>('[data-svc-card]');
+      if (!card) return;
+      if (reduce) {
+        gsap.set(card, { autoAlpha: 1, filter: 'blur(0px)', y: 0 });
+        return;
+      }
+      gsap.set(card, { autoAlpha: 0, filter: 'blur(18px)', y: 24 });
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: section, start: 'top 80%', end: 'top 34%', scrub: 1 },
+      });
+      tl.to(card, { autoAlpha: 1, filter: 'blur(0px)', y: 0, duration: 1, ease: 'power2.out' }, 0);
+    });
+  }
+
+  /** Vertical scroll parallax for every [data-parallax] element. Static so
+      useHomeIntro (which owns its own gsap context) can reuse it. */
+  static applyParallax(root: HTMLElement, reduce: boolean): void {
+    if (reduce) return;
+    root.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
       const amount = parseFloat(el.getAttribute('data-parallax') ?? '0.25') || 0.25;
       const container = el.parentElement ?? el;
       gsap.fromTo(
