@@ -157,7 +157,7 @@ export function HomePage() {
       </section>
 
       {/* PRÉSENTATION + HISTORIQUE */}
-      <section style={{ background: colors.surface.section, padding: 'clamp(70px,11vh,130px) 30px clamp(36px,5vh,64px)' }}>
+      <section style={{ background: colors.surface.section, padding: 'clamp(70px,11vh,130px) 30px clamp(80px,12vh,140px)' }}>
         <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
           <div data-split style={{ display: 'grid', gridTemplateColumns: '1.08fr .92fr', gap: 'clamp(40px,5vw,72px)', alignItems: 'center' }}>
             <div data-split-text style={{ order: 1 }}>
@@ -198,7 +198,7 @@ export function HomePage() {
       </section>
 
       {/* THÉO GROZDANIC */}
-      <section style={{ background: colors.surface.section, padding: 'clamp(36px,5vh,64px) 30px clamp(80px,12vh,140px)' }}>
+      <section style={{ background: colors.surface.section, padding: 'clamp(80px,12vh,140px) 30px clamp(80px,12vh,140px)' }}>
         <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
           <div data-split style={{ display: 'grid', gridTemplateColumns: '.92fr 1.08fr', gap: 'clamp(40px,5vw,72px)', alignItems: 'center' }}>
             <SplitMedia image="/assets/theo-portrait.jpg" focus="center 28%" height="min(72vh,640px)" />
