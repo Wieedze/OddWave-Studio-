@@ -40,6 +40,7 @@ function PrestationPanel({ service }: { service: ServiceItem }) {
           lineHeight: 1,
           letterSpacing: '-0.025em',
           color: colors.text.surfaceBright,
+          overflowWrap: 'break-word',
         }}
       >
         {service.title}
@@ -203,7 +204,12 @@ export function ServicesPage() {
             {SERVICES_PAGE.heroTitle}
           </h1>
           <div data-hero-eyebrow style={{ margin: '18px 0 0' }}>
-            <MonoLabel size="13px" tracking="0.32em" color={colors.copper.warm} style={{ textIndent: '0.32em' }}>
+            <MonoLabel
+              size="clamp(9px, 1.6vw, 13px)"
+              tracking="clamp(0.18em, 0.6vw, 0.32em)"
+              color={colors.copper.warm}
+              style={{ textIndent: '0.18em', textAlign: 'center', lineHeight: 1.7, maxWidth: '100%' }}
+            >
               {SERVICES_PAGE.heroEyebrow}
             </MonoLabel>
           </div>
