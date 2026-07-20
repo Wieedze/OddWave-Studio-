@@ -381,5 +381,14 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
 - Copy normalization applied to the client's PDF text: straight apostrophes,
   sentence case in the CTA ("travaux réalisés", not "Réalisés"), "detail" →
   "détail". Everything else verbatim.
+- **Gotcha (recurring): media-query rules that target inline React styles are
+  dead without `!important`.** Second occurrence this month (after the
+  split-order bug): the synth rack's ≤720px rules (`.ow-synth-stage` height,
+  `.ow-synth-rack` ear columns) silently never fired, costing the whole
+  mobile overflow margin. When a stylesheet rule must override a `style={}`
+  prop, it needs `!important` — audit the pair whenever adding either side.
+- Long mono eyebrows need the Home hero pattern (clamp() on size AND
+  tracking + lineHeight 1.7 + maxWidth 100%); fixed 13px/0.32em only works
+  under ~30 characters.
 
 <!-- Add new entries above this line -->
