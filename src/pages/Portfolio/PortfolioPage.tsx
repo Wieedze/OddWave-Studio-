@@ -4,7 +4,7 @@
 // mounted (its space is reserved, no layout shift) but is revealed only once
 // the hero intro has played, so the title/eyebrow always land first.
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FloatingLines, CtaLogo, PortfolioSynth } from '@/components';
 import { Button } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
@@ -17,6 +17,15 @@ import './PortfolioPage.css';
 export function PortfolioPage() {
   const [heroDone, setHeroDone] = useState(false);
   const ref = usePageMotion<HTMLDivElement>({ onHeroIntroComplete: () => setHeroDone(true) });
+
+  // Fast-navigation escape hatch: a visitor who scrolls before the hero intro
+  // hands off should not face the synth's reserved-but-empty space — the first
+  // scroll reveals it immediately.
+  useEffect(() => {
+    const reveal = () => setHeroDone(true);
+    window.addEventListener('scroll', reveal, { once: true, passive: true });
+    return () => window.removeEventListener('scroll', reveal);
+  }, []);
 
   return (
     <div ref={ref} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden', minHeight: '100vh' }}>

@@ -5,7 +5,7 @@
 // scroll over it. Motion runs through the shared MotionService (hero
 // title/eyebrow intro, panel de-blur, reveals).
 
-import { useState, type CSSProperties } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import { FloatingLines, CtaLogo } from '@/components';
 import { Button, MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
@@ -40,6 +40,7 @@ function PrestationPanel({ service }: { service: ServiceItem }) {
           lineHeight: 1,
           letterSpacing: '-0.025em',
           color: colors.text.surfaceBright,
+          overflowWrap: 'break-word',
         }}
       >
         {service.title}
@@ -118,7 +119,7 @@ function PrestationPanel({ service }: { service: ServiceItem }) {
           gridTemplateColumns: columns,
           borderRadius: '8px',
           overflow: 'hidden',
-          background: 'rgba(14,15,18,.85)',
+          background: 'rgba(14,15,18,.96)',
           backdropFilter: 'blur(28px) saturate(120%)',
           WebkitBackdropFilter: 'blur(28px) saturate(120%)',
           border: '1px solid rgba(246,238,230,.10)',
@@ -146,6 +147,15 @@ const spacer = (height: string): CSSProperties => ({ height });
 export function ServicesPage() {
   const [heroDone, setHeroDone] = useState(false);
   const ref = usePageMotion<HTMLDivElement>({ onHeroIntroComplete: () => setHeroDone(true) });
+
+  // Fast-navigation escape hatch: a visitor who scrolls before the hero intro
+  // hands off should not face the panels' reserved-but-empty space — the first
+  // scroll reveals them immediately.
+  useEffect(() => {
+    const reveal = () => setHeroDone(true);
+    window.addEventListener('scroll', reveal, { once: true, passive: true });
+    return () => window.removeEventListener('scroll', reveal);
+  }, []);
 
   return (
     <div ref={ref} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden', minHeight: '100vh' }}>
@@ -203,7 +213,12 @@ export function ServicesPage() {
             {SERVICES_PAGE.heroTitle}
           </h1>
           <div data-hero-eyebrow style={{ margin: '18px 0 0' }}>
-            <MonoLabel size="13px" tracking="0.32em" color={colors.copper.warm} style={{ textIndent: '0.32em' }}>
+            <MonoLabel
+              size="clamp(9px, 1.6vw, 13px)"
+              tracking="clamp(0.18em, 0.6vw, 0.32em)"
+              color={colors.copper.warm}
+              style={{ textIndent: '0.18em', textAlign: 'center', lineHeight: 1.7, maxWidth: '100%' }}
+            >
               {SERVICES_PAGE.heroEyebrow}
             </MonoLabel>
           </div>
@@ -217,12 +232,12 @@ export function ServicesPage() {
           {SERVICES.map((service, i) => (
             <div key={service.id}>
               <PrestationPanel service={service} />
-              {i < SERVICES.length - 1 && <div aria-hidden style={spacer('min(32vh, 360px)')} />}
+              {i < SERVICES.length - 1 && <div aria-hidden style={spacer('min(14vh, 150px)')} />}
             </div>
           ))}
         </div>
 
-        <div aria-hidden style={spacer('min(28vh, 300px)')} />
+        <div aria-hidden style={spacer('min(16vh, 170px)')} />
 
         {/* CTA */}
         <section

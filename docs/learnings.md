@@ -357,4 +357,38 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   `[data-split-media]{order:1}` hit the nested element. Fix: `SplitMedia`
   takes an `order` prop on its root and is always a direct grid child.
 
+## 2026-07-20 · Client feedback batch 2 (modif.txt)
+
+- **Services:** three new panels appended (Sound Design & Post Production →
+  CTA "Extrait des travaux réalisés par le studio →" to /sound-design;
+  Production & Composition; Accompagnement & Direction Artistique → CTA
+  "Cliquez ici pour le détail des services →" to /guidance). Photos provided
+  by Max: cabin-mic (voix off fits sound design), machine-tubetech,
+  eleve-close (coaching). Stem Mastering lost the sentence "C'est une forme
+  de mixage plus complète…". Eyebrow widened to cover the five domains.
+- **Home:** Théo's bio replaced by his first-person "interview" copy
+  (5 paragraphs, `STUDIO.interview`), rendered with a large copper « before
+  and » closing the last paragraph; the split is top-aligned since the text
+  outruns the portrait. "Créatif et apaisant" got the client's 3-paragraph
+  copy (`STUDIO.envParagraphs`, now an array). The old handoff bio (with
+  OddWave/Earthworm highlights) is gone.
+- **Sound Design gallery:** reordered per the client (Showreel/Démo →
+  Alice 2049/Court métrage → Hadra/Film reportage → all re-sound pieces) and
+  every re-sound entry normalized to "Re Sound Design / NAME / Sound Design,
+  Sfx, Background, Foley, Mixage". NOTE: the client wrote "The Witcher S2-E8"
+  where the site said "S3 E6" — client's version used; flag if he corrects.
+- **Portfolio:** "Cliquez **sur** une pochette pour écouter."
+- Copy normalization applied to the client's PDF text: straight apostrophes,
+  sentence case in the CTA ("travaux réalisés", not "Réalisés"), "detail" →
+  "détail". Everything else verbatim.
+- **Gotcha (recurring): media-query rules that target inline React styles are
+  dead without `!important`.** Second occurrence this month (after the
+  split-order bug): the synth rack's ≤720px rules (`.ow-synth-stage` height,
+  `.ow-synth-rack` ear columns) silently never fired, costing the whole
+  mobile overflow margin. When a stylesheet rule must override a `style={}`
+  prop, it needs `!important` — audit the pair whenever adding either side.
+- Long mono eyebrows need the Home hero pattern (clamp() on size AND
+  tracking + lineHeight 1.7 + maxWidth 100%); fixed 13px/0.32em only works
+  under ~30 characters.
+
 <!-- Add new entries above this line -->

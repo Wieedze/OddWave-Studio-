@@ -15,6 +15,6 @@ export class ServiceItem {
     /** CSS background-position for the media. */
     readonly imageFocus: string,
     readonly ctaLabel: string = 'Demander un devis →',
-    readonly ctaHref: string = '/#contact',
+    readonly ctaHref: string = '/contact',
   ) {}
 }

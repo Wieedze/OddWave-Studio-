@@ -1,19 +1,27 @@
-// Studio content — verbatim from design-handoff/Studio OddWave.dc.html.
-// Since the July 2026 client feedback these sections live on the landing
-// (the /studio page is gone). Bio paragraph 1 carries inline highlights and
-// is rendered in HomePage.
+// Studio content — sections of the landing (the /studio page is gone since the
+// July 2026 feedback). The interview and environment paragraphs are the
+// client's own copy from modif.txt (July 2026, batch 2) — verbatim, do not
+// rephrase.
 
 export const STUDIO = {
   engineerName: 'Théo Grozdanic',
   engineerRole: 'Ingénieur du son · Producteur · Formateur',
-  bioParagraph2:
-    "Aujourd'hui directeur artistique et pédagogue, il guide les artistes émergents tout en repoussant les limites de l'ingénierie sonore.",
+
+  /** First-person presentation, written by the client as an interview answer. */
+  interview: [
+    "Passionné de musique depuis toujours, j'ai commencé très tôt à enregistrer et mixer des groupes locaux dans mon propre studio. Cette passion est rapidement devenue un métier, me conduisant à travailler aussi bien en studio que sur scène en tant que technicien du son, avant de développer plusieurs projets de musique électronique.",
+    "Au fil des années, ces projets m'ont permis de collaborer avec des labels reconnus, de me produire dans de nombreux clubs et festivals, et de tourner pendant plus de dix ans en France comme à l'international. Cette expérience m'a offert une vision complète du parcours d'un artiste, de la création en studio jusqu'à la scène.",
+    "Aujourd'hui, à travers OddWave Studio, je mets cette expertise au service des artistes, producteurs, groupes, labels et créateurs de contenus. Mon approche ne se limite pas à la technique : je considère chaque projet dans sa globalité afin de trouver les solutions les plus adaptées à son identité artistique et à ses objectifs.",
+    "Mixage, mastering, production musicale, composition, sound design, post-production audio ou direction artistique : chaque prestation est pensée comme une véritable collaboration. Au-delà du résultat sonore, j'accorde une grande importance au dialogue, à la transmission de connaissances et au partage d'expérience, afin que chaque projet permette également à son créateur de progresser.",
+    "Mon objectif est simple : transformer une vision artistique en une production aboutie, cohérente et capable de transmettre toute son émotion.",
+  ],
 
   envTitle: 'Créatif et apaisant.',
-  envParagraph1:
-    "Un cadre tranquille en pleine campagne provençale. Des résidences avec hébergement : un appartement indépendant face aux espaces de travail.",
-  envParagraph2:
-    "Plus de 15 ans d'expérience, des artistes du monde entier, tous styles et genres confondus.",
+  envParagraphs: [
+    "Situé au cœur de la campagne provençale, OddWave Studio offre un environnement calme et inspirant, pensé pour favoriser la créativité et la concentration. Loin de l'agitation, chaque projet bénéficie d'un cadre propice à un travail exigeant, dans une atmosphère à la fois chaleureuse et professionnelle.",
+    "Pour les artistes venant de plus loin, des résidences avec hébergement sont proposées grâce à un appartement indépendant situé à quelques mètres des espaces de travail, permettant de vivre pleinement le projet et de travailler dans les meilleures conditions.",
+    "Fort de plus de quinze ans d'expérience, le studio accompagne des artistes, producteurs, groupes et créateurs venus de France comme de l'international, couvrant un large éventail d'esthétiques musicales et de projets audiovisuels.",
+  ],
 
   pedagogyTitle: 'Au-delà des prestations : vous donner les clés.',
   pedagogyBody:

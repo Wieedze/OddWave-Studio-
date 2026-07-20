@@ -4,7 +4,7 @@
 
 export const PORTFOLIO = {
   heroTitle: 'PORTFOLIO',
-  heroIntro: 'Une sélection de masters, mixes et productions signés OddWaveStudio. Cliquez une pochette pour écouter.',
+  heroIntro: 'Une sélection de masters, mixes et productions signés OddWaveStudio. Cliquez sur une pochette pour écouter.',
   ctaTitle: "Le prochain, c'est le vôtre.",
   ctaLabel: 'Nous contacter →',
 } as const;

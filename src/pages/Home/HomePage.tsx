@@ -47,6 +47,16 @@ const bodyParagraph: CSSProperties = {
   textWrap: 'pretty',
 };
 
+/** Interview guillemets — identical opening and closing marks, inline with
+    the text (lineHeight 0 keeps the bigger glyph from stretching the line). */
+const quoteMark: CSSProperties = {
+  fontFamily: typography.font.display,
+  fontWeight: typography.weight.bold,
+  fontSize: '1.4em',
+  lineHeight: 0,
+  color: colors.copper.landing,
+};
+
 export function HomePage() {
   const rootRef = useHomeIntro<HTMLDivElement>();
   const [introLead, ...introRest] = HOME.intro;
@@ -197,10 +207,10 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* THÉO GROZDANIC */}
+      {/* THÉO GROZDANIC — interview-style presentation (client copy) */}
       <section style={{ background: colors.surface.section, padding: 'clamp(80px,12vh,140px) 30px clamp(80px,12vh,140px)' }}>
         <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
-          <div data-split style={{ display: 'grid', gridTemplateColumns: '.92fr 1.08fr', gap: 'clamp(40px,5vw,72px)', alignItems: 'center' }}>
+          <div data-split style={{ display: 'grid', gridTemplateColumns: '.92fr 1.08fr', gap: 'clamp(40px,5vw,72px)', alignItems: 'start' }}>
             <SplitMedia image="/assets/theo-portrait.jpg" focus="center 28%" height="min(72vh,640px)" />
             <div data-split-text>
               <h2
@@ -217,19 +227,22 @@ export function HomePage() {
               >
                 {STUDIO.engineerName}
               </h2>
-              <div data-reveal style={{ marginBottom: '26px' }}>
+              <div data-reveal style={{ marginBottom: '22px' }}>
                 <MonoLabel as="div" size="13px" tracking="0.06em" color={colors.copper.warm} style={{ textTransform: 'none', lineHeight: 1.5 }}>
                   {STUDIO.engineerRole}
                 </MonoLabel>
               </div>
-              <p data-reveal style={{ ...bodyParagraph, margin: '0 0 20px', maxWidth: '520px', fontSize: '16px', lineHeight: 1.75 }}>
-                D'une passion devenue expertise : à 18 ans, il enregistre et mixe les groupes locaux dans son propre studio.
-                Technicien son sur scène, puis producteur, il lance <span style={{ color: colors.copper.highlight }}>OddWave</span> et{' '}
-                <span style={{ color: colors.copper.highlight }}>Earthworm</span>, signe sur des labels reconnus et tourne à travers le monde.
-              </p>
-              <p data-reveal style={{ ...bodyParagraph, margin: 0, maxWidth: '520px', fontSize: '16px', lineHeight: 1.75 }}>
-                {STUDIO.bioParagraph2}
-              </p>
+              {STUDIO.interview.map((paragraph, i) => (
+                <p
+                  key={i}
+                  data-reveal
+                  style={{ ...bodyParagraph, margin: i === 0 ? 0 : '16px 0 0', maxWidth: '540px', fontSize: '16px', lineHeight: 1.75 }}
+                >
+                  {i === 0 && <span style={quoteMark}>« </span>}
+                  {paragraph}
+                  {i === STUDIO.interview.length - 1 && <span style={quoteMark}> »</span>}
+                </p>
+              ))}
             </div>
           </div>
         </div>
@@ -257,12 +270,15 @@ export function HomePage() {
               >
                 {STUDIO.envTitle}
               </h2>
-              <p data-reveal style={{ ...bodyParagraph, margin: '0 0 20px', maxWidth: '500px', fontSize: '17px', lineHeight: 1.75 }}>
-                {STUDIO.envParagraph1}
-              </p>
-              <p data-reveal style={{ ...bodyParagraph, margin: 0, maxWidth: '500px', fontSize: '17px', lineHeight: 1.75 }}>
-                {STUDIO.envParagraph2}
-              </p>
+              {STUDIO.envParagraphs.map((paragraph, i) => (
+                <p
+                  key={i}
+                  data-reveal
+                  style={{ ...bodyParagraph, margin: i === 0 ? 0 : '18px 0 0', maxWidth: '500px', fontSize: '17px', lineHeight: 1.75 }}
+                >
+                  {paragraph}
+                </p>
+              ))}
             </div>
             <SplitMedia image="/assets/cabin-mic.jpg" focus="center" height="min(64vh,560px)" order={2} />
           </div>

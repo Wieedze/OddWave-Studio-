@@ -98,19 +98,20 @@ export class MotionService {
       done?.();
       return;
     }
-    const last = eyebrow ?? title;
-    if (!last) {
+    if (!title && !eyebrow) {
       done?.();
       return;
     }
     if (title) gsap.to(title, { autoAlpha: 1, filter: 'blur(0px)', y: 0, duration: 1.5, ease: 'power2.out', delay: 0.7 });
     if (eyebrow) gsap.to(eyebrow, { autoAlpha: 1, filter: 'blur(0px)', y: 0, duration: 1.5, ease: 'power2.out', delay: 1.25 });
     if (done) {
-      // Hand off partway through the last tween, not at its mathematical end:
+      // Hand off partway through the TITLE tween, not at its mathematical end:
       // with power2.out the text is visually settled around 45% in, and the
-      // follow-up content should overlap the invisible tail of the blur.
-      const lastDelay = last === eyebrow ? 1.25 : 0.7;
-      gsap.delayedCall(lastDelay + 0.65, done);
+      // follow-up content should overlap the eyebrow's entrance and the
+      // invisible tail of the blur (client feedback: the old eyebrow-based
+      // handoff made the page entrance feel slow).
+      const titleDelay = title ? 0.7 : 1.25;
+      gsap.delayedCall(titleDelay + 0.65, done);
     }
   }
 
@@ -154,8 +155,9 @@ export class MotionService {
   }
 
   /** Prestation panels ([data-svc] > [data-svc-card]): scrubbed de-blur on
-      scroll, ported from the landing GSAP timeline. Static so useHomeIntro
-      (which owns its own gsap context) can reuse it. */
+      scroll. Softened from the landing original (blur 18->8, rise 24->14,
+      shorter scrub window) per client feedback, July 2026. Static so
+      useHomeIntro (which owns its own gsap context) can reuse it. */
   static applyServicePanels(root: HTMLElement, reduce: boolean): void {
     root.querySelectorAll<HTMLElement>('[data-svc]').forEach((section) => {
       const card = section.querySelector<HTMLElement>('[data-svc-card]');
@@ -164,9 +166,9 @@ export class MotionService {
         gsap.set(card, { autoAlpha: 1, filter: 'blur(0px)', y: 0 });
         return;
       }
-      gsap.set(card, { autoAlpha: 0, filter: 'blur(18px)', y: 24 });
+      gsap.set(card, { autoAlpha: 0, filter: 'blur(8px)', y: 14 });
       const tl = gsap.timeline({
-        scrollTrigger: { trigger: section, start: 'top 80%', end: 'top 34%', scrub: 1 },
+        scrollTrigger: { trigger: section, start: 'top 88%', end: 'top 58%', scrub: 1 },
       });
       tl.to(card, { autoAlpha: 1, filter: 'blur(0px)', y: 0, duration: 1, ease: 'power2.out' }, 0);
     });

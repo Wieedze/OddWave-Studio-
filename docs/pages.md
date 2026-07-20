@@ -43,13 +43,17 @@ The three prestation panels, moved from the landing (client feedback, July 2026)
   zIndex 1 content wrapper). Title section (`SERVICES`, hero outline treatment,
   top padding `clamp(140px,22vh,220px)` like Portfolio, not full-height so the
   first panel sits close) + mono eyebrow "Mastering · Stem mastering · Mixage".
-- **Prestations:** three image/text glass cards (Mastering, Stem Mastering,
-  Mixage), all centered (client request; only the image side alternates inside
-  the card). The panels stay mounted but hidden until the hero intro completes
-  (same `onHeroIntroComplete` + CSS reveal mechanism as the Portfolio synth),
-  then each card de-blurs (`blur 18px→0`, rise) on scroll (ScrollTrigger scrub
-  `top 80% → top 34%`). Full copy in `content/services.ts` (verbatim from the
-  landing handoff). Each has a "Demander un devis →" link to `/#contact`.
+- **Prestations:** six image/text glass cards (Mastering, Stem Mastering,
+  Mixage, Sound Design & Post Production, Production & Composition,
+  Accompagnement & Direction Artistique), all centered (client request; only
+  the image side alternates inside the card). The panels stay mounted but
+  hidden until the hero intro completes (same `onHeroIntroComplete` + CSS
+  reveal mechanism as the Portfolio synth), then each card de-blurs
+  (`blur 18px→0`, rise) on scroll (ScrollTrigger scrub `top 80% → top 34%`).
+  Full copy in `content/services.ts` (verbatim client copy: first three from
+  the landing handoff, last three from modif.txt batch 2). CTA links:
+  "Demander un devis →" to `/contact`, except Sound Design & Post Production
+  → `/sound-design` and Accompagnement & Direction Artistique → `/guidance`.
 - **CTA:** centred monogram, H2 "Donnons une dimension à votre son.",
   paragraph, copper button "Démarrer un projet →".
 
