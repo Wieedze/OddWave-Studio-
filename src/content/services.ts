@@ -67,7 +67,7 @@ export const SERVICES: readonly ServiceItem[] = [
     'left',
     'center',
     'Extrait des travaux réalisés par le studio →',
-    '/portfolio',
+    '/sound-design',
   ),
   new ServiceItem(
     'production-composition',
