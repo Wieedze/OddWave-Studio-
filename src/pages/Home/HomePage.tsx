@@ -47,6 +47,16 @@ const bodyParagraph: CSSProperties = {
   textWrap: 'pretty',
 };
 
+/** Interview guillemets — identical opening and closing marks, inline with
+    the text (lineHeight 0 keeps the bigger glyph from stretching the line). */
+const quoteMark: CSSProperties = {
+  fontFamily: typography.font.display,
+  fontWeight: typography.weight.bold,
+  fontSize: '1.4em',
+  lineHeight: 0,
+  color: colors.copper.landing,
+};
+
 export function HomePage() {
   const rootRef = useHomeIntro<HTMLDivElement>();
   const [introLead, ...introRest] = HOME.intro;
@@ -222,28 +232,15 @@ export function HomePage() {
                   {STUDIO.engineerRole}
                 </MonoLabel>
               </div>
-              <div
-                data-reveal
-                aria-hidden
-                style={{
-                  fontFamily: typography.font.display,
-                  fontWeight: typography.weight.bold,
-                  fontSize: '54px',
-                  lineHeight: 0.6,
-                  color: colors.copper.landing,
-                  marginBottom: '6px',
-                }}
-              >
-                «
-              </div>
               {STUDIO.interview.map((paragraph, i) => (
                 <p
                   key={i}
                   data-reveal
                   style={{ ...bodyParagraph, margin: i === 0 ? 0 : '16px 0 0', maxWidth: '540px', fontSize: '16px', lineHeight: 1.75 }}
                 >
+                  {i === 0 && <span style={quoteMark}>« </span>}
                   {paragraph}
-                  {i === STUDIO.interview.length - 1 && <span style={{ color: colors.copper.landing }}> »</span>}
+                  {i === STUDIO.interview.length - 1 && <span style={quoteMark}> »</span>}
                 </p>
               ))}
             </div>
