@@ -119,7 +119,7 @@ function PrestationPanel({ service }: { service: ServiceItem }) {
           gridTemplateColumns: columns,
           borderRadius: '8px',
           overflow: 'hidden',
-          background: 'rgba(14,15,18,.85)',
+          background: 'rgba(14,15,18,.96)',
           backdropFilter: 'blur(28px) saturate(120%)',
           WebkitBackdropFilter: 'blur(28px) saturate(120%)',
           border: '1px solid rgba(246,238,230,.10)',
