@@ -217,12 +217,12 @@ export function ServicesPage() {
           {SERVICES.map((service, i) => (
             <div key={service.id}>
               <PrestationPanel service={service} />
-              {i < SERVICES.length - 1 && <div aria-hidden style={spacer('min(32vh, 360px)')} />}
+              {i < SERVICES.length - 1 && <div aria-hidden style={spacer('min(14vh, 150px)')} />}
             </div>
           ))}
         </div>
 
-        <div aria-hidden style={spacer('min(28vh, 300px)')} />
+        <div aria-hidden style={spacer('min(16vh, 170px)')} />
 
         {/* CTA */}
         <section
