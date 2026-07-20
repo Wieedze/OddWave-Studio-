@@ -14,3 +14,7 @@ bun.lockb
 public/assets/*.mp4
 public/assets/*.mov
 public/assets/*.webm
+
+# Client feedback source documents (July 2026 batch), kept local only.
+modif.txt
+Modifs site.pdf
