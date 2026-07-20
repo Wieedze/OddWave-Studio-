@@ -42,15 +42,17 @@ export const VIDEO_SRC = {
   seaBeast: ipfs('bafybeidsa35nqhev7fchhqcb56l7cuuw3w6uywys6serj5zzlwuhzuj2ty'),
 } as const;
 
-/** Gallery entries. The client's real reels lead; durations on the real ones are
- *  approximate badges (the player shows the true length) — adjust if needed. */
+/** Gallery entries. Order and labels come from the client's modif.txt (July
+ *  2026, batch 2): showreel first, then the real productions (Alice 2049,
+ *  Hadra), then every re-sound-design piece with the same normalized note.
+ *  Durations are approximate badges (the player shows the true length). */
 export const SD_VIDEOS: readonly VideoEntry[] = [
-  new VideoEntry('showreel', 'Showreel', 'Showreel', '1:01', 'Le condensé de nos réalisations en sound design.', '/assets/showreel-poster.jpg', VIDEO_SRC.showreel),
-  new VideoEntry('unreal', 'Unreal', 'Re-sound design', '2:04', 'Re-sound design complet, démo.', '/assets/unreal-poster.jpg', VIDEO_SRC.unreal),
-  new VideoEntry('love-death-robots', 'Love, Death & Robots', 'Série', '1:11', "Re-sound design d'une séquence, démo.", '/assets/love-death-robots-poster.jpg', VIDEO_SRC.loveDeathRobots),
-  new VideoEntry('witcher', 'The Witcher · S3 E6', 'Série', '0:46', 'Re-sound design, extrait court.', '/assets/witcher-poster.jpg', VIDEO_SRC.witcher),
-  new VideoEntry('irradiation', 'Irradiation', 'Trailer', '0:40', 'Redesign sonore complet : court CG de Sava Zivkovic.', '/assets/sd-irradiation-poster.jpg', VIDEO_SRC.irradiation),
-  new VideoEntry('sea-beast', 'The Sea Beast', 'Film', '0:40', "Redesign sonore : séquence du film d'animation.", '/assets/sd-seabeast-poster.jpg', VIDEO_SRC.seaBeast),
-  new VideoEntry('alice-2049', 'Alice 2049', 'Court métrage', '2:20', 'Réalisation Timagin Production.', 'https://i.ytimg.com/vi/8bXkfoIFBXc/maxresdefault.jpg', undefined, '8bXkfoIFBXc'),
-  new VideoEntry('hadra-utopies', 'Hadra : Utopies Ephémères', 'Film', '1:06:00', 'Film réalisé par Timothé Fournol.', 'https://i.ytimg.com/vi/v98TYYpbjXo/maxresdefault.jpg', undefined, 'v98TYYpbjXo'),
+  new VideoEntry('showreel', 'Showreel', 'Démo', '1:01', 'Le condensé de nos réalisations en sound design.', '/assets/showreel-poster.jpg', VIDEO_SRC.showreel),
+  new VideoEntry('alice-2049', 'Alice 2049', 'Court métrage', '2:20', 'Sound Design, Mixing, Mastering', 'https://i.ytimg.com/vi/8bXkfoIFBXc/maxresdefault.jpg', undefined, '8bXkfoIFBXc'),
+  new VideoEntry('hadra-utopies', 'Hadra : Utopies Ephémères', 'Film reportage', '1:06:00', 'Sound Design, Bande originale, Voix Off', 'https://i.ytimg.com/vi/v98TYYpbjXo/maxresdefault.jpg', undefined, 'v98TYYpbjXo'),
+  new VideoEntry('witcher', 'The Witcher · S2 E8', 'Re Sound Design', '0:46', 'Sound Design, Sfx, Background, Foley, Mixage', '/assets/witcher-poster.jpg', VIDEO_SRC.witcher),
+  new VideoEntry('unreal', 'Unreal', 'Re Sound Design', '2:04', 'Sound Design, Sfx, Background, Foley, Mixage', '/assets/unreal-poster.jpg', VIDEO_SRC.unreal),
+  new VideoEntry('love-death-robots', 'Love, Death & Robots', 'Re Sound Design', '1:11', 'Sound Design, Sfx, Background, Foley, Mixage', '/assets/love-death-robots-poster.jpg', VIDEO_SRC.loveDeathRobots),
+  new VideoEntry('irradiation', 'Irradiation', 'Re Sound Design', '0:40', 'Sound Design, Sfx, Background, Foley, Mixage', '/assets/sd-irradiation-poster.jpg', VIDEO_SRC.irradiation),
+  new VideoEntry('sea-beast', 'The Sea Beast', 'Re Sound Design', '0:40', 'Sound Design, Sfx, Background, Foley, Mixage', '/assets/sd-seabeast-poster.jpg', VIDEO_SRC.seaBeast),
 ];
