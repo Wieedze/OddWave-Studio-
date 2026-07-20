@@ -144,6 +144,11 @@ function PrestationPanel({ service }: { service: ServiceItem }) {
 
 const spacer = (height: string): CSSProperties => ({ height });
 
+/** Panels kept in content but not displayed (client request, July 2026):
+    mastering, stem mastering and mixage are hidden for now, not deleted. */
+const HIDDEN_SERVICE_IDS = new Set(['mastering', 'stem-mastering', 'mixage']);
+const VISIBLE_SERVICES = SERVICES.filter((service) => !HIDDEN_SERVICE_IDS.has(service.id));
+
 export function ServicesPage() {
   const [heroDone, setHeroDone] = useState(false);
   const ref = usePageMotion<HTMLDivElement>({ onHeroIntroComplete: () => setHeroDone(true) });
@@ -229,10 +234,10 @@ export function ServicesPage() {
         {/* Panels stay mounted (space reserved) but are revealed only once the
             hero intro has played, so the SERVICES title always lands first. */}
         <div className={cx('services-panels-enter', heroDone && 'is-in')}>
-          {SERVICES.map((service, i) => (
+          {VISIBLE_SERVICES.map((service, i) => (
             <div key={service.id}>
               <PrestationPanel service={service} />
-              {i < SERVICES.length - 1 && <div aria-hidden style={spacer('min(14vh, 150px)')} />}
+              {i < VISIBLE_SERVICES.length - 1 && <div aria-hidden style={spacer('min(14vh, 150px)')} />}
             </div>
           ))}
         </div>
