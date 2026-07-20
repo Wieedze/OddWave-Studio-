@@ -5,7 +5,7 @@
 // scroll over it. Motion runs through the shared MotionService (hero
 // title/eyebrow intro, panel de-blur, reveals).
 
-import { useState, type CSSProperties } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import { FloatingLines, CtaLogo } from '@/components';
 import { Button, MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
@@ -147,6 +147,15 @@ const spacer = (height: string): CSSProperties => ({ height });
 export function ServicesPage() {
   const [heroDone, setHeroDone] = useState(false);
   const ref = usePageMotion<HTMLDivElement>({ onHeroIntroComplete: () => setHeroDone(true) });
+
+  // Fast-navigation escape hatch: a visitor who scrolls before the hero intro
+  // hands off should not face the panels' reserved-but-empty space — the first
+  // scroll reveals them immediately.
+  useEffect(() => {
+    const reveal = () => setHeroDone(true);
+    window.addEventListener('scroll', reveal, { once: true, passive: true });
+    return () => window.removeEventListener('scroll', reveal);
+  }, []);
 
   return (
     <div ref={ref} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden', minHeight: '100vh' }}>
