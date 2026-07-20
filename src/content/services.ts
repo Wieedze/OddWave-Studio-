@@ -1,14 +1,16 @@
-// Services page content. The three "prestations" panels are verbatim copy from
-// design-handoff/Landing OddWave GSAP.dc.html (do not edit the French copy; the
-// bodies are split into paragraphs at sentence boundaries only, user request
-// 2026-07-11). They moved here from the landing per client feedback (July
-// 2026): the landing now presents the studio, and the services live on /services.
+// Services page content. Six "prestations" panels, verbatim client copy (do
+// not edit the French; bodies split into paragraphs at sentence boundaries
+// only, user request 2026-07-11). The first three come from
+// design-handoff/Landing OddWave GSAP.dc.html (moved off the landing, July
+// 2026 feedback); the last three were added from the client's modif.txt
+// (July 2026, batch 2) with per-panel CTA links to /sound-design and
+// /guidance.
 
 import { ServiceItem } from '@/models';
 
 export const SERVICES_PAGE = {
   heroTitle: 'SERVICES',
-  heroEyebrow: 'Mastering · Stem mastering · Mixage',
+  heroEyebrow: 'Mastering · Mixage · Production · Sound design · Accompagnement',
   /** Final CTA block (verbatim, formerly the landing CTA). */
   ctaTitle: 'Donnons une dimension à votre son.',
   ctaBody: 'À distance ou en résidence. Dites-nous où vous en êtes, on vous répond avec une proposition adaptée.',
@@ -32,7 +34,7 @@ export const SERVICES: readonly ServiceItem[] = [
     'stem-mastering',
     'Stem Mastering',
     [
-      "Le stem mastering partage la même ambition que le mastering classique, mais offre cette fois davantage d'espace pour sculpter en détail les différents éléments clés de vos morceaux. C'est une forme de mixage plus complète, toujours dans une optique de finalisation.",
+      "Le stem mastering partage la même ambition que le mastering classique, mais offre cette fois davantage d'espace pour sculpter en détail les différents éléments clés de vos morceaux.",
       "Dans la plupart des cas, j'ai besoin des éléments suivants : kick, basse, caisse claire, percussions, leads, FX, nappes, voix, ou tout autre élément nécessitant un traitement spécifique.",
       "Sans jamais altérer l'intention de votre mix, je travaille la cohésion et la cohérence de tous les éléments importants : les phases, l'équilibre, la dynamique et la couleur de chaque composante, pour poser des fondations rythmiques solides qui soutiennent au mieux leur harmonie.",
       "Le stem mastering permet aussi, lorsque plusieurs titres partagent un même contexte (EP ou album), de travailler la cohérence entre les morceaux et de leur donner une intention commune.",
@@ -52,5 +54,45 @@ export const SERVICES: readonly ServiceItem[] = [
     '/assets/mastering-bokeh.jpg',
     'right',
     'center 60%',
+  ),
+  new ServiceItem(
+    'sound-design-post-production',
+    'Sound Design & Post Production',
+    [
+      "Le son est un élément essentiel de la narration. Il donne vie aux images, renforce les émotions et participe pleinement à l'immersion du spectateur. Qu'il soit discret ou au premier plan, un univers sonore bien conçu apporte une véritable identité à chaque projet.",
+      "J'interviens sur la création de sound design pour le cinéma, les courts-métrages, documentaires, reportages, publicités, jeux vidéo ou tout autre contenu audiovisuel. Bruitages, ambiances, effets spéciaux, textures sonores ou traitements créatifs : chaque élément est pensé pour servir le récit et accompagner l'image avec précision.",
+      "En complément du sound design, je peux également assurer l'enregistrement de voix off, le montage son, l'édition, le nettoyage des prises, le mixage et la finalisation des bandes sonores afin de livrer un résultat cohérent, immersif et prêt à la diffusion.",
+    ],
+    '/assets/cabin-mic.jpg',
+    'left',
+    'center',
+    'Extrait des travaux réalisés par le studio →',
+    '/sound-design',
+  ),
+  new ServiceItem(
+    'production-composition',
+    'Production & Composition',
+    [
+      "Chaque projet musical est unique. Qu'il s'agisse d'une bande son, d'un morceau destiné à un artiste ou d'une création entièrement originale, mon objectif est de composer une musique qui porte une émotion, raconte une histoire et reflète pleinement votre identité.",
+      "J'interviens sur la composition, la production, l'arrangement et le développement musical pour des chanteurs, groupes, producteurs, réalisateurs, agences ou toute personne souhaitant donner vie à une idée. Que vous partiez d'une simple mélodie, d'un texte, d'une maquette ou d'un cahier des charges précis, je vous accompagne dans la création d'une œuvre sur mesure, adaptée à votre projet.",
+      "La prestation peut également inclure la production complète, les enregistrements, le mixage et le mastering afin de livrer un résultat professionnel, prêt à être diffusé. Lorsque le projet le nécessite, je travaille en collaboration avec un réseau de musiciens instrumentistes professionnels (guitare, basse, batterie, cordes, cuivres, piano, voix, etc.) afin d'apporter les meilleures compétences à chaque production et d'offrir une grande richesse artistique.",
+    ],
+    '/assets/machine-tubetech.jpg',
+    'right',
+    'center',
+  ),
+  new ServiceItem(
+    'guidance-artistic-direction',
+    'Accompagnement & Direction Artistique',
+    [
+      "Développer un projet musical demande bien plus que de produire de bons morceaux. Il faut construire une identité forte, prendre les bonnes décisions au bon moment et conserver une vision cohérente sur le long terme.",
+      "Mon accompagnement s'adresse aux artistes qui souhaitent bénéficier d'un regard extérieur expérimenté pour faire évoluer leur projet. Ensemble, nous analysons votre musique, vos références, vos objectifs et votre positionnement afin d'identifier les axes de progression les plus pertinents.",
+      "Au-delà des sessions de travail, je propose un véritable suivi personnalisé. Chaque étape importante peut être accompagnée de retours détaillés, d'analyses techniques et artistiques, ainsi que de vidéos explicatives permettant de comprendre les choix réalisés. L'objectif n'est pas seulement d'améliorer vos productions actuelles, mais de vous transmettre une méthode de travail durable qui vous permettra de progresser de manière autonome sur vos futurs projets.",
+    ],
+    '/assets/eleve-close.jpg',
+    'left',
+    'center',
+    'Cliquez ici pour le détail des services →',
+    '/guidance',
   ),
 ];
