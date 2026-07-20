@@ -52,7 +52,7 @@ The three prestation panels, moved from the landing (client feedback, July 2026)
   (`blur 18px→0`, rise) on scroll (ScrollTrigger scrub `top 80% → top 34%`).
   Full copy in `content/services.ts` (verbatim client copy: first three from
   the landing handoff, last three from modif.txt batch 2). CTA links:
-  "Demander un devis →" to `/#contact`, except Sound Design & Post Production
+  "Demander un devis →" to `/contact`, except Sound Design & Post Production
   → `/sound-design` and Accompagnement & Direction Artistique → `/guidance`.
 - **CTA:** centred monogram, H2 "Donnons une dimension à votre son.",
   paragraph, copper button "Démarrer un projet →".
