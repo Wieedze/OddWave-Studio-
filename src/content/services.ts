@@ -63,7 +63,7 @@ export const SERVICES: readonly ServiceItem[] = [
       "J'interviens sur la création de sound design pour le cinéma, les courts-métrages, documentaires, reportages, publicités, jeux vidéo ou tout autre contenu audiovisuel. Bruitages, ambiances, effets spéciaux, textures sonores ou traitements créatifs : chaque élément est pensé pour servir le récit et accompagner l'image avec précision.",
       "En complément du sound design, je peux également assurer l'enregistrement de voix off, le montage son, l'édition, le nettoyage des prises, le mixage et la finalisation des bandes sonores afin de livrer un résultat cohérent, immersif et prêt à la diffusion.",
     ],
-    '/assets/witcher-poster.jpg',
+    '/assets/materiel-console.jpg',
     'left',
     'center',
     'Extrait des travaux réalisés par le studio →',
