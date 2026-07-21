@@ -18,3 +18,8 @@ public/assets/*.webm
 # Client feedback source documents (July 2026 batch), kept local only.
 modif.txt
 Modifs site.pdf
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
