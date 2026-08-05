@@ -1,6 +1,8 @@
 // Official Spotify embed in a small framed card, with a header stating the work
 // the studio did on the release (mix, master, stem master, prod…). The audio
 // streams from Spotify — nothing is hosted or owned here.
+// The dark veil fills the nearest positioned ancestor (the portfolio rack),
+// not the viewport: mount it inside a position: relative container.
 
 import { useEffect } from 'react';
 import { MonoLabel } from '@/design-system/primitives';
@@ -41,7 +43,7 @@ export function SpotifyEmbedModal({ track, title, artist, work, type, onClose }:
       aria-modal="true"
       aria-label={title ?? 'Lecteur Spotify'}
       style={{
-        position: 'fixed',
+        position: 'absolute',
         inset: 0,
         zIndex: 120,
         display: 'flex',
@@ -49,8 +51,7 @@ export function SpotifyEmbedModal({ track, title, artist, work, type, onClose }:
         justifyContent: 'center',
         padding: '24px',
         background: 'rgba(8,9,11,.82)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)',
+        borderRadius: '18px',
       }}
     >
       <div
@@ -59,7 +60,9 @@ export function SpotifyEmbedModal({ track, title, artist, work, type, onClose }:
           position: 'relative',
           width: '100%',
           maxWidth: '720px',
-          background: '#101116',
+          background: 'rgba(16,17,22,.78)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)',
           border: `1px solid ${colors.border.base}`,
           borderRadius: '18px',
           padding: 'clamp(16px, 2.2vw, 24px)',

@@ -131,7 +131,6 @@ export function PortfolioSynth() {
   );
 
   return (
-    <>
     <div className="ow-synth-stage" style={{ height: '96vh', minHeight: '820px', display: 'flex', alignItems: 'stretch', justifyContent: 'center', fontFamily: MONO }}>
       <div className="ow-synth-rack" style={{ position: 'relative', width: '100%', maxWidth: '1800px', height: '100%', display: 'grid', gridTemplateColumns: '36px 1fr 36px', borderRadius: '18px', background: '#0B0C0F', boxShadow: '0 50px 120px rgba(0,0,0,.72)' }}>
         {ear('left')}
@@ -262,11 +261,12 @@ export function PortfolioSynth() {
         </div>
 
         {ear('right')}
+
+        {/* Player overlay confined to the rack (the rack is the positioned ancestor) */}
+        {open?.spotify && (
+          <SpotifyEmbedModal track={open.spotify} title={open.title} artist={open.artist} work={open.tag} type={open.type} onClose={() => setOpen(null)} />
+        )}
       </div>
     </div>
-    {open?.spotify && (
-      <SpotifyEmbedModal track={open.spotify} title={open.title} artist={open.artist} work={open.tag} type={open.type} onClose={() => setOpen(null)} />
-    )}
-    </>
   );
 }
