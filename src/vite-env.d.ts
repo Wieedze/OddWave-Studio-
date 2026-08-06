@@ -1,8 +1,9 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  /** Web3Forms access key (tied to the pro email). See ContactService. */
-  readonly VITE_WEB3FORMS_KEY?: string;
+  // The contact/guidance forms no longer use a client-side key — they POST to the
+  // Pages Function /api/contact, which holds the Cloudflare Email Service creds
+  // server-side (see functions/api/contact.ts + docs/deploy.md).
   /** IPFS gateway base for the Sound Design videos (e.g. https://name.mypinata.cloud). */
   readonly VITE_IPFS_GATEWAY?: string;
   /** Dedicated-gateway access token (Pinata gateway key — NOT the pinning JWT). */

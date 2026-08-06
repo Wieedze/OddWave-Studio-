@@ -1,6 +1,8 @@
-// ContactService — submits the Contact + Guidance forms to the pro inbox via
-// Web3Forms (no backend). Set the access key (tied to your pro email at
-// https://web3forms.com) as VITE_WEB3FORMS_KEY in the environment.
+// ContactService — submits the Contact + Guidance forms to the studio inbox.
+// The browser POSTs the form data to the same-origin Pages Function
+// `/api/contact`, which sends the email through the Cloudflare Email Service
+// REST API. All credentials stay server-side in the Pages project env — nothing
+// sensitive ships in the client bundle. See functions/api/contact.ts.
 
 export interface ContactSubmission {
   name: string;
@@ -17,44 +19,29 @@ export interface SubmitResult {
   error?: string;
 }
 
-const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+const CONTACT_ENDPOINT = '/api/contact';
 
 export class ContactService {
-  constructor(private readonly accessKey: string | undefined = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined) {}
+  constructor(private readonly endpoint: string = CONTACT_ENDPOINT) {}
 
   async submit(data: ContactSubmission): Promise<SubmitResult> {
-    const subject = data.formule
-      ? `Demande d'accompagnement — ${data.formule}`
-      : data.need
-        ? `Contact — ${data.need}`
-        : 'Nouvelle demande — OddWave Studio';
-
-    // No key configured yet: don't block the UX during setup, but make it loud.
-    if (!this.accessKey) {
-      // eslint-disable-next-line no-console
-      console.warn('[ContactService] VITE_WEB3FORMS_KEY is not set — submission not sent. Payload:', { ...data, subject });
-      return { ok: true, error: 'missing-access-key' };
-    }
-
-    const payload: Record<string, string> = {
-      access_key: this.accessKey,
-      subject,
-      from_name: 'OddWave Studio — site',
-      name: data.name,
-      email: data.email,
-      message: data.project,
-    };
-    if (data.need) payload.besoin = data.need;
-    if (data.formule) payload.formule = data.formule;
-
     try {
-      const res = await fetch(WEB3FORMS_ENDPOINT, {
+      const res = await fetch(this.endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(data),
       });
-      const json = (await res.json()) as { success?: boolean; message?: string };
-      if (!json.success) return { ok: false, error: json.message ?? 'send-failed' };
+
+      // Plain `vite` dev serves no Pages Functions: don't block the UX while
+      // testing the form locally without `wrangler pages dev`.
+      if (res.status === 404) {
+        // eslint-disable-next-line no-console
+        console.warn('[ContactService] /api/contact not found — run `wrangler pages dev` to exercise it. Payload:', data);
+        return { ok: true, error: 'endpoint-missing' };
+      }
+
+      const json = (await res.json().catch(() => ({}))) as { success?: boolean; error?: string };
+      if (!res.ok || !json.success) return { ok: false, error: json.error ?? `http-${res.status}` };
       return { ok: true };
     } catch (err) {
       return { ok: false, error: err instanceof Error ? err.message : 'network-error' };
