@@ -1,56 +1,75 @@
-# Deploy — Cloudflare Pages
+# Deploy — Cloudflare Workers (Git-connected)
 
 The site is static (vite-react-ssg pre-renders every route to HTML in `dist/`).
-Cloudflare Pages serves that directory on its CDN.
+Two Git-connected Workers build the repo `Wieedze/OddWave-Studio-` on every
+push to `main`:
 
-## One-time setup
+| Worker | Role | Serves | Deploy command (Settings → Build) |
+|---|---|---|---|
+| `oddwave-studio` | prod | `oddwavestudio.com` | `npx wrangler deploy` |
+| `oddwavestudio` | dev | `oddwavestudio.maxime-moodz.workers.dev` | `npx wrangler deploy --env dev` |
 
-**Connect the repo** (`Wieedze/OddWave-Studio-`) in Cloudflare Pages
-(Workers & Pages → Create → Pages → Connect to Git). The build settings below
-deploy the site to a `*.pages.dev` URL on every push to `main`.
+Build command for both: `bun run build`, root `/`. If the build image needs a
+Bun pin: set `BUN_VERSION` as a build environment variable.
 
-## Build settings
+[`wrangler.jsonc`](../wrangler.jsonc) drives the deploy: static assets from
+`./dist` (binding `ASSETS`) plus [`worker/index.ts`](../worker/index.ts), which
+handles `POST /api/contact` and lets every other request fall through to the
+pre-rendered files. The dashboard deploy commands must stay plain (no
+`--assets` / `--name` flags) or the config file is bypassed.
 
-| Field | Value |
-|---|---|
-| Framework preset | None |
-| Build command | `bun run build` |
-| Build output directory | `dist` |
-| Root directory | `/` |
-
-If the build image needs a Bun pin: set `BUN_VERSION` = `1.3.14` (or the version
-in use) as a build environment variable.
+History note: the site first shipped as assets-only Workers while the mailer
+was written as a Pages Function (`functions/api/contact.ts`). Workers ignore
+`functions/`, so `/api/contact` answered 405 in prod. The handler moved to
+`worker/contact.ts`, mounted by `worker/index.ts` (2026-08-07).
 
 vite-react-ssg emits a real HTML file per route (`/`, `/services/index.html`, …),
-so deep links work without an SPA catch-all. No `_redirects` needed.
+so deep links work without an SPA catch-all.
+
+## Custom domains
+
+`oddwavestudio.com` is attached to the prod Worker (Settings → Domains &
+Routes). Add `www.oddwavestudio.com` there too — it currently resolves to
+nothing.
 
 ## Contact form → Cloudflare Email Service
 
-Both forms (Contact + Accompagnement) POST to the Pages Function
-`functions/api/contact.ts`, which sends the demande to the studio inbox through
-the **Cloudflare Email Service** REST API. The recipient is always the studio's
-own **verified destination address**, so sending is free on every plan and does
-not count against any quota (arbitrary recipients would need Workers Paid).
+Both forms (Contact + Accompagnement) POST to `/api/contact`
+([`worker/contact.ts`](../worker/contact.ts)), which sends **two** emails
+through the Email Service **Workers binding** (`env.EMAIL`, declared as
+`send_email` in `wrangler.jsonc` — no API token involved):
 
-Prerequisites: the domain must use **Cloudflare DNS**, and Email Sending must be
-onboarded (dashboard → Email → onboard the domain; this adds SPF/DKIM/DMARC, and
-MX if Email Routing is enabled). Add the studio inbox as a **verified
-destination address** and confirm it via the verification email.
+1. the demande, to the studio inbox (`CONTACT_TO`);
+2. a branded confirmation, back to the visitor. Arbitrary recipients require
+   the **Workers Paid** plan (active since 2026-08-07; the free tier only
+   writes to verified destination addresses).
 
-Set these as project variables (Settings → Variables and Secrets), **not**
-`VITE_`-prefixed so they stay server-side, for **Production and Preview**:
+Prerequisites: the domain must use **Cloudflare DNS** (done 2026-08-07), and
+Email Sending must be onboarded: Compute → Email Service → **Email Sending** →
+onboard `oddwavestudio.com` and approve the MX/SPF/DKIM/DMARC records.
+
+Set these on the prod Worker (Settings → Variables and Secrets) — and on the
+dev Worker too if the form should really send from dev:
 
 | Name | Value |
 |---|---|
-| `CF_ACCOUNT_ID` | Cloudflare account id |
-| `CF_EMAIL_TOKEN` | API token with the *Email Sending* permission (store as a **Secret**) |
-| `CONTACT_FROM` | a sender on the onboarded domain, e.g. `noreply@oddwavestudio.com` |
-| `CONTACT_TO` | the studio's verified destination address (where demandes land) |
+| `CONTACT_FROM` | a sender on the onboarded domain, e.g. `noreply@oddwavestudio.com` (no mailbox needed) |
+| `CONTACT_TO` | the studio inbox (where demandes land) |
 
-Local dev note: plain `vite` does not run Pages Functions, so the form POST 404s
-and `ContactService` treats it as a soft no-op (logs the payload). To exercise
-the function locally, build then run `wrangler pages dev ./dist` with the same
-variables in a `.dev.vars` file.
+`keep_vars` is set in `wrangler.jsonc` so dashboard variables survive wrangler
+deploys.
+
+**Verify a deploy:** `bun scripts/check-contact-prod.mjs` probes `/api/contact`
+without sending anything. `bun scripts/check-contact-prod.mjs --send` does a
+real end-to-end run (demande + confirmation); pass a URL and/or a visitor
+address to vary the target, e.g.
+`bun scripts/check-contact-prod.mjs https://oddwavestudio.maxime-moodz.workers.dev you@example.com --send`.
+
+Local dev note: plain `vite` does not serve `/api/contact`, so the form POST
+404s and `ContactService` treats it as a soft no-op (logs the payload). To
+exercise the route locally: `bun run build`, then `npx wrangler dev` — the
+binding is `remote: true`, so local dev sends REAL emails through the service
+(set `CONTACT_FROM`/`CONTACT_TO` in a `.dev.vars` file).
 
 ## Videos (IPFS)
 

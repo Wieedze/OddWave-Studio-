@@ -3,7 +3,7 @@
 // video plays in), the réalisations grid, the modal player, and the CTA.
 
 import { useEffect, useRef, useState } from 'react';
-import { CtaLogo, VideoModal } from '@/components';
+import { CtaLogo, VideoModal, Seo } from '@/components';
 import { Button } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
@@ -122,6 +122,7 @@ export function SoundDesignPage() {
 
   return (
     <div ref={ref} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden' }}>
+      <Seo page="soundDesign" />
       {/* HERO */}
       <section data-hero style={{ position: 'relative', height: '100vh', minHeight: '640px', width: '100%', overflow: 'hidden', background: colors.surface.section }}>
         <video

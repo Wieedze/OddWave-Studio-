@@ -6,7 +6,7 @@
 // title/eyebrow intro, panel de-blur, reveals).
 
 import { useEffect, useState, type CSSProperties } from 'react';
-import { FloatingLines, CtaLogo } from '@/components';
+import { FloatingLines, CtaLogo, Seo } from '@/components';
 import { Button, MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
@@ -159,6 +159,7 @@ export function ServicesPage() {
 
   return (
     <div ref={ref} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden', minHeight: '100vh' }}>
+      <Seo page="services" />
       {/* FIXED FLOATINGLINES BACKDROP (same behavior as Portfolio) */}
       <section
         data-hero

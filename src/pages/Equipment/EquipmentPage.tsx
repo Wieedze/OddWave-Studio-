@@ -4,7 +4,7 @@
 // full inventory by category, CTA.
 
 import type { CSSProperties } from 'react';
-import { CtaLogo } from '@/components';
+import { CtaLogo, Seo } from '@/components';
 import { Button, MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
@@ -52,6 +52,7 @@ export function EquipmentPage() {
 
   return (
     <div ref={ref} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden' }}>
+      <Seo page="equipment" />
       {/* HERO */}
       <section
         data-hero

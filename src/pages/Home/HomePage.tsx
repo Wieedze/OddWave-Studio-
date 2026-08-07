@@ -6,7 +6,7 @@
 // /services. Motion is wired by useHomeIntro.
 
 import type { CSSProperties } from 'react';
-import { CtaLogo } from '@/components';
+import { CtaLogo, Seo } from '@/components';
 import { Button, MonoLabel } from '@/design-system/primitives';
 import { colors, typography, shadow } from '@/design-system/tokens';
 import { useHomeIntro } from '@/hooks';
@@ -63,6 +63,7 @@ export function HomePage() {
 
   return (
     <div ref={rootRef} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden' }}>
+      <Seo page="home" />
       {/* HERO */}
       <section
         id="top"

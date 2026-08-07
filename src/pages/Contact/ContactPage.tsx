@@ -3,7 +3,7 @@
 // column grid (form / channels), and the "Message envoyé." confirmation state.
 
 import { useState } from 'react';
-import { CtaLogo } from '@/components';
+import { CtaLogo, Seo } from '@/components';
 import { MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
@@ -57,6 +57,7 @@ export function ContactPage() {
 
   return (
     <div ref={ref} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden' }}>
+      <Seo page="contact" />
       {/* HERO */}
       <section
         data-hero

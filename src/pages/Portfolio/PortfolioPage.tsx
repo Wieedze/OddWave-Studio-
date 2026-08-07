@@ -5,7 +5,7 @@
 // the hero intro has played, so the title/eyebrow always land first.
 
 import { useEffect, useState } from 'react';
-import { FloatingLines, CtaLogo, PortfolioSynth } from '@/components';
+import { FloatingLines, CtaLogo, PortfolioSynth, Seo } from '@/components';
 import { Button } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
@@ -29,6 +29,7 @@ export function PortfolioPage() {
 
   return (
     <div ref={ref} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden', minHeight: '100vh' }}>
+      <Seo page="portfolio" />
       {/* FIXED FLOATINGLINES BACKDROP */}
       <section
         data-hero

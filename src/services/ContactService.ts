@@ -1,8 +1,8 @@
 // ContactService — submits the Contact + Guidance forms to the studio inbox.
-// The browser POSTs the form data to the same-origin Pages Function
-// `/api/contact`, which sends the email through the Cloudflare Email Service
-// REST API. All credentials stay server-side in the Pages project env — nothing
-// sensitive ships in the client bundle. See functions/api/contact.ts.
+// The browser POSTs the form data to the same-origin `/api/contact` route,
+// handled by the Worker (worker/index.ts → worker/contact.ts), which sends the
+// email through the Cloudflare Email Service REST API. All credentials stay
+// server-side in the Worker env — nothing sensitive ships in the client bundle.
 
 export interface ContactSubmission {
   name: string;
@@ -32,11 +32,11 @@ export class ContactService {
         body: JSON.stringify(data),
       });
 
-      // Plain `vite` dev serves no Pages Functions: don't block the UX while
-      // testing the form locally without `wrangler pages dev`.
+      // Plain `vite` dev serves no /api/contact route: don't block the UX while
+      // testing the form locally without `wrangler dev`.
       if (res.status === 404) {
         // eslint-disable-next-line no-console
-        console.warn('[ContactService] /api/contact not found — run `wrangler pages dev` to exercise it. Payload:', data);
+        console.warn('[ContactService] /api/contact not found — run `bun run build` then `npx wrangler dev` to exercise it. Payload:', data);
         return { ok: true, error: 'endpoint-missing' };
       }
 

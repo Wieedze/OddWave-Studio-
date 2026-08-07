@@ -1,0 +1,31 @@
+// Config for the two Git-connected Workers built from this repo (docs/deploy.md):
+//   prod  `oddwave-studio`  (oddwavestudio.com)          — deploy command: npx wrangler deploy
+//   dev   `oddwavestudio`   (*.maxime-moodz.workers.dev) — deploy command: npx wrangler deploy --env dev
+// Both serve the static build (dist/) and run worker/index.ts for /api/contact.
+// The dashboard deploy commands must stay plain (no --assets/--name flags) so
+// this file drives the deploy.
+{
+  "name": "oddwave-studio",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-08-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS"
+  },
+  // Cloudflare Email Service — no API token, the binding carries the rights.
+  // `remote: true` lets `wrangler dev` send real emails through the service.
+  "send_email": [{ "name": "EMAIL", "remote": true }],
+  // Variables/secrets set in the dashboard survive wrangler deploys.
+  "keep_vars": true,
+  "observability": { "enabled": true },
+  "env": {
+    "dev": {
+      "name": "oddwavestudio",
+      "assets": {
+        "directory": "./dist",
+        "binding": "ASSETS"
+      },
+      "send_email": [{ "name": "EMAIL", "remote": true }]
+    }
+  }
+}

@@ -3,7 +3,7 @@
 // FloatingLines backdrop behind the whole page, a full-height title, then the
 // 6 A4 guide pages scrolling over the backdrop.
 
-import { FloatingLines } from '@/components';
+import { FloatingLines, Seo } from '@/components';
 import { usePageMotion } from '@/hooks';
 import { colors, typography } from '@/design-system/tokens';
 import { EXPORTS } from '@/content/exports';
@@ -14,6 +14,7 @@ export function ExportsPage() {
 
   return (
     <div ref={ref} style={{ background: colors.surface.section, color: colors.text.primary, overflowX: 'hidden', minHeight: '100vh' }}>
+      <Seo page="exports" />
       {/* FIXED FLOATINGLINES BACKDROP */}
       <section
         data-hero

@@ -390,5 +390,15 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
 - Long mono eyebrows need the Home hero pattern (clamp() on size AND
   tracking + lineHeight 1.7 + maxWidth 100%); fixed 13px/0.32em only works
   under ~30 characters.
+- **SEO layer (2026-08-07):** per-page head tags live in `src/components/Seo`
+  (fed by `src/content/seo.ts`, JSON-LD built by `SeoService`); every page
+  renders `<Seo page="..." />` inside its root div. Location policy decided
+  by Max: the town (Auriol) appears in metadata, JSON-LD and llms.txt ONLY,
+  never in visible UI, and no street address anywhere (privacy). Global
+  OG/Twitter tags were removed from index.html on purpose: static head tags
+  would duplicate the per-page ones on every prerendered route (react-helmet
+  appends, it does not replace them). The canonical social image is
+  `public/og.jpg` (1200x630). robots.txt allowlists AI crawlers; sitemap.xml
+  is hand-maintained: add a `<url>` entry when adding a route.
 
 <!-- Add new entries above this line -->

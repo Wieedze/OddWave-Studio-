@@ -3,7 +3,7 @@
 // formules table that pre-fills the request form, and the request form itself.
 
 import { useState } from 'react';
-import { CtaLogo, Logo } from '@/components';
+import { CtaLogo, Logo, Seo } from '@/components';
 import { MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { usePageMotion } from '@/hooks';
@@ -28,6 +28,7 @@ export function GuidancePage() {
 
   return (
     <div ref={ref} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden' }}>
+      <Seo page="guidance" />
       {/* HERO */}
       <section
         data-hero
