@@ -68,14 +68,41 @@ function escapeHtml(value: string): string {
     .replace(/"/g, '&quot;');
 }
 
-/** Branded shell shared by both emails: wordmark, copper rule, card, footer. */
-function emailShell(cardHtml: string, footerHtml: string): string {
+// Per-service hero banners: email-sized derivatives of the Services page
+// panel images, generated into public/assets/mail/ (1200x420). Keys match the
+// Contact "besoin" chips; any formule (Guidance) maps to accompagnement.
+const MAIL_ASSETS = 'https://oddwavestudio.com/assets/mail';
+const NEED_HEROES: Record<string, string> = {
+  Mastering: 'mastering',
+  'Stem Mastering': 'stem-mastering',
+  Mixage: 'mixage',
+  Accompagnement: 'accompagnement',
+  'Sound design': 'sound-design',
+};
+
+function heroFor(need?: string, formule?: string): { src: string; alt: string } {
+  const key = formule ? 'accompagnement' : need ? (NEED_HEROES[need] ?? 'default') : 'default';
+  const label = formule ? 'Accompagnement' : (need ?? 'OddWave Studio');
+  return { src: `${MAIL_ASSETS}/${key}.jpg`, alt: label };
+}
+
+/** Branded shell shared by both emails: wordmark, copper rule, service hero
+ * photo, card with the logo watermark, footer. The watermark background is
+ * ignored by Outlook desktop, which simply keeps the flat card color. */
+function emailShell(
+  hero: { src: string; alt: string },
+  cardHtml: string,
+  footerHtml: string,
+): string {
   return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${BG};padding:32px 16px">
     <tr><td align="center">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%">
         <tr><td style="padding:0 8px 16px;font-family:${FONT};font-size:13px;font-weight:bold;letter-spacing:4px;color:${PAPER}">ODDWAVE STUDIO</td></tr>
         <tr><td style="height:2px;background:${COPPER};font-size:0;line-height:0">&nbsp;</td></tr>
-        <tr><td style="background:${CARD};border:1px solid ${BORDER};padding:28px">${cardHtml}</td></tr>
+        <tr><td style="background:${CARD};border:1px solid ${BORDER};padding:0">
+          <img src="${hero.src}" alt="${escapeHtml(hero.alt)}" width="600" style="display:block;width:100%;height:auto;border:0"/>
+          <div style="padding:28px;background:${CARD} url('https://oddwavestudio.com/mail-watermark.png') no-repeat right bottom">${cardHtml}</div>
+        </td></tr>
         <tr><td style="padding:16px 8px;font-family:${FONT};font-size:12px;color:${MUTED}">${footerHtml}</td></tr>
       </table>
     </td></tr>
@@ -141,8 +168,12 @@ export async function handleContactPost(context: {
     'Répondre directement à ' + email,
   ].join('\n');
 
+  const hero = heroFor(need, formule);
+
   const demandeHtml = emailShell(
-    `<p style="margin:0 0 20px;font-family:${FONT};font-size:20px;line-height:1.3;color:${PAPER}">${escapeHtml(subject)}</p>
+    hero,
+    `<p style="margin:0 0 6px;font-family:${FONT};font-size:11px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:${COPPER_SOFT}">Nouvelle demande</p>
+      <p style="margin:0 0 20px;font-family:${FONT};font-size:24px;font-weight:bold;line-height:1.2;letter-spacing:1px;text-transform:uppercase;color:${PAPER}">${escapeHtml(subject)}</p>
       <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 20px">
         ${rows
           .map(
@@ -196,7 +227,9 @@ export async function handleContactPost(context: {
   ].join('\n');
 
   const confirmationHtml = emailShell(
-    `<p style="margin:0 0 20px;font-family:${FONT};font-size:20px;line-height:1.3;color:${PAPER}">Message bien re&ccedil;u.</p>
+    hero,
+    `<p style="margin:0 0 6px;font-family:${FONT};font-size:11px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:${COPPER_SOFT}">OddWave Studio</p>
+      <p style="margin:0 0 20px;font-family:${FONT};font-size:24px;font-weight:bold;line-height:1.2;letter-spacing:1px;text-transform:uppercase;color:${PAPER}">Message bien re&ccedil;u.</p>
       <p style="margin:0 0 20px;font-family:${FONT};font-size:15px;line-height:1.6;color:${PAPER_WARM}">Bonjour ${escapeHtml(
         name,
       )},<br/>Merci ! J'ai bien re&ccedil;u votre demande et je reviens vers vous tr&egrave;s vite. R&eacute;ponse sous 48h.</p>
