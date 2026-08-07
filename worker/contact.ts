@@ -162,10 +162,13 @@ export async function handleContactPost(context: {
     `Re&ccedil;u via le formulaire de ${SITE_LINK}`,
   );
 
+  // Display name so inboxes show "OddWave Studio" instead of "noreply".
+  const from = `OddWave Studio <${env.CONTACT_FROM}>`;
+
   try {
     await env.EMAIL.send({
       to: env.CONTACT_TO,
-      from: env.CONTACT_FROM,
+      from,
       subject,
       text: demandeText,
       html: demandeHtml,
@@ -175,34 +178,37 @@ export async function handleContactPost(context: {
     return json({ success: false, error: 'send-failed', detail }, 502);
   }
 
-  // Confirmation back to the visitor. Best effort: the demande is already in
-  // the studio inbox, a bounced confirmation must not fail the submission.
+  // Confirmation back to the visitor, in the site's own voice (Contact page
+  // copy: "Réponse sous 48h", "on revient vers vous très vite", "À bientôt sur
+  // OddWave"). Best effort: the demande is already in the studio inbox, a
+  // bounced confirmation must not fail the submission.
   const confirmationText = [
     `Bonjour ${name},`,
     '',
-    'Nous avons bien reçu votre demande et revenons vers vous rapidement.',
+    "Merci ! J'ai bien reçu votre demande et je reviens vers vous très vite. Réponse sous 48h.",
     '',
     'Votre message :',
     project,
     '',
+    'À bientôt sur OddWave.',
     'OddWave Studio',
-    'https://oddwavestudio.com',
+    'https://oddwavestudio.com · Instagram : @oddwave.studio',
   ].join('\n');
 
   const confirmationHtml = emailShell(
-    `<p style="margin:0 0 20px;font-family:${FONT};font-size:20px;line-height:1.3;color:${PAPER}">Votre demande est bien re&ccedil;ue</p>
+    `<p style="margin:0 0 20px;font-family:${FONT};font-size:20px;line-height:1.3;color:${PAPER}">Message bien re&ccedil;u.</p>
       <p style="margin:0 0 20px;font-family:${FONT};font-size:15px;line-height:1.6;color:${PAPER_WARM}">Bonjour ${escapeHtml(
         name,
-      )},<br/>Nous avons bien re&ccedil;u votre demande et revenons vers vous rapidement.</p>
+      )},<br/>Merci ! J'ai bien re&ccedil;u votre demande et je reviens vers vous tr&egrave;s vite. R&eacute;ponse sous 48h.</p>
       ${messageBlock(project)}
-      <p style="margin:24px 0 0;font-family:${FONT};font-size:15px;line-height:1.6;color:${PAPER}">OddWave Studio</p>`,
-    `Vous recevez ce message car cette adresse a &eacute;t&eacute; utilis&eacute;e sur le formulaire de ${SITE_LINK}.`,
+      <p style="margin:24px 0 0;font-family:${FONT};font-size:15px;line-height:1.6;color:${PAPER}">&Agrave; bient&ocirc;t sur OddWave.<br/><span style="font-weight:bold">OddWave Studio</span></p>`,
+    `${SITE_LINK} &middot; <a href="https://instagram.com/oddwave.studio" style="color:${COPPER_SOFT};text-decoration:none">@oddwave.studio</a><br/>Vous recevez ce message car cette adresse a &eacute;t&eacute; utilis&eacute;e sur notre formulaire de contact.`,
   );
 
   try {
     await env.EMAIL.send({
       to: email,
-      from: env.CONTACT_FROM,
+      from,
       subject: 'Votre demande est bien reçue',
       text: confirmationText,
       html: confirmationHtml,
