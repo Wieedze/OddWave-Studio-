@@ -6,7 +6,7 @@ export const CONTACT = {
   channelsLabel: 'En direct',
   note: 'Réponse sous 48h. Sessions à distance dans le monde entier, ou en résidence sur place pour les projets au long cours.',
   confirmTitle: 'Message envoyé.',
-  confirmBody: 'Merci ! On a bien reçu votre demande et on revient vers vous très vite. À bientôt sur OddWave.',
+  confirmBody: 'Merci ! On a bien reçu votre demande et on revient vers vous très vite. À bientôt.',
   submitLabel: 'Envoyer la demande →',
 } as const;
 

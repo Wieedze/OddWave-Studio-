@@ -209,10 +209,10 @@ export async function handleContactPost(context: {
     return json({ success: false, error: 'send-failed', detail }, 502);
   }
 
-  // Confirmation back to the visitor, in the site's own voice (Contact page
-  // copy: "Réponse sous 48h", "on revient vers vous très vite", "À bientôt sur
-  // OddWave"). Best effort: the demande is already in the studio inbox, a
-  // bounced confirmation must not fail the submission.
+  // Confirmation back to the visitor, in the site's voice but first person
+  // ("je", Max 2026-08-07; closing is always "À bientôt." and never
+  // "À bientôt sur OddWave"). Best effort: the demande is already in the
+  // studio inbox, a bounced confirmation must not fail the submission.
   const confirmationText = [
     `Bonjour ${name},`,
     '',
