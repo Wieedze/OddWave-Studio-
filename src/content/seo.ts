@@ -10,6 +10,8 @@ export const SITE_NAME = 'OddWave Studio';
 export const SITE_EMAIL = 'contact@oddwave.studio';
 export const SITE_INSTAGRAM = 'https://instagram.com/oddwave.studio';
 export const OG_IMAGE_PATH = '/og.jpg';
+export const OG_IMAGE_ALT =
+  "La console du studio OddWave, avec le logo et l'invitation Démarrons votre projet.";
 
 /** Public profiles tied to the studio entity (JSON-LD sameAs: Instagram, label). */
 export const SITE_SAME_AS: readonly string[] = [SITE_INSTAGRAM, LABEL_URL];

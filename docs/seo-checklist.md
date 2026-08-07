@@ -30,21 +30,21 @@ visible, et aucune adresse postale n'est publiée nulle part.
       conservé, 2 sauts maximum
 - [x] Vérifié en prod (2026-08-07) : `robots.txt`, `sitemap.xml`, `llms.txt`
       et `og.jpg` répondent en 200, titres par page servis correctement
-- [ ] Rebuild + redeploy après le nettoyage des doublons title/description
-      d'index.html (fait dans le code le 2026-08-07, en attente de deploy)
-- [ ] Tester le JSON-LD : https://search.google.com/test/rich-results
-- [ ] Tester le partage social : https://www.opengraph.xyz (l'image et le titre
-      de chaque page doivent s'afficher)
+- [x] Rebuild + redeploy après le nettoyage des doublons title/description :
+      vérifié en prod le 2026-08-07 (1 seul title et 1 seule description par
+      page, sameAs JSON-LD avec Instagram + label)
+- [x] JSON-LD validé au test de résultats enrichis Google (2026-08-07).
+      Piège : tester avec l'URL complète, .com inclus
+- [x] Partage social vérifié sur opengraph.xyz (2026-08-07)
 
 ## 3. Indexation (semaine 1 après mise en ligne)
 
-- [ ] Google Search Console : https://search.google.com/search-console
-      (propriété "Domaine", validation par DNS, facile depuis Cloudflare)
-- [ ] Soumettre le sitemap dans Search Console
-- [ ] Bing Webmaster Tools : https://www.bing.com/webmasters
-      (bouton "importer depuis Search Console", 2 minutes). Indispensable :
-      ChatGPT s'appuie sur l'index Bing
-- [ ] Demander l'indexation de la page d'accueil dans les deux outils
+- [x] Google Search Console : propriété domaine validée via Cloudflare (2026-08-07)
+- [x] Sitemap soumis dans Search Console (2026-08-07)
+- [x] Bing Webmaster Tools connecté (2026-08-07)
+- [x] Indexation de la page d'accueil demandée (2026-08-07)
+- [ ] Contrôle dans quelques jours : `site:oddwavestudio.com` dans Google doit
+      lister les pages, et Search Console > Pages doit passer en vert
 
 ## 4. Fiches locales (le levier n°1 pour Google ET les IA)
 

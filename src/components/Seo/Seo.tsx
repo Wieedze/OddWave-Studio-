@@ -2,7 +2,14 @@
 // LocalBusiness JSON-LD. Rendered once per page, resolved at pre-render time.
 
 import { Head } from 'vite-react-ssg';
-import { OG_IMAGE_PATH, PAGE_SEO, SITE_NAME, SITE_URL, type PageSeoKey } from '@/content/seo';
+import {
+  OG_IMAGE_ALT,
+  OG_IMAGE_PATH,
+  PAGE_SEO,
+  SITE_NAME,
+  SITE_URL,
+  type PageSeoKey,
+} from '@/content/seo';
 import { SeoService } from '@/services';
 
 interface SeoProps {
@@ -29,6 +36,7 @@ export function Seo({ page }: SeoProps) {
       <meta property="og:image" content={image} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={OG_IMAGE_ALT} />
       <meta name="twitter:card" content="summary_large_image" />
       <script type="application/ld+json">{SeoService.localBusinessJsonLd()}</script>
     </Head>
