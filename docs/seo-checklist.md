@@ -20,14 +20,18 @@ visible, et aucune adresse postale n'est publiée nulle part.
 
 ## 2. Au déploiement (une fois)
 
-- [ ] `bun run build` : vérifier dans `dist/` que chaque page a son propre `<title>`
-      et le bloc `application/ld+json`
-- [ ] Commit + deploy sur le Worker de prod
-- [ ] Choisir le domaine canonique et rediriger l'autre en 301 :
-      `www.oddwavestudio.com` -> `oddwavestudio.com` (règle Cloudflare).
-      Un seul domaine doit répondre, sinon Google divise le score entre les deux
-- [ ] Vérifier en prod : `oddwavestudio.com/robots.txt`, `/sitemap.xml`, `/llms.txt`
-      et `/og.jpg` répondent bien
+- [x] `bun run build` : vérifié dans `dist/` (2026-08-07), chaque page a son propre
+      `<title>` et le bloc `application/ld+json`
+- [x] Commit + deploy sur le Worker de prod
+- [x] Domaine canonique : CNAME `www` + Redirect Rule 301 vers l'apex posés et
+      vérifiés (chemin conservé, testé racine + pages)
+- [x] "Always Use HTTPS" activé et vérifié (2026-08-07) : http apex, http www,
+      https www redirigent tous en 301 vers https://oddwavestudio.com, chemin
+      conservé, 2 sauts maximum
+- [x] Vérifié en prod (2026-08-07) : `robots.txt`, `sitemap.xml`, `llms.txt`
+      et `og.jpg` répondent en 200, titres par page servis correctement
+- [ ] Rebuild + redeploy après le nettoyage des doublons title/description
+      d'index.html (fait dans le code le 2026-08-07, en attente de deploy)
 - [ ] Tester le JSON-LD : https://search.google.com/test/rich-results
 - [ ] Tester le partage social : https://www.opengraph.xyz (l'image et le titre
       de chaque page doivent s'afficher)

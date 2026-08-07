@@ -3,11 +3,16 @@
 // Location policy: the town (Auriol) lives in metadata only, never in the
 // visible UI, and no street address is published anywhere.
 
+import { LABEL_URL } from './navigation';
+
 export const SITE_URL = 'https://oddwavestudio.com';
 export const SITE_NAME = 'OddWave Studio';
 export const SITE_EMAIL = 'contact@oddwave.studio';
 export const SITE_INSTAGRAM = 'https://instagram.com/oddwave.studio';
 export const OG_IMAGE_PATH = '/og.jpg';
+
+/** Public profiles tied to the studio entity (JSON-LD sameAs: Instagram, label). */
+export const SITE_SAME_AS: readonly string[] = [SITE_INSTAGRAM, LABEL_URL];
 
 /** Where the studio sits and the area it serves (metadata + JSON-LD only). */
 export const SERVICE_AREA = {

@@ -6,8 +6,8 @@ import {
   PAGE_SEO,
   SERVICE_AREA,
   SITE_EMAIL,
-  SITE_INSTAGRAM,
   SITE_NAME,
+  SITE_SAME_AS,
   SITE_URL,
 } from '@/content/seo';
 
@@ -43,7 +43,7 @@ export class SeoService {
       url: `${SITE_URL}/`,
       email: SITE_EMAIL,
       image: `${SITE_URL}${OG_IMAGE_PATH}`,
-      sameAs: [SITE_INSTAGRAM],
+      sameAs: [...SITE_SAME_AS],
       address: {
         '@type': 'PostalAddress',
         addressLocality: SERVICE_AREA.locality,
