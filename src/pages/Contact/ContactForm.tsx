@@ -78,8 +78,15 @@ export function ContactForm({ onSubmitted }: ContactFormProps) {
         />
       </div>
 
-      <button type="submit" className="ow-submit" disabled={submitting}>
-        {CONTACT.submitLabel}
+      <button type="submit" className="ow-submit" disabled={submitting} aria-busy={submitting}>
+        {submitting ? (
+          <>
+            <span className="ow-submit-spinner" aria-hidden="true" />
+            Envoi en cours…
+          </>
+        ) : (
+          CONTACT.submitLabel
+        )}
       </button>
       {error && (
         <p style={{ margin: 0, fontFamily: typography.font.body, fontSize: '14px', lineHeight: 1.5, color: colors.signal.red }}>{error}</p>

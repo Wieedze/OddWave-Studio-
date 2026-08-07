@@ -92,8 +92,15 @@ export function GuidanceForm({ formule, onSelectFormule, onSubmitted }: Guidance
         />
       </div>
 
-      <button type="submit" className="ow-submit" disabled={submitting} style={{ fontFamily: typography.font.body }}>
-        Envoyer la demande →
+      <button type="submit" className="ow-submit" disabled={submitting} aria-busy={submitting} style={{ fontFamily: typography.font.body }}>
+        {submitting ? (
+          <>
+            <span className="ow-submit-spinner" aria-hidden="true" />
+            Envoi en cours…
+          </>
+        ) : (
+          'Envoyer la demande →'
+        )}
       </button>
       {error && (
         <p style={{ margin: 0, fontFamily: typography.font.body, fontSize: '14px', lineHeight: 1.5, color: colors.signal.red }}>{error}</p>

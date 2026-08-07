@@ -80,3 +80,25 @@ textarea.ow-field {
   cursor: default;
   transform: none;
 }
+
+/* Sending state: the label switches to "Envoi en cours…" and this small ring
+   spins inside the button (the flex gap already spaces it). */
+.ow-submit-spinner {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border-radius: 50%;
+  border: 2px solid rgba(246, 238, 230, 0.35);
+  border-top-color: #f6eee6;
+  animation: ow-submit-spin 0.7s linear infinite;
+}
+@keyframes ow-submit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ow-submit-spinner {
+    animation: none;
+  }
+}

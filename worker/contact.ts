@@ -216,12 +216,12 @@ export async function handleContactPost(context: {
   const confirmationText = [
     `Bonjour ${name},`,
     '',
-    "Merci ! J'ai bien reçu votre demande et je reviens vers vous très vite. Réponse sous 48h.",
+    "Merci ! J'ai bien reçu votre demande et je reviens vers vous très vite.",
     '',
     'Votre message :',
     project,
     '',
-    'À bientôt sur OddWave.',
+    'À bientôt.',
     'OddWave Studio',
     'https://oddwavestudio.com · Instagram : @oddwave.studio',
   ].join('\n');
@@ -232,9 +232,9 @@ export async function handleContactPost(context: {
       <p style="margin:0 0 20px;font-family:${FONT};font-size:24px;font-weight:bold;line-height:1.2;letter-spacing:1px;text-transform:uppercase;color:${PAPER}">Message bien re&ccedil;u.</p>
       <p style="margin:0 0 20px;font-family:${FONT};font-size:15px;line-height:1.6;color:${PAPER_WARM}">Bonjour ${escapeHtml(
         name,
-      )},<br/>Merci ! J'ai bien re&ccedil;u votre demande et je reviens vers vous tr&egrave;s vite. R&eacute;ponse sous 48h.</p>
+      )},<br/>Merci ! J'ai bien re&ccedil;u votre demande et je reviens vers vous tr&egrave;s vite.</p>
       ${messageBlock(project)}
-      <p style="margin:24px 0 0;font-family:${FONT};font-size:15px;line-height:1.6;color:${PAPER}">&Agrave; bient&ocirc;t sur OddWave.<br/><span style="font-weight:bold">OddWave Studio</span></p>`,
+      <p style="margin:24px 0 0;font-family:${FONT};font-size:15px;line-height:1.6;color:${PAPER}">&Agrave; bient&ocirc;t.<br/><span style="font-weight:bold">OddWave Studio</span></p>`,
     `${SITE_LINK} &middot; <a href="https://instagram.com/oddwave.studio" style="color:${COPPER_SOFT};text-decoration:none">@oddwave.studio</a><br/>Vous recevez ce message car cette adresse a &eacute;t&eacute; utilis&eacute;e sur notre formulaire de contact.`,
   );
 
