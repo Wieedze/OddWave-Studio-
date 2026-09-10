@@ -10,6 +10,9 @@ export const SITE_NAME = 'OddWave Studio';
 export const SITE_EMAIL = 'contact@oddwave.studio';
 export const SITE_INSTAGRAM = 'https://instagram.com/oddwave_studio';
 export const OG_IMAGE_PATH = '/og.jpg';
+/** The Google Business Profile place (found 2026-09-10, place ID ChIJfd3b6jmZyRIRoxDQN8GEMdw). */
+export const GOOGLE_MAPS_URL =
+  'https://www.google.com/maps/place/?q=place_id:ChIJfd3b6jmZyRIRoxDQN8GEMdw';
 export const OG_IMAGE_ALT =
   "La console du studio OddWave, avec le logo et l'invitation Démarrons votre projet.";
 

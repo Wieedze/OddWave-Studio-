@@ -71,7 +71,14 @@ Vérification web du 2026-09-10 (le client dit avoir tout fait) :
   Théo). À trancher par Max, puis corriger contact.ts + seo.ts + llms.txt.
 
 - [ ] Client : dépublier ou rediriger l'ancien site oddwavestudio.odoo.com
-- [ ] Client : fournir lien ou capture de chaque fiche (GBP, Bing, Foursquare, Yelp)
+- [x] Fiche Google RETROUVÉE (2026-09-10) : nom "OddWave Studio Auriol",
+      description reprise de la checklist client, adresse masquée (point ville
+      seulement). Place ID `ChIJfd3b6jmZyRIRoxDQN8GEMdw`, reliée au site via
+      `hasMap` dans le JSON-LD. Lien avis à donner aux clients :
+      https://search.google.com/local/writereview?placeid=ChIJfd3b6jmZyRIRoxDQN8GEMdw
+      NOTE : "Auriol" dans le nom de la fiche = hors guidelines Google (risque
+      de suspension) ; conseiller de renommer en "OddWave Studio" simple.
+- [ ] Client : fournir lien ou capture des fiches restantes (Bing, Foursquare, Yelp)
 - [x] Handle Instagram tranché par Max (2026-09-10) : @oddwave_studio
       (underscore) appliqué dans contact.ts, seo.ts et llms.txt
 - [ ] Revendiquer la fiche PagesJaunes et masquer la rue si possible

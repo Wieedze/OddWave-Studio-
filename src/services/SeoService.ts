@@ -2,6 +2,7 @@
 // engines. Pure derivations from src/content/seo.ts, no DOM access.
 
 import {
+  GOOGLE_MAPS_URL,
   OG_IMAGE_PATH,
   PAGE_SEO,
   SERVICE_AREA,
@@ -44,6 +45,7 @@ export class SeoService {
       email: SITE_EMAIL,
       image: `${SITE_URL}${OG_IMAGE_PATH}`,
       sameAs: [...SITE_SAME_AS],
+      hasMap: GOOGLE_MAPS_URL,
       address: {
         '@type': 'PostalAddress',
         addressLocality: SERVICE_AREA.locality,
