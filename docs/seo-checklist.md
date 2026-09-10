@@ -72,7 +72,8 @@ Vérification web du 2026-09-10 (le client dit avoir tout fait) :
 
 - [ ] Client : dépublier ou rediriger l'ancien site oddwavestudio.odoo.com
 - [ ] Client : fournir lien ou capture de chaque fiche (GBP, Bing, Foursquare, Yelp)
-- [ ] Max : trancher le handle Instagram et aligner site + métadonnées
+- [x] Handle Instagram tranché par Max (2026-09-10) : @oddwave_studio
+      (underscore) appliqué dans contact.ts, seo.ts et llms.txt
 - [ ] Revendiquer la fiche PagesJaunes et masquer la rue si possible
 
 - [ ] Google Business Profile : https://business.google.com

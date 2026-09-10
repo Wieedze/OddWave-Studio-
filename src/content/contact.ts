@@ -30,6 +30,6 @@ export interface ContactChannel {
 
 export const CONTACT_CHANNELS: readonly ContactChannel[] = [
   { label: 'Email', value: 'contact@oddwave.studio', href: 'mailto:contact@oddwave.studio' },
-  { label: 'Instagram', value: '@oddwave.studio', href: 'https://instagram.com/oddwave.studio', external: true },
+  { label: 'Instagram', value: '@oddwave_studio', href: 'https://instagram.com/oddwave_studio', external: true },
   { label: 'Le studio', value: 'France · sur rendez-vous' },
 ];
