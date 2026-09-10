@@ -1,0 +1,177 @@
+/* Google reviews — star row, CTA badge and the "Ils en parlent" section.
+   Colours and easings come from the token custom properties emitted by the
+   theme layer (see design-system/theme/cssVars.ts). */
+
+/* --- Stars ------------------------------------------------------------- */
+
+.ow-stars {
+  position: relative;
+  display: inline-flex;
+  line-height: 0;
+  flex: none;
+}
+.ow-stars-row {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+/* Copper layer clipped to the rating. The inner row keeps its natural width so
+   the flex items are cut off rather than squeezed. */
+.ow-stars-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  overflow: hidden;
+}
+.ow-stars-fill .ow-stars-row {
+  width: max-content;
+}
+
+/* --- Mount fade --------------------------------------------------------- */
+
+/* These blocks appear once the fetch resolves, after MotionService has already
+   collected its [data-reveal] elements, so they carry their own entrance. */
+@keyframes owReviewIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.ow-reviews,
+.ow-review-badge {
+  animation: owReviewIn 520ms var(--ow-ease-reveal) both;
+}
+
+/* --- CTA badge ---------------------------------------------------------- */
+
+.ow-review-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 20px;
+  text-decoration: none;
+  transition: opacity 240ms var(--ow-ease-ui);
+}
+.ow-review-badge:hover {
+  opacity: 0.72;
+}
+.ow-review-badge:focus-visible {
+  outline: 2px solid var(--ow-color-copper-landing);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+/* --- Section ------------------------------------------------------------ */
+
+.ow-review-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  margin-top: 18px;
+}
+
+.ow-review-grid {
+  margin-top: clamp(28px, 4vh, 44px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 380px));
+  justify-content: center;
+  gap: 22px;
+}
+
+.ow-review-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 26px 24px 28px;
+  border-radius: 14px;
+  text-align: left;
+}
+
+.ow-review-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ow-review-avatar {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.ow-review-avatar--initial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--ow-color-text-primarywarm);
+  background: rgba(194, 78, 55, 0.22);
+}
+
+.ow-review-author {
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+/* Reviews vary wildly in length; clamping keeps the row even. The card links
+   out to the listing, where the full text lives. */
+.ow-review-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.62;
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ow-review-all {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 4px;
+  font:
+    600 14px/1 'Manrope',
+    sans-serif;
+  color: var(--ow-color-text-primarywarm);
+  text-decoration: none;
+}
+.ow-review-all::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--ow-color-copper-landing);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 240ms var(--ow-ease-ui);
+}
+.ow-review-all:hover::after {
+  transform: scaleX(1);
+}
+
+@media (max-width: 620px) {
+  .ow-review-summary {
+    flex-wrap: wrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ow-reviews,
+  .ow-review-badge {
+    animation: none;
+  }
+  .ow-review-badge,
+  .ow-review-all::after {
+    transition: none;
+  }
+}

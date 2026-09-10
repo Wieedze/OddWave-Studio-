@@ -5,16 +5,17 @@
 // the hero intro has played, so the title/eyebrow always land first.
 
 import { useEffect, useState } from 'react';
-import { FloatingLines, CtaLogo, PortfolioSynth, Seo } from '@/components';
+import { FloatingLines, CtaLogo, PortfolioSynth, ReviewBadge, Seo } from '@/components';
 import { Button } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
-import { usePageMotion } from '@/hooks';
+import { usePageMotion, useText } from '@/hooks';
 import { cx } from '@/helpers';
 import { ROUTES } from '@/content/navigation';
 import { PORTFOLIO } from '@/content/portfolio';
 import './PortfolioPage.css';
 
 export function PortfolioPage() {
+  const portfolio = useText(PORTFOLIO);
   const [heroDone, setHeroDone] = useState(false);
   const ref = usePageMotion<HTMLDivElement>({ onHeroIntroComplete: () => setHeroDone(true) });
 
@@ -71,7 +72,7 @@ export function PortfolioPage() {
               textShadow: '0 2px 60px rgba(0,0,0,.5)',
             }}
           >
-            {PORTFOLIO.heroTitle}
+            {portfolio.heroTitle}
           </h1>
           <p
             data-hero-eyebrow
@@ -86,7 +87,7 @@ export function PortfolioPage() {
               textWrap: 'pretty',
             }}
           >
-            {PORTFOLIO.heroIntro}
+            {portfolio.heroIntro}
           </p>
         </section>
 
@@ -114,11 +115,12 @@ export function PortfolioPage() {
                 textWrap: 'balance',
               }}
             >
-              {PORTFOLIO.ctaTitle}
+              {portfolio.ctaTitle}
             </h2>
+            <ReviewBadge />
             <div data-reveal style={{ marginTop: '24px' }}>
               <Button to={ROUTES.contact} variant="primary" style={{ padding: '16px 32px' }}>
-                {PORTFOLIO.ctaLabel}
+                {portfolio.ctaLabel}
               </Button>
             </div>
           </div>

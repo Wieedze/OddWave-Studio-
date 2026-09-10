@@ -4,6 +4,8 @@
 // /assets/covers/…) and `spotify` (the track URL or id). `art` is the gradient
 // fallback shown until a real cover image is provided.
 
+import type { Localized } from '@/helpers';
+
 export interface SynthCover {
   readonly title: string;
   readonly artist: string;
@@ -26,20 +28,39 @@ export interface ChannelFilter {
   readonly label: string;
 }
 
-export const SYNTH_FILTERS: readonly ChannelFilter[] = [
-  { key: 'all', label: 'TOUS' },
-  { key: 'Master', label: 'MASTER' },
-  { key: 'Mix', label: 'MIX' },
-  { key: 'Prod', label: 'PROD' },
-];
+export interface SynthCopy {
+  readonly filters: readonly ChannelFilter[];
+  readonly readoutIdle: string;
+}
 
+/** Faceplate lettering that never translates. */
 export const SYNTH = {
   brand: 'OddWave Studio',
   subtitle: 'RELEASE ARCHIVE',
-  readoutIdle: 'CLIQUEZ UNE POCHETTE POUR ÉCOUTER',
   previewDur: 30,
   defaultGain: 0.9,
 } as const;
+
+export const SYNTH_UI: Localized<SynthCopy> = {
+  fr: {
+    filters: [
+      { key: 'all', label: 'TOUS' },
+      { key: 'Master', label: 'MASTER' },
+      { key: 'Mix', label: 'MIX' },
+      { key: 'Prod', label: 'PROD' },
+    ],
+    readoutIdle: 'CLIQUEZ UNE POCHETTE POUR ÉCOUTER',
+  },
+  en: {
+    filters: [
+      { key: 'all', label: 'ALL' },
+      { key: 'Master', label: 'MASTER' },
+      { key: 'Mix', label: 'MIX' },
+      { key: 'Prod', label: 'PROD' },
+    ],
+    readoutIdle: 'CLICK A SLEEVE TO LISTEN',
+  },
+};
 
 /** Filter predicate matching the handoff's tag rules. */
 export function matchesFilter(tag: string, key: ChannelFilter['key']): boolean {

@@ -83,11 +83,10 @@ Vérification web du 2026-09-10 (le client dit avoir tout fait) :
       (underscore) appliqué dans contact.ts, seo.ts et llms.txt
 - [ ] Revendiquer la fiche PagesJaunes et masquer la rue si possible
 
-- [ ] Google Business Profile : https://business.google.com
-      Catégorie "Studio d'enregistrement". Mode "entreprise de zone" :
-      l'adresse reste privée, tu déclares Marseille, Aubagne, Aix-en-Provence,
-      La Ciotat, Toulon (jusqu'à 20 zones). Photos du studio, description avec
-      les services. Nourrit Google Maps, le pack local, Gemini et les AI Overviews
+- [ ] Dans la fiche Google (elle existe, voir plus haut) : vérifier le mode
+      "entreprise de zone" pour garder l'adresse privée, les zones déclarées
+      (Marseille, Aubagne, Aix-en-Provence, La Ciotat, Toulon), la catégorie
+      "Studio d'enregistrement", les photos et la description des services
 - [ ] Bing Places : https://www.bingplaces.com
       (option de synchro depuis Google Business Profile). Nourrit ChatGPT et Copilot
 - [ ] Foursquare : https://location.foursquare.com
@@ -99,6 +98,12 @@ Vérification web du 2026-09-10 (le client dit avoir tout fait) :
 
 - [x] La fiche compte déjà 28 avis Google (constaté par Max le 2026-09-10) :
       l'objectif des 10 premiers avis est largement dépassé
+- [x] Avis affichés sur le site (2026-09-10) : bandeau note + nombre au-dessus
+      des CTA (Services, Matériel, Sound Design, Portfolio) et section
+      "Ils en parlent" sur l'accueil et sur Contact. Source : API Places (New)
+      via `/api/reviews`, mise en place détaillée dans `docs/deploy.md`
+- [ ] **Poser `GOOGLE_MAPS_API_KEY` sur le Worker de prod** : sans la clé, la
+      route répond 503 et le site masque simplement le bandeau et la section
 - [ ] Mettre en place le réflexe : après chaque projet livré, envoyer le lien
       d'avis Google au client
 - [ ] Suggérer aux clients de mentionner le service et la ville dans l'avis

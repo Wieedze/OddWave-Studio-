@@ -3,7 +3,7 @@
 // Mirrors the handoff component family (06 · Composants).
 
 import type { CSSProperties, ReactNode } from 'react';
-import { Link } from 'react-router-dom';
+import { LocaleLink } from './LocaleLink';
 import { colors, radius, shadow, typography } from '@/design-system/tokens';
 import './Button.css';
 
@@ -76,9 +76,9 @@ export function Button(props: ButtonProps) {
 
   if ('to' in props && props.to) {
     return (
-      <Link to={props.to} className={cls} style={merged}>
+      <LocaleLink to={props.to} className={cls} style={merged}>
         {children}
-      </Link>
+      </LocaleLink>
     );
   }
   if ('href' in props && props.href) {

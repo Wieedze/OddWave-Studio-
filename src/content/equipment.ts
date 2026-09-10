@@ -1,13 +1,46 @@
-// Le Matériel content — verbatim from design-handoff/Materiel OddWave.dc.html.
+// Le Matériel content — from design-handoff/Materiel OddWave.dc.html, minus the
+// captions and the detail close-ups (client feedback, July 2026), and with the
+// featured pieces replaced by an atmosphere mosaic (September 2026).
+//
+// The inventory itself is declared once: product names and manufacturer links
+// are the same in every language, so only the category labels and the short
+// tags are translated, through the two maps below. Duplicating the whole list
+// per language would be six kilobytes of guaranteed drift.
 
-export const EQUIPMENT = {
-  heroTitle: 'MATÉRIEL',
-  heroEyebrow: 'La liste complète',
-  inventoryTitle: "L'inventaire complet",
-  ctaTitle: 'Un projet en tête ?',
-  ctaBody: 'Dites-nous ce que vous cherchez à faire : on définit ensemble la meilleure chaîne pour votre son.',
-  ctaLabel: 'Nous contacter →',
-} as const;
+import { Photo } from '@/models';
+import type { Localized, Locale } from '@/helpers';
+
+export interface EquipmentCopy {
+  readonly heroTitle: string;
+  readonly heroEyebrow: string;
+  readonly inventoryTitle: string;
+  readonly ctaTitle: string;
+  readonly ctaBody: string;
+  readonly ctaLabel: string;
+  /** Accessible name of a mosaic tile, around the photo description. */
+  readonly enlargeLabel: (alt: string) => string;
+}
+
+export const EQUIPMENT: Localized<EquipmentCopy> = {
+  fr: {
+    heroTitle: 'MATÉRIEL',
+    heroEyebrow: 'La liste complète',
+    inventoryTitle: "L'inventaire complet",
+    ctaTitle: 'Un projet en tête ?',
+    ctaBody: 'Dites-nous ce que vous cherchez à faire : on définit ensemble la meilleure chaîne pour votre son.',
+    ctaLabel: 'Nous contacter →',
+    enlargeLabel: (alt) => `Agrandir : ${alt}`,
+  },
+  en: {
+    heroTitle: 'EQUIPMENT',
+    heroEyebrow: 'The full list',
+    inventoryTitle: 'The complete inventory',
+    ctaTitle: 'Got a project in mind?',
+    ctaBody: 'Tell us what you are trying to do and we will work out the best chain for your sound together.',
+    ctaLabel: 'Get in touch →',
+    enlargeLabel: (alt) => `Enlarge: ${alt}`,
+  },
+};
 
 export interface GearItem {
   readonly name: string;
@@ -21,14 +54,93 @@ export interface GearCategory {
   readonly items: readonly GearItem[];
 }
 
-/** Featured pieces ("pièces phares") carry a title caption. */
-export const FEATURED = {
-  main: { image: '/assets/materiel-console.jpg', title: 'SSL & Elysia channel strip' },
-  topRight: { image: '/assets/machine-tubetech.jpg', title: 'Tube-Tech' },
-  bottomRight: { image: '/assets/machine-channelstrip.jpg', title: 'Elysia & SSL Fusion' },
-} as const;
+/** Studio atmosphere mosaic, shown before the inventory (client feedback,
+ *  September 2026): five uncaptioned photos so a visitor feels the room before
+ *  reading the gear list. The first one is the large tile. Clicking any of them
+ *  opens the PhotoLightbox, which steps through this same order. */
+const GALLERY_ALT: Localized<readonly string[]> = {
+  fr: [
+    "Vue d'ensemble de la régie, plafond traité et écoute centrale.",
+    'Session de travail à deux devant la console.',
+    'Micro statique et filtre anti-pop dans la cabine de prise.',
+    'La cabine de prise et sa fenêtre ouverte sur la régie.',
+    'Le poste de mixage vu de derrière pendant une session.',
+  ],
+  en: [
+    'A wide view of the control room, treated ceiling and central listening position.',
+    'Two people working together at the desk.',
+    'Condenser microphone and pop filter in the recording booth.',
+    'The recording booth and its window onto the control room.',
+    'The mixing position seen from behind during a session.',
+  ],
+};
 
-export const GEAR_CATEGORIES: readonly GearCategory[] = [
+const GALLERY_FILES = [
+  'studio-room-wide',
+  'studio-session-duo',
+  'studio-mic-closeup',
+  'studio-booth',
+  'studio-desk',
+] as const;
+
+function buildGallery(locale: Locale): readonly Photo[] {
+  return GALLERY_FILES.map(
+    (file, i) =>
+      new Photo(`/assets/studio/${file}.jpg`, GALLERY_ALT[locale][i], `/assets/studio/${file}-full.jpg`),
+  );
+}
+
+export const STUDIO_GALLERY: Localized<readonly Photo[]> = {
+  fr: buildGallery('fr'),
+  en: buildGallery('en'),
+};
+
+/** Category headings, French to English. */
+const CATEGORY_EN: Record<string, string> = {
+  'Conversion & préamplis': 'Conversion & preamps',
+  Monitoring: 'Monitoring',
+  'Traitement (outboard)': 'Outboard processing',
+  Micros: 'Microphones',
+  'Instruments & hardware': 'Instruments & hardware',
+  Logiciels: 'Software',
+  'Contrôle': 'Control',
+};
+
+/** Short qualifiers next to each item, French to English. Anything missing
+ *  falls through unchanged, which is right for the ones already in English. */
+const TAG_EN: Record<string, string> = {
+  Convertisseur: 'Converter',
+  Interface: 'Interface',
+  'Préampli': 'Preamp',
+  'Préampli ×8': 'Preamp ×8',
+  'Monitor 3 voies': '3-way monitor',
+  Monitor: 'Monitor',
+  Compresseur: 'Compressor',
+  'Multiband comp': 'Multiband comp',
+  Transient: 'Transient',
+  'De-esser': 'De-esser',
+  Dynamique: 'Dynamics',
+  EQ: 'EQ',
+  'Reverb 500': 'Reverb 500',
+  'Bus processor': 'Bus processor',
+  Mastering: 'Mastering',
+  'Condensateur': 'Condenser',
+  Shotgun: 'Shotgun',
+  'Synthé': 'Synth',
+  'Synthé ×2': 'Synth ×2',
+  'Synthé analogique': 'Analogue synth',
+  'Boîte à rythmes': 'Drum machine',
+  Guitare: 'Guitar',
+  Ampli: 'Amp',
+  Instruments: 'Instruments',
+  'Contrôleur': 'Controller',
+  Remote: 'Remote',
+  DAW: 'DAW',
+  Plugins: 'Plugins',
+  Suites: 'Suites',
+};
+
+const GEAR_FR: readonly GearCategory[] = [
   {
     label: 'Conversion & préamplis',
     items: [
@@ -110,3 +222,12 @@ export const GEAR_CATEGORIES: readonly GearCategory[] = [
     ],
   },
 ];
+
+/** English inventory, derived from the French one: same products, same links,
+ *  translated headings and tags. */
+const GEAR_EN: readonly GearCategory[] = GEAR_FR.map((category) => ({
+  label: CATEGORY_EN[category.label] ?? category.label,
+  items: category.items.map((item) => ({ ...item, tag: TAG_EN[item.tag] ?? item.tag })),
+}));
+
+export const GEAR_CATEGORIES: Localized<readonly GearCategory[]> = { fr: GEAR_FR, en: GEAR_EN };

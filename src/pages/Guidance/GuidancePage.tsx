@@ -6,14 +6,17 @@ import { useState } from 'react';
 import { CtaLogo, Logo, Seo } from '@/components';
 import { MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
-import { usePageMotion } from '@/hooks';
-import { GUIDANCE_INTRO, GUIDANCE_PHASES, GUIDANCE_FORMULAS, GUIDANCE_FEEDBACK } from '@/content/guidance';
+import { usePageMotion, useText } from '@/hooks';
+import { GUIDANCE, GUIDANCE_PHASES, GUIDANCE_FORMULAS, GUIDANCE_MEDIA } from '@/content/guidance';
 import { GuidanceForm } from './GuidanceForm';
 import './GuidancePage.css';
 
 const SECTION_TOP_RULE = `1px solid ${colors.border.hair}`;
 
 export function GuidancePage() {
+  const guidance = useText(GUIDANCE);
+  const phases = useText(GUIDANCE_PHASES);
+  const formulas = useText(GUIDANCE_FORMULAS);
   const ref = usePageMotion<HTMLDivElement>();
   const [formule, setFormule] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
@@ -86,11 +89,11 @@ export function GuidancePage() {
               textShadow: '0 4px 60px rgba(0,0,0,.55)',
             }}
           >
-            ACCOMPAGNEMENT
+            {guidance.heroTitle}
           </h1>
           <div data-hero-eyebrow style={{ margin: '18px 0 0' }}>
             <MonoLabel size="13px" tracking="0.32em" color={colors.copper.warm} style={{ textIndent: '0.32em' }}>
-              Suivi personnalisé &amp; pédagogique
+              {guidance.heroEyebrow}
             </MonoLabel>
           </div>
         </div>
@@ -101,7 +104,7 @@ export function GuidancePage() {
         <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
           <div data-reveal style={{ marginBottom: '16px' }}>
             <MonoLabel size="12px" tracking="0.2em" color={colors.copper.landing}>
-              {GUIDANCE_INTRO.eyebrow}
+              {guidance.introEyebrow}
             </MonoLabel>
           </div>
           <h2
@@ -119,7 +122,7 @@ export function GuidancePage() {
               maxWidth: '760px',
             }}
           >
-            {GUIDANCE_INTRO.title}
+            {guidance.introTitle}
           </h2>
           <p
             data-reveal
@@ -134,7 +137,7 @@ export function GuidancePage() {
               textWrap: 'pretty',
             }}
           >
-            {GUIDANCE_INTRO.body}
+            {guidance.introBody}
           </p>
         </div>
       </section>
@@ -142,7 +145,7 @@ export function GuidancePage() {
       {/* LES 4 PHASES */}
       <section id="phases" style={{ background: colors.surface.section, padding: 'clamp(18px,3.5vh,40px) 30px clamp(60px,9vh,110px)' }}>
         <div style={{ maxWidth: '1360px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(18px,2.6vh,30px)' }}>
-          {GUIDANCE_PHASES.map((phase) => (
+          {phases.map((phase) => (
             <article key={phase.number} data-reveal className="ow-phase">
               <div className="ow-phase-num" aria-hidden="true">
                 {phase.number}
@@ -166,17 +169,17 @@ export function GuidancePage() {
       <section style={{ background: colors.surface.section, padding: 'clamp(50px,8vh,110px) 30px' }}>
         <div data-reveal className="ow-feedback" style={{ maxWidth: '1360px', margin: '0 auto' }}>
           <div className="ow-feedback-media">
-            <video autoPlay muted loop playsInline poster={GUIDANCE_FEEDBACK.poster}>
-              <source src={GUIDANCE_FEEDBACK.video} type="video/mp4" />
+            <video autoPlay muted loop playsInline poster={GUIDANCE_MEDIA.poster}>
+              <source src={GUIDANCE_MEDIA.video} type="video/mp4" />
             </video>
           </div>
           <div className="ow-feedback-text">
             <div style={{ marginBottom: '18px' }}>
               <MonoLabel size="12px" tracking="0.2em" color="#A0481F">
-                {GUIDANCE_FEEDBACK.eyebrow}
+                {guidance.feedbackEyebrow}
               </MonoLabel>
             </div>
-            {GUIDANCE_FEEDBACK.paragraphs.map((paragraph, i) => (
+            {guidance.feedbackParagraphs.map((paragraph, i) => (
               <p key={i}>{paragraph}</p>
             ))}
           </div>
@@ -188,7 +191,7 @@ export function GuidancePage() {
         <div style={{ maxWidth: '1480px', margin: '0 auto' }}>
           <div data-reveal style={{ marginBottom: '16px' }}>
             <MonoLabel size="12px" tracking="0.2em" color={colors.copper.landing}>
-              Les formules
+              {guidance.formulesEyebrow}
             </MonoLabel>
           </div>
           <h2
@@ -205,7 +208,7 @@ export function GuidancePage() {
               maxWidth: '680px',
             }}
           >
-            Une formule par ambition.
+            {guidance.formulesTitle}
           </h2>
           <p
             data-reveal
@@ -220,11 +223,11 @@ export function GuidancePage() {
               textWrap: 'pretty',
             }}
           >
-            Pas de tarif figé : chaque accompagnement se construit autour de votre projet. On en parle ensemble.
+            {guidance.formulesBody}
           </p>
 
           <div data-reveal className="ow-formula-grid">
-            {GUIDANCE_FORMULAS.map((f) => (
+            {formulas.map((f) => (
               <article key={f.id} className="ow-formula" data-pick onClick={() => pickFormula(f.name)}>
                 <div className="ow-formula-head">
                   <span className="ow-formula-tag">{f.tag}</span>
@@ -237,7 +240,7 @@ export function GuidancePage() {
                   ))}
                 </ul>
                 <div className="ow-formula-foot">
-                  <span className="ow-formula-go">Choisir →</span>
+                  <span className="ow-formula-go">{guidance.chooseLabel}</span>
                 </div>
               </article>
             ))}
@@ -251,7 +254,7 @@ export function GuidancePage() {
           <div data-reveal style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '18px' }}>
             <Logo size={161} stroke={colors.copper.landing} />
             <MonoLabel size="16px"  color={colors.copper.landing}>
-              Demande d'accompagnement
+              {guidance.requestEyebrow}
             </MonoLabel>
           </div>
           <h2
@@ -267,7 +270,7 @@ export function GuidancePage() {
               textWrap: 'balance',
             }}
           >
-            Parlons de votre projet.
+            {guidance.requestTitle}
           </h2>
           <p
             data-reveal
@@ -281,7 +284,7 @@ export function GuidancePage() {
               textWrap: 'pretty',
             }}
           >
-            Choisissez une formule, dites-nous où vous en êtes : on définit ensemble ce qui vous fera avancer. Réponse sous 48h.
+            {guidance.requestBody}
           </p>
 
           <div data-reveal>
@@ -299,7 +302,7 @@ export function GuidancePage() {
                     color: colors.text.primaryWarm,
                   }}
                 >
-                  Demande envoyée.
+                  {guidance.confirmTitle}
                 </h3>
                 <p
                   style={{
@@ -313,8 +316,9 @@ export function GuidancePage() {
                     textWrap: 'pretty',
                   }}
                 >
-                  Merci ! On a bien reçu votre demande pour{' '}
-                  <strong style={{ color: colors.copper.highlight, fontWeight: typography.weight.semibold }}>{chosen}</strong>. On revient vers vous très vite.
+                  {guidance.confirmBefore}
+                  <strong style={{ color: colors.copper.highlight, fontWeight: typography.weight.semibold }}>{chosen}</strong>
+                  {guidance.confirmAfter}
                 </p>
               </div>
             ) : (

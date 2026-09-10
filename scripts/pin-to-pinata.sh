@@ -9,7 +9,8 @@
 #   3) export PINATA_API_KEY="..." PINATA_API_SECRET="..."
 #
 # Run from the project root:
-#   bash scripts/pin-to-pinata.sh
+#   bash scripts/pin-to-pinata.sh                  # the full list below
+#   bash scripts/pin-to-pinata.sh witcher-demo.mp4  # only the file(s) named
 #
 # Then paste the printed "CID MAP" back, plus your dedicated gateway domain
 # (e.g. your-name.mypinata.cloud), and the videos get wired into
@@ -28,14 +29,18 @@ ENDPOINT="https://api.pinata.cloud/pinning/pinFileToIPFS"
 
 # --- Files to pin. Prefer .mp4 (H.264) for cross-browser playback; the .mov files
 # --- only play reliably in Safari — re-export them to .mp4 first. ---
+# --- Any filenames passed as arguments replace the list (pin one new reel
+# --- without re-uploading the whole gallery).
 FILES=(
   "sd-irradiation.mp4"
   "sd-seabeast.mp4"
   "showreel.mp4"
   "witcher.mp4"
+  "witcher-demo.mp4"
   "unreal.mp4"
   "love-death-robots.mp4"
 )
+if [[ $# -gt 0 ]]; then FILES=("$@"); fi
 
 # --- Build the auth header(s) ---
 auth_args=()

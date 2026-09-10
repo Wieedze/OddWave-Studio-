@@ -1,35 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<!-- 16 URLs: the French tree at the root, the English tree under /en.
+     Each entry declares its alternates so Google pairs the two versions
+     instead of reading them as duplicates. Add BOTH rows for a new route. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://oddwavestudio.com/</loc>
-    <lastmod>2026-08-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/"/>
+    <lastmod>2026-09-10</lastmod>
   </url>
   <url>
     <loc>https://oddwavestudio.com/services</loc>
-    <lastmod>2026-08-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/services"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/services"/>
+    <lastmod>2026-09-10</lastmod>
   </url>
   <url>
     <loc>https://oddwavestudio.com/equipment</loc>
-    <lastmod>2026-08-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/equipment"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en/equipment"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/equipment"/>
+    <lastmod>2026-09-10</lastmod>
   </url>
   <url>
     <loc>https://oddwavestudio.com/guidance</loc>
-    <lastmod>2026-08-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/guidance"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en/guidance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/guidance"/>
+    <lastmod>2026-09-10</lastmod>
   </url>
   <url>
     <loc>https://oddwavestudio.com/sound-design</loc>
-    <lastmod>2026-08-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/sound-design"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en/sound-design"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/sound-design"/>
+    <lastmod>2026-09-10</lastmod>
   </url>
   <url>
     <loc>https://oddwavestudio.com/portfolio</loc>
-    <lastmod>2026-08-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/portfolio"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en/portfolio"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/portfolio"/>
+    <lastmod>2026-09-10</lastmod>
   </url>
   <url>
     <loc>https://oddwavestudio.com/exports</loc>
-    <lastmod>2026-08-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/exports"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en/exports"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/exports"/>
+    <lastmod>2026-09-10</lastmod>
   </url>
   <url>
     <loc>https://oddwavestudio.com/contact</loc>
-    <lastmod>2026-08-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/contact"/>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://oddwavestudio.com/en</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/"/>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://oddwavestudio.com/en/services</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/services"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/services"/>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://oddwavestudio.com/en/equipment</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/equipment"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en/equipment"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/equipment"/>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://oddwavestudio.com/en/guidance</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/guidance"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en/guidance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/guidance"/>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://oddwavestudio.com/en/sound-design</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/sound-design"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en/sound-design"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/sound-design"/>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://oddwavestudio.com/en/portfolio</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/portfolio"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en/portfolio"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/portfolio"/>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://oddwavestudio.com/en/exports</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/exports"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en/exports"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/exports"/>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://oddwavestudio.com/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://oddwavestudio.com/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oddwavestudio.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oddwavestudio.com/contact"/>
+    <lastmod>2026-09-10</lastmod>
   </url>
 </urlset>

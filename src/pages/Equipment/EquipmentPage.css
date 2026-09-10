@@ -1,4 +1,4 @@
-/* Le Matériel — gear rows + responsive grids. Ported from
+/* Le Matériel — gear rows, atmosphere mosaic, responsive grids. Ported from
    design-handoff/Materiel OddWave.dc.html. */
 
 .ow-gear {
@@ -38,9 +38,59 @@ a.ow-gear-name:hover {
   white-space: nowrap;
 }
 
+/* Atmosphere mosaic tiles. Each one is a button that opens the PhotoLightbox;
+   only the inner image moves, so the reveal transform on the tile itself
+   (applied by MotionService via [data-reveal]) is never fought over. */
+.ow-photo-tile img {
+  transition: transform 600ms var(--ow-ease-ui);
+}
+.ow-photo-tile:hover img,
+.ow-photo-tile:focus-visible img {
+  transform: scale(1.045);
+}
+.ow-photo-tile:focus-visible {
+  outline: 2px solid var(--ow-color-copper-landing);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ow-photo-tile img {
+    transition: none;
+  }
+  .ow-photo-tile:hover img,
+  .ow-photo-tile:focus-visible img {
+    transform: none;
+  }
+}
+
+/* Atmosphere mosaic. Its desktop geometry (columns, rows, container ratio,
+   the lead tile's row span) is inline on the React elements, so every override
+   below needs !important to win over the style attribute. */
+@media (max-width: 1100px) {
+  [data-mosaic] {
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: none !important;
+    grid-auto-rows: minmax(0, 1fr) !important;
+    aspect-ratio: auto !important;
+  }
+  [data-mosaic] > * {
+    aspect-ratio: 3 / 2;
+  }
+  [data-mosaic] > *:first-child {
+    grid-row: auto !important;
+    grid-column: span 2;
+    aspect-ratio: 16 / 9;
+  }
+}
+
 @media (max-width: 860px) {
-  [data-phares] {
+  [data-mosaic] {
     grid-template-columns: 1fr !important;
+  }
+  [data-mosaic] > *,
+  [data-mosaic] > *:first-child {
+    grid-column: auto;
+    aspect-ratio: 16 / 10;
   }
   [data-cats] {
     grid-template-columns: 1fr !important;

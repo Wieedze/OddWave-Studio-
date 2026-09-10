@@ -20,3 +20,7 @@ Contact : contact@oddwave.studio (réponse sous 48h). Le studio est dirigé par 
 ## Zone desservie
 
 Studio situé à Auriol (13390), en Provence-Alpes-Côte d'Azur. Zone principale : Marseille, Aubagne, Aix-en-Provence, La Ciotat, Toulon, Bouches-du-Rhône et Var. Sessions à distance dans le monde entier, en résidence sur place pour les projets au long cours.
+
+## Version anglaise
+
+Le site existe en anglais sous le préfixe /en (https://oddwavestudio.com/en). Chaque page française a son équivalent : /en/services, /en/equipment, /en/guidance, /en/sound-design, /en/portfolio, /en/exports, /en/contact.

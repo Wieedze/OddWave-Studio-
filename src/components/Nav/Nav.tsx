@@ -2,11 +2,15 @@
 // (hover/focus-within). La couche motion (intro home) peut ajouter `.is-open`.
 
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Logo } from '@/components/Logo';
+import { LocaleSwitch } from '@/components/LocaleSwitch';
+import { LocaleLink } from '@/design-system/primitives';
 import { colors } from '@/design-system/tokens';
+import { useText } from '@/hooks';
 import { prefersReducedMotion } from '@/helpers';
-import { NAV_LEFT, NAV_RIGHT, MENU_LINKS, ROUTES } from '@/content/navigation';
+import { NAV, menuLinks, ROUTES } from '@/content/navigation';
+import { SITE } from '@/content/site';
 import type { NavLink as NavLinkModel } from '@/models';
 import './Nav.css';
 
@@ -19,13 +23,15 @@ function NavLinkItem({ link }: { link: NavLinkModel }) {
     );
   }
   return (
-    <Link to={link.to} className="ow-link">
+    <LocaleLink to={link.to} className="ow-link">
       {link.label}
-    </Link>
+    </LocaleLink>
   );
 }
 
 export function Nav() {
+  const nav = useText(NAV);
+  const site = useText(SITE);
   const [menuOpen, setMenuOpen] = useState(false);
   // Auto-deployed on page arrival, collapsed to the logo once scrolled down
   // (hover / keyboard focus still re-open it via CSS).
@@ -75,7 +81,7 @@ export function Nav() {
           FIXED-width bar revealed via clip-path — no width animation, so nothing
           shifts in layout and the centred elements never jitter. */}
       <div className="ow-nav-fx">
-        <nav className={open ? 'ow-nav is-open' : 'ow-nav'} aria-label="Navigation principale">
+        <nav className={open ? 'ow-nav is-open' : 'ow-nav'} aria-label={nav.mainLabel}>
           {/* fond en un seul bloc : union barre + disque */}
           <div className="ow-nav-bg">
             <div className="bar" />
@@ -84,12 +90,12 @@ export function Nav() {
 
           <div className="ow-nav-content">
             <div className="ow-nav-side ow-nav-left">
-              {NAV_LEFT.map((link) => (
+              {nav.groups.left.map((link) => (
                 <NavLinkItem key={link.to} link={link} />
               ))}
             </div>
             <div className="ow-nav-side ow-nav-right">
-              {NAV_RIGHT.map((link) => (
+              {nav.groups.right.map((link) => (
                 <NavLinkItem key={link.to} link={link} />
               ))}
             </div>
@@ -99,17 +105,19 @@ export function Nav() {
 
       {/* Logo OUT of the clipped/filtered bar: always sharp, pinned to a stable
           centre → zero jitter while the bar deploys / retracts. */}
-      <Link to={ROUTES.home} className="ow-nav-logo" aria-label="Accueil">
+      <LocaleLink to={ROUTES.home} className="ow-nav-logo" aria-label={nav.homeLabel}>
         {/* le <span> porte la taille + la correction optique (voir Nav.css) */}
         <span>
           <Logo size={108} stroke={colors.text.primary} />
         </span>
-      </Link>
+      </LocaleLink>
+
+      <LocaleSwitch label={site.languageLabel} place="nav" />
 
       <button
         type="button"
         className="ow-burger"
-        aria-label="Menu"
+        aria-label={nav.menuLabel}
         aria-expanded={menuOpen}
         onClick={() => setMenuOpen((o) => !o)}
       >
@@ -119,17 +127,18 @@ export function Nav() {
       </button>
 
       <div className={menuOpen ? 'ow-menu open' : 'ow-menu'}>
-        {MENU_LINKS.map((link) =>
+        {menuLinks(nav).map((link) =>
           link.external ? (
             <a key={link.to} href={link.to} className="ow-mlink" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>
               {link.label}
             </a>
           ) : (
-            <Link key={link.to} to={link.to} className="ow-mlink" onClick={() => setMenuOpen(false)}>
+            <LocaleLink key={link.to} to={link.to} className="ow-mlink" onClick={() => setMenuOpen(false)}>
               {link.label}
-            </Link>
+            </LocaleLink>
           ),
         )}
+        <LocaleSwitch label={site.languageLabel} place="menu" />
       </div>
     </div>
   );

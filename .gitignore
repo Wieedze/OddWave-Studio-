@@ -18,3 +18,13 @@ public/assets/*.webm
 # Client feedback source documents (July 2026 batch), kept local only.
 modif.txt
 Modifs site.pdf
+
+# Raw photo/video drops from the client (optimized copies live next to them).
+public/assets/grid/
+
+# Business paperwork (quotes, invoices) must never reach the shared repo.
+*devis*
+*Devis*
+*facture*
+*Facture*
+*.pdf

@@ -4,13 +4,14 @@
 // 6 A4 guide pages scrolling over the backdrop.
 
 import { FloatingLines, Seo } from '@/components';
-import { usePageMotion } from '@/hooks';
+import { usePageMotion, useText } from '@/hooks';
 import { colors, typography } from '@/design-system/tokens';
 import { EXPORTS } from '@/content/exports';
 import './ExportsPage.css';
 
 export function ExportsPage() {
   const ref = usePageMotion<HTMLDivElement>();
+  const exportsCopy = useText(EXPORTS);
 
   return (
     <div ref={ref} style={{ background: colors.surface.section, color: colors.text.primary, overflowX: 'hidden', minHeight: '100vh' }}>
@@ -57,7 +58,7 @@ export function ExportsPage() {
               textShadow: '0 4px 60px rgba(0,0,0,.55)',
             }}
           >
-            {EXPORTS.title}
+            {exportsCopy.title}
           </h1>
           <p
             data-hero-eyebrow
@@ -72,7 +73,7 @@ export function ExportsPage() {
               textWrap: 'pretty',
             }}
           >
-            {EXPORTS.intro}
+            {exportsCopy.intro}
           </p>
         </section>
 
@@ -80,7 +81,7 @@ export function ExportsPage() {
         <section className="ow-exports" style={{ position: 'relative', zIndex: 2 }}>
           <div data-reveal className="ow-exports-card">
             <div className="ow-exports-doc">
-              {EXPORTS.pages.map((page, i) => (
+              {exportsCopy.pages.map((page, i) => (
                 <img
                   key={page.src}
                   className="ow-exports-page"

@@ -1,14 +1,20 @@
-// Site footer — sitemap grid + monogram + legal caption + FR/EN switch.
+// Site footer — sitemap grid + monogram + legal caption + the FR/EN switch
+// (a real one since September 2026; it used to be decorative markup).
 // Mirrors the landing footer (design-handoff/Landing OddWave GSAP.dc.html).
 
-import { Link } from 'react-router-dom';
+
 import { Logo } from '@/components/Logo';
+import { LocaleLink } from '@/design-system/primitives';
+import { LocaleSwitch } from '@/components/LocaleSwitch';
 import { MonoLabel } from '@/design-system/primitives';
 import { colors, typography, spacing } from '@/design-system/tokens';
-import { FOOTER_COLUMNS, SITE } from '@/content/site';
+import { useText } from '@/hooks';
+import { SITE, SITE_NAME } from '@/content/site';
 import { ROUTES } from '@/content/navigation';
 
 export function Footer() {
+  const site = useText(SITE);
+
   return (
     <footer
       style={{
@@ -20,7 +26,7 @@ export function Footer() {
       }}
     >
       <nav
-        aria-label="Plan du site"
+        aria-label={site.sitemapLabel}
         style={{
           maxWidth: spacing.layout.contentMax,
           margin: '0 auto 48px',
@@ -29,7 +35,7 @@ export function Footer() {
           gap: '36px 24px',
         }}
       >
-        {FOOTER_COLUMNS.map((column) => (
+        {site.columns.map((column) => (
           <div key={column.heading} style={{ display: 'flex', flexDirection: 'column', gap: '13px' }}>
             <MonoLabel as="div" color={colors.text.fainter} size="11px" tracking="0.16em" style={{ marginBottom: '4px' }}>
               {column.heading}
@@ -48,9 +54,9 @@ export function Footer() {
                   {link.label}
                 </a>
               ) : (
-                <Link key={link.label} to={link.to} style={linkStyle}>
+                <LocaleLink key={link.label} to={link.to} style={linkStyle}>
                   {link.label}
-                </Link>
+                </LocaleLink>
               );
             })}
           </div>
@@ -70,7 +76,7 @@ export function Footer() {
           gap: '18px',
         }}
       >
-        <Link to={ROUTES.home} style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+        <LocaleLink to={ROUTES.home} style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
           <Logo size={43} stroke={colors.text.primary} />
           <span
             style={{
@@ -82,30 +88,14 @@ export function Footer() {
               color: colors.text.primary,
             }}
           >
-            {SITE.name}
+            {SITE_NAME}
           </span>
-        </Link>
+        </LocaleLink>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '22px' }}>
-          <span
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              fontFamily: typography.font.mono,
-              fontWeight: typography.weight.semibold,
-              fontSize: '12px',
-              lineHeight: 1,
-              letterSpacing: '0.06em',
-              color: 'rgba(241,238,232,.45)',
-            }}
-          >
-            <span style={{ color: colors.text.primary, cursor: 'pointer' }}>FR</span>
-            <span style={{ opacity: 0.4 }}>/</span>
-            <span style={{ cursor: 'pointer' }}>EN</span>
-          </span>
+          <LocaleSwitch label={site.languageLabel} place="footer" />
           <MonoLabel as="div" color={colors.text.fainter} size="12px" tracking="0.08em" style={{ textTransform: 'none' }}>
-            {SITE.copyright}
+            {site.copyright}
           </MonoLabel>
         </div>
       </div>

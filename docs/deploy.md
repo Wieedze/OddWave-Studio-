@@ -71,6 +71,69 @@ exercise the route locally: `bun run build`, then `npx wrangler dev` — the
 binding is `remote: true`, so local dev sends REAL emails through the service
 (set `CONTACT_FROM`/`CONTACT_TO` in a `.dev.vars` file).
 
+## Version anglaise (`/en`)
+
+Le site est bilingue depuis septembre 2026. Le français est servi depuis la
+racine, l'anglais sous le préfixe `/en` : `vite-react-ssg` pré-génère donc
+**16 fichiers HTML** au lieu de 8, chacun avec ses propres `title`,
+`description`, `hreflang` et `<html lang>`.
+
+**Piège à ne jamais réintroduire.** [`worker/index.ts`](../worker/index.ts)
+redirigeait `/en/*` vers `/` en 301, héritage de l'ancien site bilingue. La
+règle est maintenant filtrée par `APP_PATHS` : seules les URL `/en/…` qui ne
+correspondent à aucune route réelle sont redirigées. Si quelqu'un remet une
+redirection large sur `/en`, **tout le site anglais disparaît**, et un 301 se
+met en cache durablement dans les navigateurs.
+
+Nouvelle route ? Il faut la déclarer à **trois** endroits : `src/routes.tsx`
+(elle est montée deux fois automatiquement), `APP_PATHS` dans
+`worker/index.ts`, et `public/sitemap.xml` (deux entrées, FR et EN).
+
+Le sélecteur FR/EN vit dans la nav flottante, dans le menu burger et dans le
+pied de page. Il conserve la page courante : `/services` bascule vers
+`/en/services`, jamais vers l'accueil.
+
+## Avis Google (`GET /api/reviews`)
+
+Le site affiche la note et les derniers avis de la fiche Google du studio.
+[`worker/reviews.ts`](../worker/reviews.ts) appelle l'API **Places (New)** avec
+la clé côté serveur, et le client passe par `ReviewsService` -> `/api/reviews`.
+Aucune clé ne part dans le bundle public.
+
+| Réglage | Valeur |
+|---|---|
+| Place ID | `ChIJfd3b6jmZyRIRoxDQN8GEMdw` (public, c'est l'id du lien d'avis) |
+| Variable Worker | `GOOGLE_MAPS_API_KEY` (obligatoire) |
+| Variable Worker | `GOOGLE_PLACE_ID` (facultative, écrase la constante) |
+| Binding KV | `REVIEWS_KV` (facultatif, voir `wrangler.jsonc`) |
+
+**Créer la clé** : Google Cloud Console -> APIs & Services -> Credentials ->
+Create credentials -> API key. Activer **Places API (New)**. Restreindre la clé
+à cette seule API (restriction "API restrictions"). Ne PAS mettre de
+restriction par référent HTTP : l'appel part du Worker, pas du navigateur.
+Poser ensuite la clé sur le Worker de prod (Settings -> Variables and Secrets),
+en **secret**, et sur le Worker de dev si tu veux la tester là aussi.
+
+**Quota** : le champ `reviews` relève du palier Enterprise, 1 000 appels
+gratuits par mois. La route met la réponse en cache 12 h (cache edge, plus KV
+si le binding existe), soit une poignée d'appels par jour. Sans cache ce serait
+un appel par visiteur, donc le quota partirait en quelques jours.
+
+**Limites de l'API, à connaître avant de promettre quoi que ce soit au client** :
+cinq avis maximum, choisis par Google comme "les plus pertinents". Il n'existe
+pas de tri "les plus récents" ni "les meilleurs" côté API. Le nom de l'auteur,
+sa photo et le lien vers la fiche doivent rester affichés, et le contenu ne doit
+pas être stocké durablement (d'où le cache court).
+
+**Pas de balisage JSON-LD sur ces avis.** Google interdit le `AggregateRating`
+auto-déclaré sur son propre `LocalBusiness` : les étoiles ne sortiraient pas
+dans les résultats et c'est contraire à ses règles. Les étoiles en SERP viennent
+de la fiche Google, pas du site.
+
+**Vérifier** : `curl -s https://oddwavestudio.com/api/reviews | head -c 400`.
+Sans clé la route répond `503 {"error":"not-configured"}` et le site masque
+simplement le bandeau et la section.
+
 ## Videos (IPFS)
 
 The Sound Design videos are **not** in git (too large for GitHub). Host them on

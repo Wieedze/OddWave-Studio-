@@ -6,11 +6,11 @@
 // /services. Motion is wired by useHomeIntro.
 
 import type { CSSProperties } from 'react';
-import { CtaLogo, Seo } from '@/components';
+import { CtaLogo, ReviewsSection, Seo } from '@/components';
 import { Button, MonoLabel } from '@/design-system/primitives';
 import { colors, typography, shadow } from '@/design-system/tokens';
-import { useHomeIntro } from '@/hooks';
-import { HOME } from '@/content/home';
+import { useHomeIntro, useText } from '@/hooks';
+import { HOME, HOME_INTRO_IMAGE } from '@/content/home';
 import { STUDIO } from '@/content/studio';
 import { ROUTES } from '@/content/navigation';
 import './HomePage.css';
@@ -58,8 +58,10 @@ const quoteMark: CSSProperties = {
 };
 
 export function HomePage() {
+  const home = useText(HOME);
+  const studio = useText(STUDIO);
   const rootRef = useHomeIntro<HTMLDivElement>();
-  const [introLead, ...introRest] = HOME.intro;
+  const [introLead, ...introRest] = home.intro;
 
   return (
     <div ref={rootRef} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden' }}>
@@ -162,7 +164,7 @@ export function HomePage() {
             color={colors.copper.warm}
             style={{ textIndent: '0.16em', textAlign: 'center', lineHeight: 1.7, maxWidth: '100%' }}
           >
-            {HOME.heroEyebrow}
+            {home.heroEyebrow}
           </MonoLabel>
         </div>
       </section>
@@ -174,7 +176,7 @@ export function HomePage() {
             <div data-split-text style={{ order: 1 }}>
               <div data-reveal style={{ marginBottom: '16px' }}>
                 <MonoLabel size="12px" tracking="0.2em" color={colors.copper.landing}>
-                  {HOME.introEyebrow}
+                  {home.introEyebrow}
                 </MonoLabel>
               </div>
               <p
@@ -203,7 +205,7 @@ export function HomePage() {
                 </p>
               ))}
             </div>
-            <SplitMedia image={HOME.introImage} focus="center 50%" height="min(64vh,560px)" order={2} />
+            <SplitMedia image={HOME_INTRO_IMAGE} focus="center 50%" height="min(64vh,560px)" order={2} />
           </div>
         </div>
       </section>
@@ -226,14 +228,14 @@ export function HomePage() {
                   color: colors.text.primaryWarm,
                 }}
               >
-                {STUDIO.engineerName}
+                {studio.engineerName}
               </h2>
               <div data-reveal style={{ marginBottom: '22px' }}>
                 <MonoLabel as="div" size="13px" tracking="0.06em" color={colors.copper.warm} style={{ textTransform: 'none', lineHeight: 1.5 }}>
-                  {STUDIO.engineerRole}
+                  {studio.engineerRole}
                 </MonoLabel>
               </div>
-              {STUDIO.interview.map((paragraph, i) => (
+              {studio.interview.map((paragraph, i) => (
                 <p
                   key={i}
                   data-reveal
@@ -241,7 +243,7 @@ export function HomePage() {
                 >
                   {i === 0 && <span style={quoteMark}>« </span>}
                   {paragraph}
-                  {i === STUDIO.interview.length - 1 && <span style={quoteMark}> »</span>}
+                  {i === studio.interview.length - 1 && <span style={quoteMark}> »</span>}
                 </p>
               ))}
             </div>
@@ -269,9 +271,9 @@ export function HomePage() {
                   textWrap: 'pretty',
                 }}
               >
-                {STUDIO.envTitle}
+                {studio.envTitle}
               </h2>
-              {STUDIO.envParagraphs.map((paragraph, i) => (
+              {studio.envParagraphs.map((paragraph, i) => (
                 <p
                   key={i}
                   data-reveal
@@ -315,13 +317,18 @@ export function HomePage() {
               color: colors.text.primaryWarm,
             }}
           >
-            {STUDIO.pedagogyTitle}
+            {studio.pedagogyTitle}
           </h2>
           <p data-reveal style={{ ...bodyParagraph, margin: '26px 0 0', maxWidth: '680px', fontSize: '17px', lineHeight: 1.75, color: '#C8C4BC' }}>
-            {STUDIO.pedagogyBody}
+            {studio.pedagogyBody}
           </p>
         </div>
       </section>
+
+      {/* AVIS GOOGLE — sits right before the CTA: the reviews are the last
+          thing read before the button. Mounts once the fetch resolves, so it
+          only ever shifts the CTA and the footer, both below the fold. */}
+      <ReviewsSection background={colors.surface.section} />
 
       {/* CONTACT / CTA */}
       <section
@@ -343,7 +350,7 @@ export function HomePage() {
               textWrap: 'balance',
             }}
           >
-            {STUDIO.ctaTitle}
+            {studio.ctaTitle}
           </h2>
           <p
             data-reveal
@@ -358,11 +365,11 @@ export function HomePage() {
               textWrap: 'pretty',
             }}
           >
-            {STUDIO.ctaBody}
+            {studio.ctaBody}
           </p>
           <div data-reveal style={{ marginTop: '26px' }}>
             <Button to={ROUTES.contact} variant="primary" style={{ padding: '17px 34px' }}>
-              {STUDIO.ctaLabel}
+              {studio.ctaLabel}
             </Button>
           </div>
         </div>

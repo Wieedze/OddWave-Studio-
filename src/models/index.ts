@@ -5,3 +5,6 @@ export type { ImageSide } from './ServiceItem';
 export { Phase } from './Phase';
 export { Formula } from './Formula';
 export { VideoEntry } from './VideoEntry';
+export { Photo } from './Photo';
+export { Review } from './Review';
+export type { ReviewsSnapshot } from './Review';

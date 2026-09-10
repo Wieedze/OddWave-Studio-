@@ -6,10 +6,10 @@
 // title/eyebrow intro, panel de-blur, reveals).
 
 import { useEffect, useState, type CSSProperties } from 'react';
-import { FloatingLines, CtaLogo, Seo } from '@/components';
+import { FloatingLines, CtaLogo, ReviewBadge, Seo } from '@/components';
 import { Button, MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
-import { usePageMotion } from '@/hooks';
+import { usePageMotion, useText } from '@/hooks';
 import { cx } from '@/helpers';
 import { SERVICES, SERVICES_PAGE } from '@/content/services';
 import { ROUTES } from '@/content/navigation';
@@ -145,6 +145,8 @@ function PrestationPanel({ service }: { service: ServiceItem }) {
 const spacer = (height: string): CSSProperties => ({ height });
 
 export function ServicesPage() {
+  const servicesPage = useText(SERVICES_PAGE);
+  const services = useText(SERVICES);
   const [heroDone, setHeroDone] = useState(false);
   const ref = usePageMotion<HTMLDivElement>({ onHeroIntroComplete: () => setHeroDone(true) });
 
@@ -211,7 +213,7 @@ export function ServicesPage() {
               textShadow: '0 4px 60px rgba(0,0,0,.55)',
             }}
           >
-            {SERVICES_PAGE.heroTitle}
+            {servicesPage.heroTitle}
           </h1>
           <div data-hero-eyebrow style={{ margin: '18px 0 0' }}>
             <MonoLabel
@@ -220,7 +222,7 @@ export function ServicesPage() {
               color={colors.copper.warm}
               style={{ textIndent: '0.18em', textAlign: 'center', lineHeight: 1.7, maxWidth: '100%' }}
             >
-              {SERVICES_PAGE.heroEyebrow}
+              {servicesPage.heroEyebrow}
             </MonoLabel>
           </div>
         </section>
@@ -230,10 +232,10 @@ export function ServicesPage() {
         {/* Panels stay mounted (space reserved) but are revealed only once the
             hero intro has played, so the SERVICES title always lands first. */}
         <div className={cx('services-panels-enter', heroDone && 'is-in')}>
-          {SERVICES.map((service, i) => (
+          {services.map((service, i) => (
             <div key={service.id}>
               <PrestationPanel service={service} />
-              {i < SERVICES.length - 1 && <div aria-hidden style={spacer('min(14vh, 150px)')} />}
+              {i < services.length - 1 && <div aria-hidden style={spacer('min(14vh, 150px)')} />}
             </div>
           ))}
         </div>
@@ -259,7 +261,7 @@ export function ServicesPage() {
                 textWrap: 'balance',
               }}
             >
-              {SERVICES_PAGE.ctaTitle}
+              {servicesPage.ctaTitle}
             </h2>
             <p
               data-reveal
@@ -274,11 +276,12 @@ export function ServicesPage() {
                 textWrap: 'pretty',
               }}
             >
-              {SERVICES_PAGE.ctaBody}
+              {servicesPage.ctaBody}
             </p>
+            <ReviewBadge />
             <div data-reveal style={{ marginTop: '26px' }}>
               <Button to={ROUTES.contact} variant="primary" style={{ padding: '17px 34px' }}>
-                {SERVICES_PAGE.ctaLabel}
+                {servicesPage.ctaLabel}
               </Button>
             </div>
           </div>

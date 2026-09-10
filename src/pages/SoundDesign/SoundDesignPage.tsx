@@ -3,10 +3,10 @@
 // video plays in), the réalisations grid, the modal player, and the CTA.
 
 import { useEffect, useRef, useState } from 'react';
-import { CtaLogo, VideoModal, Seo } from '@/components';
+import { CtaLogo, ReviewBadge, VideoModal, Seo } from '@/components';
 import { Button } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
-import { usePageMotion } from '@/hooks';
+import { usePageMotion, useText } from '@/hooks';
 import { prefersReducedMotion } from '@/helpers';
 import { SOUND_DESIGN, SD_VIDEOS, VIDEO_SRC } from '@/content/soundDesign';
 import { ROUTES } from '@/content/navigation';
@@ -83,12 +83,14 @@ function GalleryCard({ entry, onOpen }: { entry: VideoEntry; onOpen: () => void 
 
 export function SoundDesignPage() {
   const ref = usePageMotion<HTMLDivElement>();
+  const soundDesign = useText(SOUND_DESIGN);
+  const videos = useText(SD_VIDEOS);
   const heroVidRef = useRef<HTMLVideoElement>(null);
   const [soundOn, setSoundOn] = useState(false);
   const [heroShown, setHeroShown] = useState(false);
   const [openId, setOpenId] = useState<string | null>(null);
 
-  const openEntry = openId ? SD_VIDEOS.find((v) => v.id === openId) ?? null : null;
+  const openEntry = openId ? videos.find((v) => v.id === openId) ?? null : null;
 
   // Hero video: start muted + autoplay; reveal the title once it has played in.
   useEffect(() => {
@@ -186,12 +188,12 @@ export function SoundDesignPage() {
               )}
             </svg>
           </span>
-          <span>{SOUND_DESIGN.soundLabel}</span>
+          <span>{soundDesign.soundLabel}</span>
         </button>
 
         <div style={{ position: 'absolute', left: 'clamp(22px,5vw,84px)', bottom: 'clamp(40px,8vh,96px)', right: 'clamp(22px,5vw,84px)' }}>
           <div className={heroTextClass} style={{ margin: '0 0 16px', fontFamily: typography.font.mono, fontWeight: typography.weight.semibold, fontSize: '13px', lineHeight: 1, letterSpacing: '0.32em', textTransform: 'uppercase', color: colors.copper.warm, textIndent: '0.32em' }}>
-            {SOUND_DESIGN.heroEyebrow}
+            {soundDesign.heroEyebrow}
           </div>
           <h1
             className={heroTextClass}
@@ -207,7 +209,7 @@ export function SoundDesignPage() {
               textShadow: '0 4px 60px rgba(0,0,0,.55)',
             }}
           >
-            {SOUND_DESIGN.heroTitle}
+            {soundDesign.heroTitle}
           </h1>
           <p
             className={heroTextClass}
@@ -222,7 +224,7 @@ export function SoundDesignPage() {
               textWrap: 'pretty',
             }}
           >
-            {SOUND_DESIGN.heroIntro}
+            {soundDesign.heroIntro}
           </p>
         </div>
       </section>
@@ -233,7 +235,7 @@ export function SoundDesignPage() {
           <div data-reveal style={{ marginBottom: '34px' }}>
           </div>
           <div data-grid style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '28px' }}>
-            {SD_VIDEOS.map((entry) => (
+            {videos.map((entry) => (
               <div data-reveal key={entry.id}>
                 <GalleryCard entry={entry} onOpen={() => setOpenId(entry.id)} />
               </div>
@@ -259,14 +261,15 @@ export function SoundDesignPage() {
               textWrap: 'balance',
             }}
           >
-            {SOUND_DESIGN.ctaTitle}
+            {soundDesign.ctaTitle}
           </h2>
           <p data-reveal style={{ margin: '16px auto 0', maxWidth: '460px', fontFamily: typography.font.body, fontWeight: typography.weight.regular, fontSize: '17px', lineHeight: 1.6, color: colors.text.secondary, textWrap: 'pretty' }}>
-            {SOUND_DESIGN.ctaBody}
+            {soundDesign.ctaBody}
           </p>
+          <ReviewBadge />
           <div data-reveal style={{ marginTop: '24px' }}>
             <Button to={ROUTES.contact} variant="primary" style={{ padding: '16px 32px' }}>
-              {SOUND_DESIGN.ctaLabel}
+              {soundDesign.ctaLabel}
             </Button>
           </div>
         </div>

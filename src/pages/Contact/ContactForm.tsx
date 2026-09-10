@@ -5,7 +5,8 @@ import { useState, type FormEvent } from 'react';
 import { MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { contactService } from '@/services';
-import { CONTACT, CONTACT_NEEDS } from '@/content/contact';
+import { useText } from '@/hooks';
+import { CONTACT } from '@/content/contact';
 
 interface ContactFormProps {
   onSubmitted: () => void;
@@ -20,7 +21,9 @@ function FieldLabel({ children }: { children: string }) {
 }
 
 export function ContactForm({ onSubmitted }: ContactFormProps) {
-  const [need, setNeed] = useState<string>(CONTACT_NEEDS[0]);
+  const contact = useText(CONTACT);
+  const { form } = contact;
+  const [need, setNeed] = useState<string>(contact.needs[0]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [project, setProject] = useState('');
@@ -34,7 +37,7 @@ export function ContactForm({ onSubmitted }: ContactFormProps) {
     const result = await contactService.submit({ name, email, project, need });
     setSubmitting(false);
     if (result.ok) onSubmitted();
-    else setError("L'envoi n'a pas abouti. Réessayez, ou écrivez-nous à contact@oddwave.studio.");
+    else setError(form.error);
   }
 
   const labelGap = { display: 'flex', flexDirection: 'column', gap: '9px' } as const;
@@ -43,19 +46,19 @@ export function ContactForm({ onSubmitted }: ContactFormProps) {
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
         <div style={labelGap}>
-          <FieldLabel>Nom</FieldLabel>
-          <input className="ow-field" type="text" placeholder="Votre nom" value={name} onChange={(e) => setName(e.target.value)} />
+          <FieldLabel>{form.nameLabel}</FieldLabel>
+          <input className="ow-field" type="text" placeholder={form.namePlaceholder} value={name} onChange={(e) => setName(e.target.value)} />
         </div>
         <div style={labelGap}>
-          <FieldLabel>Email</FieldLabel>
-          <input className="ow-field" type="email" placeholder="vous@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <FieldLabel>{form.emailLabel}</FieldLabel>
+          <input className="ow-field" type="email" placeholder={form.emailPlaceholder} value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        <FieldLabel>Votre besoin</FieldLabel>
+        <FieldLabel>{form.needLabel}</FieldLabel>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '9px' }}>
-          {CONTACT_NEEDS.map((option) => (
+          {contact.needs.map((option) => (
             <button
               key={option}
               type="button"
@@ -69,10 +72,10 @@ export function ContactForm({ onSubmitted }: ContactFormProps) {
       </div>
 
       <div style={labelGap}>
-        <FieldLabel>Votre projet</FieldLabel>
+        <FieldLabel>{form.projectLabel}</FieldLabel>
         <textarea
           className="ow-field"
-          placeholder="Parlez-nous du morceau, du nombre de titres, de vos délais, de vos références…"
+          placeholder={form.projectPlaceholder}
           value={project}
           onChange={(e) => setProject(e.target.value)}
         />
@@ -82,10 +85,10 @@ export function ContactForm({ onSubmitted }: ContactFormProps) {
         {submitting ? (
           <>
             <span className="ow-submit-spinner" aria-hidden="true" />
-            Envoi en cours…
+            {form.sending}
           </>
         ) : (
-          CONTACT.submitLabel
+          contact.submitLabel
         )}
       </button>
       {error && (

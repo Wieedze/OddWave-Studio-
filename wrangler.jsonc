@@ -1,7 +1,8 @@
 // Config for the two Git-connected Workers built from this repo (docs/deploy.md):
 //   prod  `oddwave-studio`  (oddwavestudio.com)          — deploy command: npx wrangler deploy
 //   dev   `oddwavestudio`   (*.maxime-moodz.workers.dev) — deploy command: npx wrangler deploy --env dev
-// Both serve the static build (dist/) and run worker/index.ts for /api/contact.
+// Both serve the static build (dist/) and run worker/index.ts for /api/contact
+// and /api/reviews.
 // The dashboard deploy commands must stay plain (no --assets/--name flags) so
 // this file drives the deploy.
 {
@@ -15,6 +16,13 @@
   // Cloudflare Email Service — no API token, the binding carries the rights.
   // `remote: true` lets `wrangler dev` send real emails through the service.
   "send_email": [{ "name": "EMAIL", "remote": true }],
+  // GET /api/reviews works with no binding at all: it caches on the edge for
+  // 12h (see worker/reviews.ts). Add a KV namespace for a GLOBAL cache that also
+  // survives an API outage:
+  //   npx wrangler kv namespace create REVIEWS
+  // then paste the printed id below and uncomment. Do the same under env.dev.
+  // "kv_namespaces": [{ "binding": "REVIEWS_KV", "id": "<paste-the-id>" }],
+
   // Variables/secrets set in the dashboard survive wrangler deploys.
   "keep_vars": true,
   "observability": { "enabled": true },

@@ -1,6 +1,7 @@
 // Structured data and canonical URLs for search engines and AI answer
 // engines. Pure derivations from src/content/seo.ts, no DOM access.
 
+import type { Locale } from '@/helpers';
 import {
   GOOGLE_MAPS_URL,
   OG_IMAGE_PATH,
@@ -13,15 +14,26 @@ import {
 } from '@/content/seo';
 
 /** Offer names exposed in the LocalBusiness catalog (matches the site's services). */
-const OFFERED_SERVICES: readonly string[] = [
-  'Mastering',
-  'Stem mastering',
-  'Mixage',
-  'Enregistrement',
-  'Production musicale',
-  'Sound design',
-  "Accompagnement d'artistes",
-];
+const OFFERED_SERVICES: Record<Locale, readonly string[]> = {
+  fr: [
+    'Mastering',
+    'Stem mastering',
+    'Mixage',
+    'Enregistrement',
+    'Production musicale',
+    'Sound design',
+    "Accompagnement d'artistes",
+  ],
+  en: [
+    'Mastering',
+    'Stem mastering',
+    'Mixing',
+    'Recording',
+    'Music production',
+    'Sound design',
+    'Artist coaching',
+  ],
+};
 
 export class SeoService {
   /** Absolute canonical URL for a route path (only '/' keeps a trailing slash). */
@@ -34,13 +46,13 @@ export class SeoService {
    * JSON-LD script tag. Service-area business shape: town and area served,
    * deliberately no street address.
    */
-  static localBusinessJsonLd(): string {
+  static localBusinessJsonLd(locale: Locale): string {
     return JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'LocalBusiness',
       '@id': `${SITE_URL}/#studio`,
       name: SITE_NAME,
-      description: PAGE_SEO.home.description,
+      description: PAGE_SEO[locale].home.description,
       url: `${SITE_URL}/`,
       email: SITE_EMAIL,
       image: `${SITE_URL}${OG_IMAGE_PATH}`,
@@ -59,8 +71,8 @@ export class SeoService {
       ],
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
-        name: 'Prestations studio',
-        itemListElement: OFFERED_SERVICES.map((name) => ({
+        name: locale === 'fr' ? 'Prestations studio' : 'Studio services',
+        itemListElement: OFFERED_SERVICES[locale].map((name) => ({
           '@type': 'Offer',
           itemOffered: { '@type': 'Service', name },
         })),

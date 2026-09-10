@@ -6,7 +6,8 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type RefObject } from 'react';
 import { Logo } from '@/components/Logo';
 import { SpotifyEmbedModal } from '@/components/SpotifyEmbedModal';
-import { SYNTH, SYNTH_COVERS, SYNTH_FILTERS, matchesFilter, type ChannelFilter, type SynthCover } from '@/content/portfolioSynth';
+import { useText } from '@/hooks';
+import { SYNTH, SYNTH_UI, SYNTH_COVERS, matchesFilter, type ChannelFilter, type SynthCover } from '@/content/portfolioSynth';
 import './PortfolioSynth.css';
 
 const MONO = "'JetBrains Mono', monospace";
@@ -16,6 +17,7 @@ function gainAngle(gain: number): number {
 }
 
 export function PortfolioSynth() {
+  const synth = useText(SYNTH_UI);
   const needleL = useRef<HTMLSpanElement>(null);
   const needleR = useRef<HTMLSpanElement>(null);
   const gainNeedle = useRef<HTMLSpanElement>(null);
@@ -75,7 +77,7 @@ export function PortfolioSynth() {
 
   let nowShowing: string;
   if (hover) nowShowing = `${hover.title.toUpperCase()} · ${hover.artist}  ·  ${hover.tag.toUpperCase()}`;
-  else nowShowing = SYNTH.readoutIdle;
+  else nowShowing = synth.readoutIdle;
 
   const knob = (rotate: number, label: string, draggable = false) => (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '9px' }}>
@@ -169,7 +171,7 @@ export function PortfolioSynth() {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginBottom: '18px', flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
               <span style={{ font: `700 8px/1 ${MONO}`, letterSpacing: '0.22em', color: '#6E7077', marginRight: '2px' }}>CANAL</span>
-              {SYNTH_FILTERS.map((f) => {
+              {synth.filters.map((f) => {
                 const active = filter === f.key;
                 return (
                   <button

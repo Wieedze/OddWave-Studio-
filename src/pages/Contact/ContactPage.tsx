@@ -3,11 +3,11 @@
 // column grid (form / channels), and the "Message envoyé." confirmation state.
 
 import { useState } from 'react';
-import { CtaLogo, Seo } from '@/components';
+import { CtaLogo, ReviewsSection, Seo } from '@/components';
 import { MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
-import { usePageMotion } from '@/hooks';
-import { CONTACT, CONTACT_CHANNELS, type ContactChannel } from '@/content/contact';
+import { usePageMotion, useText } from '@/hooks';
+import { CONTACT, type ContactChannel } from '@/content/contact';
 import { ContactForm } from './ContactForm';
 import './ContactPage.css';
 
@@ -53,6 +53,7 @@ function ChannelRow({ channel, first }: { channel: ContactChannel; first: boolea
 
 export function ContactPage() {
   const ref = usePageMotion<HTMLDivElement>();
+  const contact = useText(CONTACT);
   const [sent, setSent] = useState(false);
 
   return (
@@ -92,7 +93,7 @@ export function ContactPage() {
         <div style={{ position: 'absolute', left: 'clamp(22px,5vw,84px)', bottom: 'clamp(40px,8vh,96px)', right: 'clamp(22px,5vw,84px)' }}>
           <div data-hero-eyebrow style={{ margin: '0 0 16px' }}>
             <MonoLabel size="13px" tracking="0.32em" color={colors.copper.warm} style={{ textIndent: '0.32em' }}>
-              {CONTACT.heroEyebrow}
+              {contact.heroEyebrow}
             </MonoLabel>
           </div>
           <h1
@@ -110,7 +111,7 @@ export function ContactPage() {
               textShadow: '0 4px 60px rgba(0,0,0,.55)',
             }}
           >
-            {CONTACT.heroTitle}
+            {contact.heroTitle}
           </h1>
         </div>
       </section>
@@ -144,7 +145,7 @@ export function ContactPage() {
                     color: colors.text.primaryWarm,
                   }}
                 >
-                  {CONTACT.confirmTitle}
+                  {contact.confirmTitle}
                 </h3>
                 <p
                   style={{
@@ -158,7 +159,7 @@ export function ContactPage() {
                     textWrap: 'pretty',
                   }}
                 >
-                  {CONTACT.confirmBody}
+                  {contact.confirmBody}
                 </p>
               </div>
             ) : (
@@ -169,9 +170,9 @@ export function ContactPage() {
           {/* CHANNELS */}
           <div data-reveal>
             <MonoLabel as="div" size="12px" tracking="0.2em" color={colors.copper.landing} style={{ marginBottom: '8px' }}>
-              {CONTACT.channelsLabel}
+              {contact.channelsLabel}
             </MonoLabel>
-            {CONTACT_CHANNELS.map((channel, i) => (
+            {contact.channels.map((channel, i) => (
               <ChannelRow key={channel.label} channel={channel} first={i === 0} />
             ))}
             <div style={{ borderTop: `1px solid ${colors.border.base}` }} />
@@ -186,11 +187,15 @@ export function ContactPage() {
                 textWrap: 'pretty',
               }}
             >
-              {CONTACT.note}
+              {contact.note}
             </p>
           </div>
         </div>
       </section>
+
+      {/* AVIS GOOGLE — under the form, never above it: the block appears once
+          the fetch resolves and must not push a form someone is filling in. */}
+      <ReviewsSection background={colors.surface.section} />
     </div>
   );
 }

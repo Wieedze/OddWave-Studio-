@@ -401,4 +401,155 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   `public/og.jpg` (1200x630). robots.txt allowlists AI crawlers; sitemap.xml
   is hand-maintained: add a `<url>` entry when adding a route.
 
+## 2026-09-10 · Client feedback batch 3 (Witcher + mosaïque Matériel)
+
+- **Sound Design / Witcher:** the short piece is back to its real name,
+  `THE WITCHER S3 E6 - RESOUND (Short)` (it matches the source filename). This
+  closes the July flag: modif.txt said "S2-E8", the client now confirms S3 E6.
+  The full 1:59 démo joins the gallery right after it as `witcher-demo`.
+  The client's drop `THE WITCHER - Re-Sound Design Démo (720P)  (2).mov` was
+  byte-identical (same md5) to the `(1).mov` sitting unused since 21 July, so
+  the duplicate was deleted and the original kept. Transcoded with the usual
+  recipe (H.264 high / yuv420p / AAC 160k / `-movflags +faststart`, CRF 22):
+  151 MB `.mov` → 32 MB `.mp4`.
+- **Gotcha (poster frames):** ffmpeg's `thumbnail` filter picked the OddWave
+  logo intro card mid-animation ("ODDWAVE STUDI" with the O still flying in).
+  For a reel that opens on a logo sting, `thumbnail` is the wrong tool: seek to
+  a real frame instead (`-ss 45`). Worth checking every generated poster by eye.
+- **`scripts/pin-to-pinata.sh` now accepts filenames as arguments**, so a single
+  new reel can be pinned without re-uploading the whole gallery:
+  `bash scripts/pin-to-pinata.sh witcher-demo.mp4`.
+- **Matériel:** the three captioned "pièces phares" were replaced by a
+  **five-photo atmosphere mosaic**, uncaptioned (client request: feel the room
+  before reading the gear list). `FEATURED` → `STUDIO_GALLERY` (`StudioPhoto`
+  with a French `alt` that is never rendered). Photos moved from background
+  divs to real `<img loading="lazy">` so they lazy-load and carry alt text.
+- **Mosaic geometry:** with a lead tile spanning 2 rows, the lead and the small
+  tiles share almost the same aspect ratio (the lead is ~2× wide and ~2× tall),
+  so you cannot make one landscape and the others square. The lever is the
+  **container `aspect-ratio`**: `1.9fr 1fr 1fr` + `aspect-ratio: 2.81` puts the
+  lead at 4:3 (its source ratio) and the four others at ~3:2 (theirs). Rows are
+  then definite, so no track-sizing surprises.
+- Raw client drops (`public/assets/grid/`) are gitignored; only the resized
+  copies in `public/assets/studio/` ship (6.0 MB → 428 KB for the five).
+- **Still open:** `witcher-demo.mp4` is NOT pinned. `VIDEO_SRC.witcherDemo`
+  points at the local `/assets/…` path, which is gitignored: it plays in dev and
+  404s in production. Pin it and swap in `ipfs('<CID>')` before the next deploy.
+
+## 2026-09-10 · PhotoLightbox + ordre de la galerie
+
+- **New shared component `components/PhotoLightbox/`**: fullscreen photo viewer
+  opened from a gallery tile. Steps with the side arrows, the ← / → keys or a
+  horizontal swipe (44px threshold), wraps at both ends, closes on backdrop / ×
+  / Escape, and preloads both neighbours so a step never shows an empty frame.
+  It reuses VideoModal's modal language (overlay `rgba(8,9,11,.92)` +
+  `blur(10px)`, 46px round controls) so the two readers feel like one object.
+- **New model `Photo`** (`src/models/Photo.ts`) with `src` / `alt` / optional
+  `full` and a `large` getter. Needed because a shared component may not import
+  from `content/`: the gallery type had to move down into `models/`.
+- **Two image sizes.** The tiles load ~1100–1600px copies; the lightbox loads
+  `*-full.jpg` (capped at the source width, max 2200px) only when opened.
+  Five tiles = 428 KB, five full copies = 776 KB loaded on demand. Serving one
+  size would have meant either a soft fullscreen view or a phone downloading
+  megapixels for a 360px grid.
+- **Gotcha (lightbox image sizing):** an `<img>` used directly as a flex item
+  with `flex: 1 1 auto` grows its *box* to the free space; `object-fit: contain`
+  then letterboxes inside it, so the border-radius and drop shadow sit around an
+  invisible box, detached from the photo. Fix: a stage `<div>` takes the flex
+  space and the image sizes itself inside it (`width/height: auto` +
+  `max-width/max-height: 100%`).
+- The side arrows carry an inline `translateY(-50%)`, so their hover state may
+  only touch colours: any hover `transform` in CSS knocks them off centre.
+- **Mosaic tiles are `<button>`s** (keyboard reachable, `cursor: zoom-in`,
+  copper `:focus-visible` ring). Only the inner `<img>` scales on hover, so the
+  reveal transform MotionService puts on `[data-reveal]` is never fought over.
+- **First use of the emitted token custom properties in a `.css` file**
+  (`var(--ow-ease-ui)`, `var(--ow-color-copper-landing)`). `cssVars.ts` has
+  emitted them since day one but every stylesheet still hardcoded hexes. Prefer
+  the vars from now on; translucent values with no matching token stay raw.
+- **Sound Design order:** the Witcher démo now opens the gallery, ahead of the
+  showreel (Max, September 2026, overriding modif.txt's showreel-first order).
+
+## 2026-09-10 · Avis Google affichés sur le site
+
+- **Where, decided from the page structure:** every page ends with the same CTA
+  block, and that is where hesitation peaks, so a compact **`ReviewBadge`**
+  (stars + average + count, linking to the listing) sits just above the button
+  on Services, Matériel, Sound Design and Portfolio. The full **`ReviewsSection`**
+  ("Ils en parlent", three cards) goes on two pages only, Home and Contact;
+  putting it on all eight would read as filler. Home gets the section and **no**
+  badge: the section already sits immediately above its CTA.
+- **Placement guards against layout shift.** Both blocks mount only once the
+  fetch resolves. On Home the section sits right before the CTA, so a late
+  insert moves only the CTA and the footer. On Contact it sits **after** the
+  form, never above it: a block appearing above a form someone is filling in is
+  the one shift that actually hurts.
+- **Gotcha (`[data-reveal]` on late-mounting content is inert).** MotionService
+  queries `[data-reveal]` once, when the page mounts, and applies
+  `gsap.set(autoAlpha: 0)` then animates. Anything mounted afterwards is never
+  collected: it is not hidden (so nothing breaks) but it never animates either.
+  These blocks carry their own CSS mount fade instead. Same trap awaits any
+  future async section.
+- **Architecture:** `worker/reviews.ts` (`GET /api/reviews`) → `ReviewsService`
+  → `useGoogleReviews` → components. The Google key stays in the Worker env.
+  The hook shares one module-level promise, so a badge and a section on the same
+  page cost one request, and route changes reuse it for the session.
+- **Two caches, and why.** The `reviews` field is a Places **Enterprise** SKU:
+  1000 free calls a month, so one call per visitor would burn the quota in days.
+  The edge cache (`caches.default` + `s-maxage=43200`) needs no setup and covers
+  the common case; KV is optional and adds a global cache plus stale-serving
+  when Google is unreachable. `wrangler.jsonc` carries the KV binding commented
+  out, with the create command, so a deploy never breaks on a placeholder id.
+- **API limits worth repeating to the client:** five reviews maximum, chosen by
+  Google as "most relevant" — there is no "latest" or "best" ordering. Author
+  name, photo and a link back must stay visible, and the content may not be
+  warehoused (hence the short freshness window).
+- **No JSON-LD for these reviews.** Google treats `AggregateRating` about your
+  own business, on your own site, under `LocalBusiness` as self-serving: the
+  stars never show and it breaks the guidelines. The SERP stars come from the
+  Google listing itself. Deliberate omission, do not "fix" it later.
+- Stars are drawn as **SVG**, not the ★ glyph: none of the three site families
+  ships one, so text stars would fall back to a system font or a colour emoji.
+- `formatRating` (French decimal comma) lives in `helpers/`, not next to the
+  component that first needed it.
+
+## 2026-09-10 · Site bilingue FR / EN
+
+- **The locale lives in the URL, not in state.** French is served from the root,
+  English from an `/en` prefix, and `useLocale()` derives the language from
+  `useLocation().pathname`. No context, no provider, no hydration mismatch: a
+  pre-rendered page knows its language before the first effect runs. The whole
+  i18n layer is `helpers/locale.ts` (pure path arithmetic) plus three hooks.
+- **`routes.tsx` mounts the same page list twice**, so the build emits 16 HTML
+  files instead of 8. That is the point: a client-side toggle would leave one
+  URL per page and Google would only ever index French.
+- **THE trap, and it was already armed.** `worker/index.ts` 301-redirected
+  `/en/*` to `/`, left over from the old bilingual site. Shipping the English
+  tree over that would have made every English URL redirect to the French home,
+  cached permanently by browsers. The rule now filters through `APP_PATHS`:
+  only `/en/…` paths that match no real route are treated as stale. A new route
+  must be added in three places: `routes.tsx`, `APP_PATHS`, `sitemap.xml`.
+- **`LocaleLink`** (a primitive wrapping react-router's `Link`) takes the
+  canonical French path and prefixes it for the current locale. `Button` uses
+  it, so every CTA on the site followed the language without a single page
+  edit. The switcher itself uses a plain `Link`: its target is already
+  locale-resolved, and `LocaleLink` would undo the switch.
+- **Content shape:** each module exports `Localized<T>` (`{ fr, en }`) and pages
+  read it through `useText()`. Data that does not translate is declared ONCE and
+  shared: release list, gear names and manufacturer links, images, video CIDs,
+  panel media. Only labels and prose are duplicated. The English gear inventory
+  is derived from the French one through a category/tag map, so a product link
+  can never drift between the two trees.
+- **Switcher UX:** two languages means a toggle, not a dropdown, and text
+  labels, never flags (a flag names a country, not a language). It is placed in
+  the floating nav, the burger menu and the footer, and it keeps the current
+  page rather than dumping the visitor on the home page.
+- **`vite-react-ssg` supports `<html lang>`** through react-helmet-async's
+  `htmlAttributes`: `<Head><html lang="en" /></Head>` really does land in the
+  pre-rendered file. Checked in the dist output of the shipped version.
+- **Translation status:** the English is a written adaptation, not a literal
+  translation, and Théo still has to proofread the parts written in his own
+  voice (the five interview paragraphs in `content/studio.ts` and the six
+  Services panels). Every affected file says so in its header comment.
+
 <!-- Add new entries above this line -->

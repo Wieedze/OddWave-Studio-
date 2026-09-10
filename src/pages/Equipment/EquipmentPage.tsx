@@ -1,23 +1,18 @@
 // Le Matériel — gear showcase. Recreated from design-handoff/Materiel OddWave.dc.html,
 // lightened per client feedback (July 2026): no caption subtitles, no inventory
-// intro paragraph, no detail close-ups section. Hero, featured pieces grid,
-// full inventory by category, CTA.
+// intro paragraph, no detail close-ups section. Client feedback (September 2026):
+// the three captioned "pièces phares" gave way to a five-photo atmosphere mosaic,
+// so the room is felt before the list is read, and every tile opens the
+// PhotoLightbox. Hero, mosaic, inventory, CTA.
 
-import type { CSSProperties } from 'react';
-import { CtaLogo, Seo } from '@/components';
+import { useState } from 'react';
+import { CtaLogo, PhotoLightbox, ReviewBadge, Seo } from '@/components';
 import { Button, MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
-import { usePageMotion } from '@/hooks';
-import { EQUIPMENT, FEATURED, GEAR_CATEGORIES, type GearItem, type GearCategory } from '@/content/equipment';
+import { usePageMotion, useText } from '@/hooks';
+import { EQUIPMENT, STUDIO_GALLERY, GEAR_CATEGORIES, type GearItem, type GearCategory } from '@/content/equipment';
 import { ROUTES } from '@/content/navigation';
 import './EquipmentPage.css';
-
-const captionTitle: CSSProperties = {
-  fontFamily: typography.font.display,
-  fontWeight: typography.weight.bold,
-  color: colors.text.primaryWarm,
-  textShadow: '0 1px 14px rgba(0,0,0,.7)',
-};
 
 function GearRow({ item }: { item: GearItem }) {
   return (
@@ -49,6 +44,11 @@ function CategoryBlock({ category }: { category: GearCategory }) {
 
 export function EquipmentPage() {
   const ref = usePageMotion<HTMLDivElement>();
+  const equipment = useText(EQUIPMENT);
+  const gallery = useText(STUDIO_GALLERY);
+  const gear = useText(GEAR_CATEGORIES);
+  // Index of the photo open in the lightbox; null when it is closed.
+  const [openPhoto, setOpenPhoto] = useState<number | null>(null);
 
   return (
     <div ref={ref} style={{ background: colors.ink[900], color: colors.text.primary, overflowX: 'hidden' }}>
@@ -104,40 +104,61 @@ export function EquipmentPage() {
               textShadow: '0 4px 60px rgba(0,0,0,.55)',
             }}
           >
-            {EQUIPMENT.heroTitle}
+            {equipment.heroTitle}
           </h1>
           <div data-hero-eyebrow style={{ margin: '18px 0 0' }}>
             <MonoLabel size="13px" tracking="0.32em" color={colors.copper.warm} style={{ textIndent: '0.32em' }}>
-              {EQUIPMENT.heroEyebrow}
+              {equipment.heroEyebrow}
             </MonoLabel>
           </div>
         </div>
       </section>
 
-      {/* PIÈCES PHARES */}
+      {/* AMBIANCE DU STUDIO — mosaic, no captions (client feedback, September 2026) */}
       <section style={{ background: colors.surface.section, padding: 'clamp(40px,7vh,90px) 30px clamp(70px,10vh,120px)' }}>
-        <div style={{ maxWidth: '1480px', margin: '0 auto' }}>
-          <div data-phares style={{ display: 'grid', gridTemplateColumns: '1.3fr .7fr', gap: '22px' }}>
-            <div data-reveal style={{ position: 'relative', height: 'min(80vh,760px)', borderRadius: '18px', overflow: 'hidden', boxShadow: '0 30px 70px rgba(0,0,0,.5)' }}>
-              <div style={{ position: 'absolute', inset: 0, background: `url('${FEATURED.main.image}') center/cover no-repeat` }} />
-              <div style={{ position: 'absolute', left: '24px', bottom: '22px' }}>
-                <div style={{ ...captionTitle, fontSize: '28px', lineHeight: 1 }}>{FEATURED.main.title}</div>
-              </div>
-            </div>
-            <div style={{ display: 'grid', gridTemplateRows: '2.1fr 1fr', gap: '22px' }}>
-              <div data-reveal style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 30px 70px rgba(0,0,0,.5)', minHeight: '220px' }}>
-                <div style={{ position: 'absolute', inset: 0, background: `url('${FEATURED.topRight.image}') center/cover no-repeat` }} />
-                <div style={{ ...captionTitle, position: 'absolute', left: '20px', bottom: '18px', fontSize: '18px', lineHeight: 1, textShadow: '0 1px 12px rgba(0,0,0,.7)' }}>
-                  {FEATURED.topRight.title}
-                </div>
-              </div>
-              <div data-reveal style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 30px 70px rgba(0,0,0,.5)', minHeight: '140px' }}>
-                <div style={{ position: 'absolute', inset: 0, background: `${colors.surface.section} url('${FEATURED.bottomRight.image}') center/cover no-repeat` }} />
-                <div style={{ ...captionTitle, position: 'absolute', left: '14px', bottom: '14px', fontSize: '13px', lineHeight: 1.1, textShadow: '0 1px 12px rgba(0,0,0,.7)' }}>
-                  {FEATURED.bottomRight.title}
-                </div>
-              </div>
-            </div>
+        <div style={{ maxWidth: '1600px', margin: '0 auto' }}>
+          {/* The container ratio sets the track heights: the lead tile spans both
+              rows and lands on 4:3 (its source ratio), which leaves the four
+              others at ~3:2 — the ratio the other photos were shot at. */}
+          <div
+            data-mosaic
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1.9fr 1fr 1fr',
+              gridTemplateRows: 'repeat(2, minmax(0, 1fr))',
+              gap: '22px',
+              aspectRatio: '2.81',
+            }}
+          >
+            {gallery.map((photo, index) => (
+              <button
+                key={photo.src}
+                type="button"
+                className="ow-photo-tile"
+                data-reveal
+                onClick={() => setOpenPhoto(index)}
+                aria-label={equipment.enlargeLabel(photo.alt)}
+                style={{
+                  position: 'relative',
+                  overflow: 'hidden',
+                  padding: 0,
+                  border: 0,
+                  background: 'none',
+                  cursor: 'zoom-in',
+                  borderRadius: index === 0 ? '18px' : '16px',
+                  boxShadow: '0 30px 70px rgba(0,0,0,.5)',
+                  gridRow: index === 0 ? 'span 2' : undefined,
+                }}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  decoding="async"
+                  style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              </button>
+            ))}
           </div>
         </div>
       </section>
@@ -157,10 +178,10 @@ export function EquipmentPage() {
               color: colors.text.primaryWarm,
             }}
           >
-            {EQUIPMENT.inventoryTitle}
+            {equipment.inventoryTitle}
           </h2>
           <div data-cats style={{ marginTop: '48px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(40px,5vw,80px)' }}>
-            {GEAR_CATEGORIES.map((category) => (
+            {gear.map((category) => (
               <CategoryBlock key={category.label} category={category} />
             ))}
           </div>
@@ -184,7 +205,7 @@ export function EquipmentPage() {
               textWrap: 'balance',
             }}
           >
-            {EQUIPMENT.ctaTitle}
+            {equipment.ctaTitle}
           </h2>
           <p
             data-reveal
@@ -199,15 +220,25 @@ export function EquipmentPage() {
               textWrap: 'pretty',
             }}
           >
-            {EQUIPMENT.ctaBody}
+            {equipment.ctaBody}
           </p>
+          <ReviewBadge />
           <div data-reveal style={{ marginTop: '24px' }}>
             <Button to={ROUTES.contact} variant="primary" style={{ padding: '16px 32px' }}>
-              {EQUIPMENT.ctaLabel}
+              {equipment.ctaLabel}
             </Button>
           </div>
         </div>
       </section>
+
+      {openPhoto !== null && (
+        <PhotoLightbox
+          photos={gallery}
+          index={openPhoto}
+          onIndexChange={setOpenPhoto}
+          onClose={() => setOpenPhoto(null)}
+        />
+      )}
     </div>
   );
 }
