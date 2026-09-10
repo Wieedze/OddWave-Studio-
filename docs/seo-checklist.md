@@ -97,6 +97,8 @@ Vérification web du 2026-09-10 (le client dit avoir tout fait) :
 
 ## 5. Avis clients (en continu, dès la première fiche)
 
+- [x] La fiche compte déjà 28 avis Google (constaté par Max le 2026-09-10) :
+      l'objectif des 10 premiers avis est largement dépassé
 - [ ] Mettre en place le réflexe : après chaque projet livré, envoyer le lien
       d'avis Google au client
 - [ ] Suggérer aux clients de mentionner le service et la ville dans l'avis
