@@ -23,8 +23,7 @@ Modifs site.pdf
 public/assets/grid/
 
 # Business paperwork (quotes, invoices) must never reach the shared repo.
-*devis*
-*Devis*
-*facture*
-*Facture*
-*.pdf
+# Anchored to the repo root: site assets (e.g. public/assets/*.pdf) stay allowed.
+/[Dd]evis*
+/[Ff]acture*
+/*.pdf
