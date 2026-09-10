@@ -13,6 +13,28 @@ interface Env extends ContactEnv {
   ASSETS: { fetch(request: Request): Promise<Response> };
 }
 
+/** Odoo-era paths (the old site, indexed for 15 years): send old backlinks
+ *  and stale search entries to their closest new page instead of a 404. */
+const LEGACY_REDIRECTS: Record<string, string> = {
+  '/contactus': '/contact',
+  '/en/contactus': '/contact',
+  '/fr/contactus': '/contact',
+  '/lestudio': '/equipment',
+  '/en/lestudio': '/equipment',
+  '/fr/lestudio': '/equipment',
+};
+
+function legacyTarget(pathname: string): string | null {
+  const clean = pathname.replace(/\/+$/, '') || '/';
+  const mapped = LEGACY_REDIRECTS[clean];
+  if (mapped) return mapped;
+  // Any other page of the old bilingual tree lands on the new home.
+  if (clean === '/en' || clean === '/fr' || clean.startsWith('/en/') || clean.startsWith('/fr/')) {
+    return '/';
+  }
+  return null;
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
@@ -24,6 +46,9 @@ export default {
         headers: { 'Content-Type': 'application/json', Allow: 'POST' },
       });
     }
+
+    const legacy = legacyTarget(url.pathname);
+    if (legacy) return Response.redirect(`${url.origin}${legacy}`, 301);
 
     // Everything else falls through to the pre-rendered site (HTML, css, js,
     // media). Unknown paths get the asset layer's 404.
