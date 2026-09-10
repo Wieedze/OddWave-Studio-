@@ -51,6 +51,30 @@ visible, et aucune adresse postale n'est publiée nulle part.
 Partout : mêmes nom "OddWave Studio", même email contact@oddwave.studio, même
 lien site, mêmes photos. Adresse masquée à chaque fois, zone desservie à la place.
 
+Vérification web du 2026-09-10 (le client dit avoir tout fait) :
+- Aucune trace indexée de fiches Foursquare, Yelp ou StarOfService. GBP est
+  invisible depuis mes outils (le pack local ne sort pas en recherche
+  organique) : demander au client un lien ou une capture de chaque fiche,
+  ou re-vérifier dans une semaine (délai d'indexation normal).
+- Trouvé en revanche : PagesJaunes et Hoodspot (fiches auto-générées depuis
+  le registre SIRENE) qui AFFICHENT l'adresse complète, comme les registres
+  officiels (pappers.fr, annuaire-entreprises). Le siège social d'une
+  société est public par la loi ; revendiquer la fiche PagesJaunes
+  permettrait au moins d'y masquer la rue.
+- L'ANCIEN SITE ODOO EST ENCORE EN LIGNE sur oddwavestudio.odoo.com et
+  ressort dans les recherches : à dépublier ou rediriger (client, dans son
+  compte Odoo), sinon il concurrence le nouveau site.
+- Profils existants découverts et ajoutés au sameAs du JSON-LD :
+  Facebook (2 126 likes), YouTube, Twitch, Discogs (label + artiste).
+- Incohérence Instagram : le site pointe @oddwave.studio (point, copie du
+  handoff), le web ne connaît que @oddwave_studio (underscore, compte de
+  Théo). À trancher par Max, puis corriger contact.ts + seo.ts + llms.txt.
+
+- [ ] Client : dépublier ou rediriger l'ancien site oddwavestudio.odoo.com
+- [ ] Client : fournir lien ou capture de chaque fiche (GBP, Bing, Foursquare, Yelp)
+- [ ] Max : trancher le handle Instagram et aligner site + métadonnées
+- [ ] Revendiquer la fiche PagesJaunes et masquer la rue si possible
+
 - [ ] Google Business Profile : https://business.google.com
       Catégorie "Studio d'enregistrement". Mode "entreprise de zone" :
       l'adresse reste privée, tu déclares Marseille, Aubagne, Aix-en-Provence,

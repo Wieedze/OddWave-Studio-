@@ -13,8 +13,16 @@ export const OG_IMAGE_PATH = '/og.jpg';
 export const OG_IMAGE_ALT =
   "La console du studio OddWave, avec le logo et l'invitation Démarrons votre projet.";
 
-/** Public profiles tied to the studio entity (JSON-LD sameAs: Instagram, label). */
-export const SITE_SAME_AS: readonly string[] = [SITE_INSTAGRAM, LABEL_URL];
+/** Public profiles tied to the studio entity (JSON-LD sameAs). Verified live
+ *  on 2026-09-10; Instagram handle pending confirmation (dot vs underscore). */
+export const SITE_SAME_AS: readonly string[] = [
+  SITE_INSTAGRAM,
+  LABEL_URL,
+  'https://www.facebook.com/oddwavestudio',
+  'https://www.youtube.com/@OddWaveStudio',
+  'https://www.twitch.tv/oddwave_studio',
+  'https://www.discogs.com/label/1536595-OddWave-Studio',
+];
 
 /** Where the studio sits and the area it serves (metadata + JSON-LD only). */
 export const SERVICE_AREA = {
