@@ -432,9 +432,14 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   then definite, so no track-sizing surprises.
 - Raw client drops (`public/assets/grid/`) are gitignored; only the resized
   copies in `public/assets/studio/` ship (6.0 MB → 428 KB for the five).
-- **Still open:** `witcher-demo.mp4` is NOT pinned. `VIDEO_SRC.witcherDemo`
-  points at the local `/assets/…` path, which is gitignored: it plays in dev and
-  404s in production. Pin it and swap in `ipfs('<CID>')` before the next deploy.
+- **Pinned 2026-09-14**, CID `bafybeigqk4s4p4nxu7y2pykuyokkfchuomrjralczrnp7ubp6y3paosoky`.
+  Gateway verified: 200, `video/mp4`, 33 271 129 bytes (byte-identical to the
+  local file), `accept-ranges: bytes`, and a range request answers 206, so
+  seeking works. `VIDEO_SRC.witcherDemo` now points at the gateway URL.
+- **Still open:** four superseded `.mov` pins from before the June transcode are
+  still on Pinata and referenced by nothing (UNREAL 151.4 MB, SHOWREEL 93.6 MB,
+  LOVE DEATH & ROBOTS 73.7 MB, THE WITCHER Short 66.4 MB) — 385 MB of quota held
+  for nothing. Unpin from the dashboard when convenient.
 
 ## 2026-09-10 · PhotoLightbox + ordre de la galerie
 

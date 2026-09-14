@@ -64,11 +64,7 @@ export const VIDEO_SRC = {
   unreal: ipfs('bafybeibsicarnfv5bamzrhuq5qomn7m6bzkv6b64e7fbrpx53lthnon6oa'),
   loveDeathRobots: ipfs('bafybeickbaopymtoz4ubc7jdeukn3npwxnsbsfzy3bmuupgh7taghmmgya'),
   witcher: ipfs('bafybeiebw5mwnq577w2dr2im6t2xf2wnxgdafpdqx6x4lapfjtet334wy4'),
-  // NOT PINNED YET. The file lives at public/assets/witcher-demo.mp4 (gitignored),
-  // so this plays in dev but 404s in production. Run
-  //   bash scripts/pin-to-pinata.sh witcher-demo.mp4
-  // then replace this line with ipfs('<CID>') BEFORE the next deploy.
-  witcherDemo: '/assets/witcher-demo.mp4',
+  witcherDemo: ipfs('bafybeigqk4s4p4nxu7y2pykuyokkfchuomrjralczrnp7ubp6y3paosoky'),
   irradiation: ipfs('bafybeiet2azf5ebvwb2ffzd3xxdzgfk3dgq6o7v6j4vxfmyywyh4grhude'),
   seaBeast: ipfs('bafybeidsa35nqhev7fchhqcb56l7cuuw3w6uywys6serj5zzlwuhzuj2ty'),
 } as const;
