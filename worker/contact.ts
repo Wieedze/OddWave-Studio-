@@ -28,6 +28,8 @@ export interface ContactEnv {
   EMAIL: EmailBinding;
   CONTACT_FROM: string;
   CONTACT_TO: string;
+  /** Turnstile secret key (Worker secret). Unset = check skipped. */
+  TURNSTILE_SECRET?: string;
 }
 
 interface ContactBody {
@@ -36,6 +38,12 @@ interface ContactBody {
   project?: string;
   need?: string;
   formule?: string;
+  /** Honeypot: hidden field only bots fill (src/components/HoneypotField). */
+  website?: string;
+  /** Time between form mount and submit, measured by the browser. */
+  elapsedMs?: number;
+  /** Cloudflare Turnstile token from the widget in the form. */
+  turnstileToken?: string;
 }
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -52,6 +60,34 @@ const PAPER = '#F4F0E8';
 const PAPER_WARM = '#ECE7DD';
 const MUTED = '#6F6A61';
 const FONT = 'Arial,Helvetica,sans-serif';
+
+// Faster than this, nobody has typed a name, an email and a message.
+const MIN_FILL_MS = 3000;
+
+/** Why a submission looks automated, or null when it looks human. A request
+ * without `elapsedMs` did not come from the site's own form (direct POST). */
+function botSignal(body: ContactBody): string | null {
+  if (typeof body.website === 'string' && body.website.trim() !== '') return 'honeypot';
+  if (typeof body.elapsedMs !== 'number') return 'no-form-timing';
+  if (body.elapsedMs < MIN_FILL_MS) return 'too-fast';
+  return null;
+}
+
+/** Asks Cloudflare whether the Turnstile token is genuine (single-use). */
+async function verifyTurnstile(secret: string, token: string | undefined, ip: string | null): Promise<boolean> {
+  if (!token) return false;
+  const form = new FormData();
+  form.append('secret', secret);
+  form.append('response', token);
+  if (ip) form.append('remoteip', ip);
+  try {
+    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method: 'POST', body: form });
+    const outcome = (await res.json()) as { success?: boolean };
+    return outcome.success === true;
+  } catch {
+    return false;
+  }
+}
 
 function json(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
@@ -128,6 +164,25 @@ export async function handleContactPost(context: {
     body = (await request.json()) as ContactBody;
   } catch {
     return json({ success: false, error: 'invalid-json' }, 400);
+  }
+
+  // Bots get the same success reply as a person, so they have no reason to
+  // retry or adapt; nothing is sent. Logged for Workers observability.
+  const signal = botSignal(body);
+  if (signal) {
+    console.log(JSON.stringify({ event: 'contact-dropped', reason: signal, email: body.email ?? '' }));
+    return json({ success: true });
+  }
+
+  // Turnstile, once its secret is set on the Worker. A failure is a real
+  // error (not a fake success): a person who failed the check sees the form's
+  // error message and can try again.
+  if (env.TURNSTILE_SECRET) {
+    const human = await verifyTurnstile(env.TURNSTILE_SECRET, body.turnstileToken, request.headers.get('CF-Connecting-IP'));
+    if (!human) {
+      console.log(JSON.stringify({ event: 'contact-dropped', reason: 'turnstile', email: body.email ?? '' }));
+      return json({ success: false, error: 'captcha-failed' }, 403);
+    }
   }
 
   // Single-line fields are flattened so crafted input can never smuggle CRLF
@@ -209,6 +264,10 @@ export async function handleContactPost(context: {
     return json({ success: false, error: 'send-failed', detail }, 502);
   }
 
+  // The confirmation never echoes the visitor's message: the recipient is
+  // whatever address was typed in, so echoing would let a spammer relay any
+  // text and link to a third party from our domain (2026-11-12).
+  //
   // Confirmation back to the visitor, in the site's voice but first person
   // ("je", Max 2026-08-07; closing is always "À bientôt." and never
   // "À bientôt sur OddWave"). Best effort: the demande is already in the
@@ -217,9 +276,6 @@ export async function handleContactPost(context: {
     `Bonjour ${name},`,
     '',
     "Merci ! J'ai bien reçu votre demande et je reviens vers vous très vite.",
-    '',
-    'Votre message :',
-    project,
     '',
     'À bientôt.',
     'OddWave Studio',
@@ -233,7 +289,6 @@ export async function handleContactPost(context: {
       <p style="margin:0 0 20px;font-family:${FONT};font-size:15px;line-height:1.6;color:${PAPER_WARM}">Bonjour ${escapeHtml(
         name,
       )},<br/>Merci ! J'ai bien re&ccedil;u votre demande et je reviens vers vous tr&egrave;s vite.</p>
-      ${messageBlock(project)}
       <p style="margin:24px 0 0;font-family:${FONT};font-size:15px;line-height:1.6;color:${PAPER}">&Agrave; bient&ocirc;t.<br/><span style="font-weight:bold">OddWave Studio</span></p>`,
     `${SITE_LINK} &middot; <a href="https://instagram.com/oddwave.studio" style="color:${COPPER_SOFT};text-decoration:none">@oddwave.studio</a><br/>Vous recevez ce message car cette adresse a &eacute;t&eacute; utilis&eacute;e sur notre formulaire de contact.`,
   );

@@ -5,7 +5,8 @@ import { useState, type FormEvent } from 'react';
 import { MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { contactService } from '@/services';
-import { useText } from '@/hooks';
+import { HoneypotField } from '@/components';
+import { useSpamGuard, useText, useTurnstile } from '@/hooks';
 import { CONTACT } from '@/content/contact';
 
 interface ContactFormProps {
@@ -29,13 +30,17 @@ export function ContactForm({ onSubmitted }: ContactFormProps) {
   const [project, setProject] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const guard = useSpamGuard();
+  const turnstile = useTurnstile();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     setSubmitting(true);
     setError(null);
-    const result = await contactService.submit({ name, email, project, need });
+    const turnstileToken = await turnstile.getToken();
+    const result = await contactService.submit({ name, email, project, need, website: guard.trap, elapsedMs: guard.elapsedMs(), turnstileToken });
     setSubmitting(false);
+    turnstile.reset();
     if (result.ok) onSubmitted();
     else setError(form.error);
   }
@@ -43,7 +48,8 @@ export function ContactForm({ onSubmitted }: ContactFormProps) {
   const labelGap = { display: 'flex', flexDirection: 'column', gap: '9px' } as const;
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+    <form onSubmit={handleSubmit} style={{ position: 'relative', display: 'flex', flexDirection: 'column', gap: '22px' }}>
+      <HoneypotField value={guard.trap} onChange={guard.setTrap} />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
         <div style={labelGap}>
           <FieldLabel>{form.nameLabel}</FieldLabel>
@@ -80,6 +86,9 @@ export function ContactForm({ onSubmitted }: ContactFormProps) {
           onChange={(e) => setProject(e.target.value)}
         />
       </div>
+
+      {/* Turnstile: empty for nearly everyone, a checkbox only when Cloudflare is unsure. */}
+      <div ref={turnstile.containerRef} style={{ display: 'contents' }} />
 
       <button type="submit" className="ow-submit" disabled={submitting} aria-busy={submitting}>
         {submitting ? (

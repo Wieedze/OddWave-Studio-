@@ -557,4 +557,27 @@ Ran the design-fidelity-reviewer on the Nav and HomePage. Decisions taken:
   voice (the five interview paragraphs in `content/studio.ts` and the six
   Services panels). Every affected file says so in its header comment.
 
+## Contact form bot filter (2026-11-12)
+
+- **Why:** AI bots were posting plausible, on-topic requests with a link
+  (e.g. "Mastering… described here: https://unpartage.online/…"). The Worker
+  accepted any POST with a name, an email and a message.
+- **Layer 1, no config:** a hidden honeypot field (`HoneypotField`) and a fill
+  timer (`useSpamGuard`), checked in `worker/contact.ts` (`botSignal`). A filled
+  honeypot, a submit under 3 s, or no timing at all (direct POST to the API)
+  gets a **fake success** and no email. Each drop is logged as
+  `contact-dropped` with its reason in Workers observability: check there if a
+  real client ever says their message vanished.
+- **Confirmation email no longer echoes the message:** it goes to whatever
+  address was typed in, so echoing let a spammer relay any text and link to a
+  third party from our domain.
+- **Layer 2, Cloudflare Turnstile** (for AI agents driving a real browser,
+  which see neither trap and can wait 3 s): `TurnstileService` + `useTurnstile`,
+  widget in "interaction-only" mode just above the submit button, token checked
+  by `verifyTurnstile` in the Worker. It turns on in two halves, both needed:
+  the public site key in `TURNSTILE_SITE_KEY` (src/services/TurnstileService.ts)
+  and the `TURNSTILE_SECRET` secret on BOTH Workers. Secret set without the
+  site key = every submission refused. Order: ship the site key first, then
+  add the secret.
+
 <!-- Add new entries above this line -->

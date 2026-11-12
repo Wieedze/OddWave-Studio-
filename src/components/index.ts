@@ -11,3 +11,4 @@ export { PortfolioSynth } from './PortfolioSynth';
 export { SpotifyEmbedModal } from './SpotifyEmbedModal';
 export { ReviewBadge, ReviewsSection } from './GoogleReviews';
 export { Seo } from './Seo';
+export { HoneypotField } from './HoneypotField';

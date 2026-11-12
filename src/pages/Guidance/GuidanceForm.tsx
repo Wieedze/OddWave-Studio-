@@ -5,7 +5,8 @@ import { useState, type FormEvent } from 'react';
 import { MonoLabel } from '@/design-system/primitives';
 import { colors, typography } from '@/design-system/tokens';
 import { contactService } from '@/services';
-import { useText } from '@/hooks';
+import { HoneypotField } from '@/components';
+import { useSpamGuard, useText, useTurnstile } from '@/hooks';
 import { GUIDANCE, GUIDANCE_FORMULAS } from '@/content/guidance';
 import { CONTACT } from '@/content/contact';
 
@@ -35,13 +36,25 @@ export function GuidanceForm({ formule, onSelectFormule, onSubmitted }: Guidance
   const [project, setProject] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const guard = useSpamGuard();
+  const turnstile = useTurnstile();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     setSubmitting(true);
     setError(null);
-    const result = await contactService.submit({ name, email, project, formule: formule ?? undefined });
+    const turnstileToken = await turnstile.getToken();
+    const result = await contactService.submit({
+      name,
+      email,
+      project,
+      formule: formule ?? undefined,
+      website: guard.trap,
+      elapsedMs: guard.elapsedMs(),
+      turnstileToken,
+    });
     setSubmitting(false);
+    turnstile.reset();
     if (result.ok) onSubmitted();
     else setError(guidance.error);
   }
@@ -49,7 +62,8 @@ export function GuidanceForm({ formule, onSelectFormule, onSubmitted }: Guidance
   const labelGap = { display: 'flex', flexDirection: 'column', gap: '9px' } as const;
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+    <form onSubmit={handleSubmit} style={{ position: 'relative', display: 'flex', flexDirection: 'column', gap: '22px' }}>
+      <HoneypotField value={guard.trap} onChange={guard.setTrap} />
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         <FieldLabel>{guidance.formulaLabel}</FieldLabel>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '9px' }}>
@@ -98,6 +112,9 @@ export function GuidanceForm({ formule, onSelectFormule, onSubmitted }: Guidance
           onChange={(e) => setProject(e.target.value)}
         />
       </div>
+
+      {/* Turnstile: empty for nearly everyone, a checkbox only when Cloudflare is unsure. */}
+      <div ref={turnstile.containerRef} style={{ display: 'contents' }} />
 
       <button type="submit" className="ow-submit" disabled={submitting} aria-busy={submitting} style={{ fontFamily: typography.font.body }}>
         {submitting ? (

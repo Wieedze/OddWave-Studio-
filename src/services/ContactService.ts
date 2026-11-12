@@ -12,6 +12,12 @@ export interface ContactSubmission {
   need?: string;
   /** Guidance page: chosen "formule". */
   formule?: string;
+  /** Honeypot value: always empty for humans (see useSpamGuard). */
+  website?: string;
+  /** Milliseconds between form mount and submit (see useSpamGuard). */
+  elapsedMs?: number;
+  /** Cloudflare Turnstile token (see TurnstileService). */
+  turnstileToken?: string;
 }
 
 export interface SubmitResult {
